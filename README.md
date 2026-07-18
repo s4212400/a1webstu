@@ -1,7 +1,7 @@
 # a1webstu
-# 🎮 ConsoleHaven - Premium Gaming Gear
+# ConsoleHaven - Premium Gaming Gear
 
-This repository contains the source code for the Web Development Group Assignment. ConsoleHaven is an e-commerce and community platform designed for gamers, featuring a retro 8-bit aesthetic.
+This repository contains the source code for the Web Development Group Assignment.
 
 ## Team Members & Task Distribution
 This project was developed collaboratively by a team of 4 members. Below is the module breakdown:

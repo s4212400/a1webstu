@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConsoleHaven - Tech News & Blog</title>
+    <!-- Nhớ đảm bảo file CSS của bạn tên là shared.css -->
+    <link rel="stylesheet" href="shared.css"> 
+</head>
+<body>
+
+    <!-- =========================
+         HEADER & NAVIGATION
+    ========================== -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <!-- Thêm class 'active' để báo hiệu người dùng đang ở trang Blog -->
+                    <li class="nav__item"><a href="blog.html" class="nav__link active">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <button class="btn--icon" title="Cart">🛒</button>
+                <a href="login.html" class="btn btn--outline">LOGIN</a>
+                <a href="register.html" class="btn btn--primary">REGISTER</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================
+         MAIN BLOG SECTION
+    ========================== -->
+    <main>
+        <section class="blog-section">
+            <h2 class="section-title">LATEST TECH NEWS & REVIEWS</h2>
+            
+            <div class="blog-grid">
+                <!-- BÀI VIẾT 1 -->
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="Retro Console">
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__date">[ JUL 18, 2026 ]</span>
+                        <h3 class="blog-card__title"><a href="article.html">The Resurgence of 8-Bit Gaming in 2026</a></h3>
+                        <p class="blog-card__excerpt">Discover why classic pixelated graphics and chiptune music are making a massive comeback among modern gamers and developers.</p>
+                        <a href="article.html" class="btn btn--outline">READ MORE</a>
+                    </div>
+                </article>
+
+                <!-- BÀI VIẾT 2 -->
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80" alt="VR Headset">
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__date">[ JUL 15, 2026 ]</span>
+                        <h3 class="blog-card__title"><a href="article.html">Next-Gen VR: Is It Worth The Hype?</a></h3>
+                        <p class="blog-card__excerpt">An in-depth review of the newest virtual reality hardware hitting the market this quarter. Read our full analysis before you buy.</p>
+                        <a href="article.html" class="btn btn--outline">READ MORE</a>
+                    </div>
+                </article>
+
+                <!-- BÀI VIẾT 3 -->
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=600&q=80" alt="Mechanical Keyboard">
+                    </div>
+                    <div class="blog-card__content">
+                        <span class="blog-card__date">[ JUL 10, 2026 ]</span>
+                        <h3 class="blog-card__title"><a href="article.html">Top 5 Mechanical Keyboards for Competitive E-sports</a></h3>
+                        <p class="blog-card__excerpt">Every millisecond counts. We test and rank the fastest mechanical switches available to give you the ultimate edge in your matches.</p>
+                        <a href="article.html" class="btn btn--outline">READ MORE</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- BLOG CONTROLS: Thanh tìm kiếm và Lọc -->
+            <div class="blog-controls">
+                <form class="search-bar">
+                    <input type="text" placeholder="SEARCH DATABANKS..." class="search-input">
+                    <!-- Tái sử dụng lại class nút bấm màu đỏ có sẵn -->
+                    <button type="submit" class="btn btn--primary">SEARCH</button> 
+                </form>
+                
+                <div class="blog-categories">
+                    <button type="button" class="category-btn active">ALL</button>
+                    <button type="button" class="category-btn">HARDWARE</button>
+                    <button type="button" class="category-btn">RETRO</button>
+                    <button type="button" class="category-btn">ESPORTS</button>
+                </div>
+            </div>
+    </main>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="footer">
+        <div class="footer__container">
+            <!-- Cột 1: Đã cài CSS riêng (:first-child) để chữ ConsoleHaven màu đỏ -->
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            
+            <!-- Cột 2: Quick Links (Chữ màu Vàng) -->
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            
+            <!-- Cột 3: Support (Chữ màu Vàng) -->
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+
+            <!-- Cột 4: Contact (Chữ màu Vàng) -->
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

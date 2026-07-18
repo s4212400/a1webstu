@@ -352,3 +352,269 @@ ul {
         justify-content: center;
     }
 }
+
+/* --- 10. BLOG MODULE --- */
+.blog-section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.blog-grid {
+    display: grid;
+    /* Dùng lệnh này để tự động dàn cột giống hệt Footer */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.blog-card {
+    background-color: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s;
+}
+
+/* Hiệu ứng nảy lên khi rê chuột */
+.blog-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 4px 4px 0px rgba(255, 0, 0, 0.2);
+}
+
+.blog-card__image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 2px dashed var(--border-color);
+}
+
+.blog-card__content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-card__date {
+    color: #ffcc33; /* Màu vàng Pixel */
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.blog-card__title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.blog-card__title a {
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.blog-card__title a:hover {
+    color: var(--primary-color);
+}
+
+.blog-card__excerpt {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Đẩy nút Read More xuống sát đáy */
+}
+
+/* --- 11. ARTICLE DETAIL MODULE --- */
+.article-detail {
+    max-width: 800px; /* Giới hạn chiều rộng để mắt đọc thoải mái nhất */
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.article-detail__hero img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border: 3px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.article-detail__header {
+    margin-bottom: 40px;
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 20px;
+}
+
+.article-detail__title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin: 15px 0;
+    line-height: 1.3;
+}
+
+.tag {
+    background-color: var(--border-color);
+    color: var(--text-main);
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-right: 10px;
+}
+
+/* Định dạng nội dung bài báo chữ */
+.article-detail__body p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 25px;
+    font-family: sans-serif; /* Dùng font thường cho bài viết để dễ đọc, không dùng font Pixel ở đây */
+}
+
+.article-detail__body h2 {
+    font-size: 1.5rem;
+    color: #ffcc33;
+    margin: 40px 0 20px;
+}
+
+.article-detail__body blockquote {
+    border-left: 4px solid var(--primary-color);
+    background-color: #1a1a1a;
+    padding: 20px 30px;
+    font-style: italic;
+    font-size: 1.2rem;
+    margin: 30px 0;
+    color: var(--text-main);
+}
+
+/* Định dạng Khu vực bình luận */
+.comments-section {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 40px 20px;
+    border-top: 4px solid var(--border-color);
+}
+
+.comments-title {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.comment-form textarea {
+    background-color: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    padding: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.comment {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    background-color: var(--bg-surface);
+    padding: 20px;
+    border: 1px solid #333;
+}
+
+.comment__avatar {
+    font-size: 2.5rem;
+}
+
+.comment__author {
+    font-weight: bold;
+    color: #ffcc33;
+    margin-bottom: 10px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+}
+
+.comment__author span {
+    color: #666;
+    font-size: 0.7rem;
+    margin-left: 10px;
+}
+
+/* --- 12. BLOG CONTROLS (SEARCH & FILTER) --- */
+.blog-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--bg-surface);
+    border: 2px dashed var(--border-color); /* Viền đứt khúc hoài cổ */
+}
+
+/* Khung tìm kiếm */
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    background-color: #000000;
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* Đổi màu viền thành đỏ khi click chuột vào gõ chữ */
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color); 
+}
+
+/* Khu vực nút bấm danh mục */
+.blog-categories {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Tự động rớt dòng nếu màn hình nhỏ */
+}
+
+.category-btn {
+    background: transparent;
+    border: 1px solid var(--text-light);
+    color: var(--text-light);
+    padding: 8px 15px;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Hiệu ứng khi rê chuột hoặc nút đang được chọn (active) */
+.category-btn:hover, 
+.category-btn.active {
+    border-color: #ffcc33; /* Đổi sang màu vàng Pixel */
+    color: #ffcc33;
+    box-shadow: 3px 3px 0px rgba(255, 204, 51, 0.2);
+}
+
+/* Dàn hàng ngang cho màn hình máy tính / iPad to */
+@media (min-width: 768px) {
+    .blog-controls {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .search-bar {
+        width: 50%; /* Thanh tìm kiếm chiếm một nửa bề ngang */
+    }
+}
