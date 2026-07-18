@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConsoleHaven - Tech News & Blog</title>
-    <!-- Nhớ đảm bảo file CSS của bạn tên là shared.css -->
     <link rel="stylesheet" href="shared.css"> 
 </head>
 <body>
 
-    <!-- =========================
-         HEADER & NAVIGATION
-    ========================== -->
+    <!-- HEADER & NAVIGATION -->
     <header class="header">
         <div class="header__container">
             <a href="index.html" class="logo">🎮 ConsoleHaven</a>
@@ -20,7 +17,6 @@
                     <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
                     <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
                     <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
-                    <!-- Thêm class 'active' để báo hiệu người dùng đang ở trang Blog -->
                     <li class="nav__item"><a href="blog.html" class="nav__link active">Blog</a></li>
                     <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
                 </ul>
@@ -33,15 +29,13 @@
         </div>
     </header>
 
-    <!-- =========================
-         MAIN BLOG SECTION
-    ========================== -->
+    <!--  MAIN BLOG SECTION  -->
     <main>
         <section class="blog-section">
             <h2 class="section-title">LATEST TECH NEWS & REVIEWS</h2>
             
             <div class="blog-grid">
-                <!-- BÀI VIẾT 1 -->
+                <!-- ARTICLE 1 -->
                 <article class="blog-card">
                     <div class="blog-card__image">
                         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="Retro Console">
@@ -54,7 +48,7 @@
                     </div>
                 </article>
 
-                <!-- BÀI VIẾT 2 -->
+                <!-- ARTICLE 2 -->
                 <article class="blog-card">
                     <div class="blog-card__image">
                         <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80" alt="VR Headset">
@@ -67,7 +61,7 @@
                     </div>
                 </article>
 
-                <!-- BÀI VIẾT 3 -->
+                <!-- ARTICLE 3 -->
                 <article class="blog-card">
                     <div class="blog-card__image">
                         <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=600&q=80" alt="Mechanical Keyboard">
@@ -82,11 +76,11 @@
             </div>
         </section>
 
-        <!-- BLOG CONTROLS: Thanh tìm kiếm và Lọc -->
+        <!-- BLOG CONTROLS -->
             <div class="blog-controls">
                 <form class="search-bar">
                     <input type="text" placeholder="SEARCH DATABANKS..." class="search-input">
-                    <!-- Tái sử dụng lại class nút bấm màu đỏ có sẵn -->
+                    <!-- Reused -->
                     <button type="submit" class="btn btn--primary">SEARCH</button> 
                 </form>
                 
@@ -99,18 +93,16 @@
             </div>
     </main>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer__container">
-            <!-- Cột 1: Đã cài CSS riêng (:first-child) để chữ ConsoleHaven màu đỏ -->
+            <!-- Column 1 -->
             <div class="footer__col">
                 <h4>🎮 ConsoleHaven</h4>
                 <p>Your ultimate destination for premium gaming hardware.</p>
             </div>
-            
-            <!-- Cột 2: Quick Links (Chữ màu Vàng) -->
+
+            <!-- Column 2: Quick Links -->
             <div class="footer__col">
                 <h4>Quick Links</h4>
                 <ul>
@@ -119,8 +111,8 @@
                     <li><a href="blog.html">Tech News</a></li>
                 </ul>
             </div>
-            
-            <!-- Cột 3: Support (Chữ màu Vàng) -->
+
+            <!-- Column 3: Support -->
             <div class="footer__col">
                 <h4>Support</h4>
                 <ul>
@@ -129,7 +121,7 @@
                 </ul>
             </div>
 
-            <!-- Cột 4: Contact (Chữ màu Vàng) -->
+            <!-- Column 4: Contact -->
             <div class="footer__col">
                 <h4>Contact</h4>
                 <ul>
