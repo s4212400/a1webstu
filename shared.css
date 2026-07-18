@@ -1,4 +1,4 @@
-/* --- NHÚNG FONT PIXEL TỪ GOOGLE FONTS --- */
+/* --- FONT PIXEL TỪ GOOGLE FONTS --- */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 /* --- 1. CSS VARIABLES (TONE ĐEN - ĐỎ - TRẮNG - PIXEL) --- */
@@ -32,13 +32,12 @@
 
 body {
     font-family: var(--font-body);
-    font-size: 1.3rem; /* Tăng size chút vì font VT323 hơi nhỏ */
+    font-size: 1.3rem; 
     color: var(--text-main);
     background-color: var(--bg-color);
     line-height: 1.5;
 }
 
-/* Áp dụng font góc cạnh cho tất cả Tiêu đề */
 h1, h2, h3, h4 {
     font-family: var(--font-heading);
     text-transform: uppercase;
@@ -59,10 +58,10 @@ ul {
     list-style: none;
 }
 
-/* --- 3. NÚT BẤM PIXEL --- */
+/* --- 3. PIXEL BUTTON --- */
 .btn {
     font-family: var(--font-heading);
-    font-size: 0.7rem; /* Font Press Start 2P rất to nên set nhỏ lại */
+    font-size: 0.7rem; 
     padding: 12px 18px;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -74,7 +73,7 @@ ul {
 .btn--primary {
     background-color: var(--primary-color);
     color: #ffffff;
-    box-shadow: 3px 3px 0px #800000; /* Hiệu ứng nút bấm nổi 3D khối */
+    box-shadow: 3px 3px 0px #800000; 
 }
 
 .btn--primary:hover {
@@ -138,7 +137,7 @@ ul {
 }
 
 .nav__link {
-    font-size: 1.5rem; /* Font VT323 cần to xíu cho dễ đọc */
+    font-size: 1.5rem; 
     color: var(--text-light);
     letter-spacing: 1px;
 }
@@ -161,7 +160,7 @@ ul {
         radial-gradient(#333 1px, transparent 1px),
         radial-gradient(#333 1px, transparent 1px);
     background-size: 20px 20px;
-    background-position: 0 0, 10px 10px; /* Tạo nền lưới caro (scanlines ảo) */
+    background-position: 0 0, 10px 10px; 
     border-bottom: 2px solid var(--border-color);
     text-align: center;
     padding: 100px 20px;
@@ -191,7 +190,7 @@ ul {
 .section-title {
     font-size: 1.5rem;
     margin-bottom: 30px;
-    color: #ffb400; /* Màu vàng pixel nổi bật */
+    color: #ffb400; 
     border-left: 5px solid #ffb400;
     padding-left: 15px;
 }
@@ -226,7 +225,7 @@ ul {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(20%) contrast(120%); /* Chỉnh ảnh hơi gai góc lên chút */
+    filter: grayscale(20%) contrast(120%); 
 }
 
 .card:hover .card__image {
@@ -311,7 +310,7 @@ ul {
 .footer__col h4 {
     font-size: 1rem;
     margin-bottom: 20px;
-    color: #ffb400; /* Màu vàng pixel nổi bật */
+    color: #ffb400; 
 }
 
 .footer__col:first-child h4 {
@@ -330,7 +329,7 @@ ul {
 .footer__col a:hover {
     color: var(--text-main);
     background-color: var(--primary-color);
-    padding: 2px 5px; /* Hiệu ứng bôi đen như game DOS cũ */
+    padding: 2px 5px; 
 }
 
 .footer__bottom {
@@ -362,7 +361,6 @@ ul {
 
 .blog-grid {
     display: grid;
-    /* Dùng lệnh này để tự động dàn cột giống hệt Footer */
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
     gap: 30px;
     margin-top: 30px;
@@ -376,7 +374,6 @@ ul {
     transition: transform 0.2s ease, border-color 0.2s;
 }
 
-/* Hiệu ứng nảy lên khi rê chuột */
 .blog-card:hover {
     transform: translateY(-5px);
     border-color: var(--primary-color);
@@ -398,7 +395,7 @@ ul {
 }
 
 .blog-card__date {
-    color: #ffcc33; /* Màu vàng Pixel */
+    color: #ffcc33;
     font-size: 0.9rem;
     margin-bottom: 15px;
     letter-spacing: 1px;
@@ -423,12 +420,12 @@ ul {
     color: var(--text-light);
     line-height: 1.6;
     margin-bottom: 25px;
-    flex-grow: 1; /* Đẩy nút Read More xuống sát đáy */
+    flex-grow: 1; 
 }
 
 /* --- 11. ARTICLE DETAIL MODULE --- */
 .article-detail {
-    max-width: 800px; /* Giới hạn chiều rộng để mắt đọc thoải mái nhất */
+    max-width: 800px; 
     margin: 40px auto;
     padding: 0 20px;
 }
@@ -462,13 +459,13 @@ ul {
     margin-right: 10px;
 }
 
-/* Định dạng nội dung bài báo chữ */
+
 .article-detail__body p {
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--text-light);
     margin-bottom: 25px;
-    font-family: sans-serif; /* Dùng font thường cho bài viết để dễ đọc, không dùng font Pixel ở đây */
+    font-family: sans-serif; 
 }
 
 .article-detail__body h2 {
@@ -487,7 +484,6 @@ ul {
     color: var(--text-main);
 }
 
-/* Định dạng Khu vực bình luận */
 .comments-section {
     max-width: 800px;
     margin: 0 auto 60px;
@@ -556,10 +552,9 @@ ul {
     margin-bottom: 40px;
     padding: 20px;
     background-color: var(--bg-surface);
-    border: 2px dashed var(--border-color); /* Viền đứt khúc hoài cổ */
+    border: 2px dashed var(--border-color);
 }
 
-/* Khung tìm kiếm */
 .search-bar {
     display: flex;
     gap: 10px;
@@ -575,17 +570,15 @@ ul {
     font-size: 1rem;
 }
 
-/* Đổi màu viền thành đỏ khi click chuột vào gõ chữ */
 .search-input:focus {
     outline: none;
     border-color: var(--primary-color); 
 }
 
-/* Khu vực nút bấm danh mục */
 .blog-categories {
     display: flex;
     gap: 15px;
-    flex-wrap: wrap; /* Tự động rớt dòng nếu màn hình nhỏ */
+    flex-wrap: wrap; 
 }
 
 .category-btn {
@@ -599,15 +592,13 @@ ul {
     transition: all 0.2s;
 }
 
-/* Hiệu ứng khi rê chuột hoặc nút đang được chọn (active) */
 .category-btn:hover, 
 .category-btn.active {
-    border-color: #ffcc33; /* Đổi sang màu vàng Pixel */
+    border-color: #ffcc33; 
     color: #ffcc33;
     box-shadow: 3px 3px 0px rgba(255, 204, 51, 0.2);
 }
 
-/* Dàn hàng ngang cho màn hình máy tính / iPad to */
 @media (min-width: 768px) {
     .blog-controls {
         flex-direction: row;
@@ -615,6 +606,6 @@ ul {
         align-items: center;
     }
     .search-bar {
-        width: 50%; /* Thanh tìm kiếm chiếm một nửa bề ngang */
+        width: 50%; 
     }
 }
