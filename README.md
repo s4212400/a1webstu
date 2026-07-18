@@ -6,7 +6,7 @@ This repository contains the source code for the Web Development Group Assignmen
 ## Team Members & Task Distribution
 This project was developed collaboratively by a team of 4 members. Below is the module breakdown:
 
-*   **Member 1: Nguyen Minh Tri (SID: )**
+*   **Member 1: Nguyen Minh Tri (SID: S4155540 )**
     *   Module 1: Shopping Cart & Checkout
     *   Module 5: Wishlist
 *   **Member 2: (SID: )**
