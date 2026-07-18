@@ -32,7 +32,26 @@
     <!--  MAIN BLOG SECTION  -->
     <main>
         <section class="blog-section">
-            <h2 class="section-title">LATEST TECH NEWS & REVIEWS</h2>
+            <div class="blog-header">
+                <h2 class="section-title">LATEST TECH NEWS & REVIEWS</h2>
+                <a href="#" class="btn btn--outline btn--create">+ CREATE NEW POST</a>
+            </div>
+        
+            <!-- BLOG CONTROLS -->
+            <div class="blog-controls">
+                <form class="search-bar">
+                    <input type="text" placeholder="SEARCH DATABANKS..." class="search-input">
+                    <!-- Reused -->
+                    <button type="submit" class="btn btn--primary">SEARCH</button> 
+                </form>
+                
+                <div class="blog-categories">
+                    <button type="button" class="category-btn active">ALL</button>
+                    <button type="button" class="category-btn">HARDWARE</button>
+                    <button type="button" class="category-btn">RETRO</button>
+                    <button type="button" class="category-btn">ESPORTS</button>
+                </div>
+            </div>
             
             <div class="blog-grid">
                 <!-- ARTICLE 1 -->
@@ -76,21 +95,7 @@
             </div>
         </section>
 
-        <!-- BLOG CONTROLS -->
-            <div class="blog-controls">
-                <form class="search-bar">
-                    <input type="text" placeholder="SEARCH DATABANKS..." class="search-input">
-                    <!-- Reused -->
-                    <button type="submit" class="btn btn--primary">SEARCH</button> 
-                </form>
-                
-                <div class="blog-categories">
-                    <button type="button" class="category-btn active">ALL</button>
-                    <button type="button" class="category-btn">HARDWARE</button>
-                    <button type="button" class="category-btn">RETRO</button>
-                    <button type="button" class="category-btn">ESPORTS</button>
-                </div>
-            </div>
+        
     </main>
 
     <!-- FOOTER -->

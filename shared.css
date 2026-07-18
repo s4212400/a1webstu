@@ -359,6 +359,36 @@ ul {
     margin: 0 auto;
 }
 
+.blog-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn--create {
+    align-self: flex-start;
+    border-color: #ffb400;
+    color: #ffb400;
+}
+
+.btn--create:hover {
+    background-color: #ffb400;
+    color: #000000;
+}
+
+@media (min-width: 768px) {
+    .blog-header {
+        flex-direction: row;
+        justify-content: space-between; 
+        align-items: center; 
+        gap: 0;
+    }
+    .btn--create {
+        align-self: auto;
+    }
+}
+
 .blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
