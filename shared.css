@@ -818,12 +818,16 @@ ul {
     top:100px;
 }
 
-.wishlist-summary h2{
-    font-size:1rem;
-    color:var(--primary-color);
-    margin-bottom:25px;
-    border-bottom:2px dashed var(--border-color);
-    padding-bottom:15px;
+.wishlist-summary .summary-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    margin-top:15px;
+    box-sizing:border-box;
+}
+
+.wishlist-summary .summary-btn:first-of-type{
+    margin-top:25px;
 }
 
 .summary-row{
