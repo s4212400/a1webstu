@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <nav class="nav">
+                <ul class="nav__list">              
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- REGISTER SECTION -->
+        <section class="auth-section">
+            <div class="auth-box">
+                <h1>CREATE ACCOUNT</h1>
+                <form class="auth-form">
+                    
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="Choose your username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description (Bio):</label>
+                        <textarea id="description" name="description" placeholder="Tell us about yourself..." rows="3" maxlength="200"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--large">SIGN UP</button>
+                </form>
+
+                <p class="auth-link">Already have an account? <a href="login.html">Log in here</a></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
