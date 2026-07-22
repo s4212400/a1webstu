@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+
+            <nav class="nav" aria-label="Main navigation">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CHECKOUT PROGRESS -->
+    <ol class="checkout-steps">
+        <li class="step done"><span>1</span> Cart</li>
+        <li class="step done"><span>2</span> Checkout</li>
+        <li class="step current" aria-current="step"><span>3</span> Confirmation</li>
+    </ol>
+
+    <main class="confirm-page">
+
+        <!-- SUCCESS BANNER -->
+        <section class="confirm-banner">
+            <p class="confirm-icon">✔</p>
+            <h1>Thank You For Your Order!</h1>
+            <p>Your order has been placed successfully. A confirmation email has been sent
+               to <strong>john.gamer@email.com</strong>.</p>
+        </section>
+
+        <!-- INVOICE -->
+        <section class="invoice">
+
+            <div class="invoice__header">
+                <div>
+                    <h2 class="section-title">Order Summary</h2>
+                    <p class="invoice__meta">Order Number: <strong>#CH-2026-04871</strong></p>
+                    <p class="invoice__meta">Order Date: <strong>22 July 2026</strong></p>
+                    <p class="invoice__meta">Payment Method: <strong>Visa ending 1111</strong></p>
+                    <p class="invoice__meta">Estimated Delivery: <strong>27–29 July 2026</strong></p>
+                </div>
+                <div>
+                    <h2 class="section-title">Delivery Address</h2>
+                    <address class="invoice__address">
+                        John Nguyen<br>
+                        702 Nguyen Van Linh<br>
+                        Tan Phong Ward, District 7<br>
+                        Ho Chi Minh City, 700000<br>
+                        Vietnam<br>
+                        0901 234 567
+                    </address>
+                </div>
+            </div>
+
+            <!-- ITEMS TABLE -->
+            <table class="invoice-table">
+                <caption class="visually-hidden">Items in order CH-2026-04871</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img class="invoice-thumb" src="images/zelda_totk.jpg"
+                                 alt="Cover art of Tears of the Kingdom">
+                        </td>
+                        <td>
+                            <strong>Zelda: Tears of the Kingdom</strong><br>
+                            Nintendo Switch &bull; Standard &bull; Physical
+                        </td>
+                        <td>$54.99</td>
+                        <td>1</td>
+                        <td>$54.99</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img class="invoice-thumb" src="images/spiderman2.jpg"
+                                 alt="Cover art of Marvel's Spider-Man 2">
+                        </td>
+                        <td>
+                            <strong>Marvel's Spider-Man 2</strong><br>
+                            PlayStation 5 &bull; Standard &bull; Physical
+                        </td>
+                        <td>$49.99</td>
+                        <td>1</td>
+                        <td>$49.99</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img class="invoice-thumb" src="images/ps_controller.jpg"
+                                 alt="DualSense wireless controller">
+                        </td>
+                        <td>
+                            <strong>DualSense Wireless Controller</strong><br>
+                            PlayStation 5 &bull; Midnight Black
+                        </td>
+                        <td>$74.99</td>
+                        <td>2</td>
+                        <td>$149.98</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Subtotal</td>
+                        <td>$254.96</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Discount (Summer Sale)</td>
+                        <td>&minus;$20.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Delivery (Standard)</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">GST (10%)</td>
+                        <td>$23.50</td>
+                    </tr>
+                    <tr class="invoice-total">
+                        <td colspan="4">Total Paid</td>
+                        <td>$258.46</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="confirm-actions">
+                <a href="shop.html" class="btn btn--primary">Continue Shopping</a>
+                <a href="profile.html" class="btn btn--outline">View My Orders</a>
+                <a href="index.html" class="btn btn--outline">Back to Home</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

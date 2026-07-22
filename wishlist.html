@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist | ConsoleHaven</title>
-
     <link rel="stylesheet" href="shared.css">
-    <script src="wishlist.js" defer></script>
 </head>
 
 <body>
@@ -17,18 +15,18 @@
 
             <a href="index.html" class="logo">🎮 ConsoleHaven</a>
 
-            <nav class="nav">
+            <nav class="nav" aria-label="Main navigation">
                 <ul class="nav__list">
                     <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
                     <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
                     <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
                     <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
-                    <li class="nav__item"><a href="wishlist.html" class="nav__link active">Wishlist</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link active" aria-current="page">Wishlist</a></li>
                 </ul>
             </nav>
 
             <div class="header__actions">
-                <a href="cart.html" class="btn btn--icon">🛒</a>
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">🛒</a>
                 <a href="login.html" class="btn btn--outline">Login</a>
                 <a href="register.html" class="btn btn--primary">Register</a>
             </div>
@@ -43,752 +41,221 @@
     </section>
 
     <main class="wishlist-page">
-    
-        <!-- LEFT -->
-        <section class="wishlist-container">
-            <br><h1> Games</h1></br>
-            <!-- Game 1 -->
-            <article class="wishlist-card" data-price="54.99">
+
+        <!-- LEFT: WISHLIST ITEMS -->
+        <section class="wishlist-container" aria-label="Saved wishlist items">
+
+            <!-- Wishlist Item 1 -->
+            <article class="wishlist-card">
 
                 <span class="sale-badge">-20%</span>
 
-                <img class="wishlist-image" src="images/zelda_totk.jpg" alt="Zelda">
-                
+                <a href="product-zelda.html">
+                    <img class="wishlist-image" src="images/zelda_totk.jpg"
+                         alt="Cover art of The Legend of Zelda: Tears of the Kingdom">
+                </a>
+
                 <div class="wishlist-info">
 
-                    <h2>The Legend of Zelda: Tears of the Kingdom</h2>
+                    <h2><a href="product-zelda.html">The Legend of Zelda: Tears of the Kingdom</a></h2>
 
-                    <p>Nintendo Switch</p>
+                    <p>Nintendo Switch &bull; Action-Adventure</p>
 
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
+                    <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,481 reviews)</span></div>
 
                     <div class="price">
-
                         <span class="old-price">$69.99</span>
-
                         <span class="new-price">$54.99</span>
-
                     </div>
 
-                    <span class="stock in-stock">
-                        In Stock
-                    </span>
+                    <span class="stock in-stock">In Stock</span>
+
+                    <!-- Wishlist statistics (required by Module 5) -->
+                    <ul class="wishlist-stats">
+                        <li><strong>1,204</strong> users wishlisted this</li>
+                        <li><strong>876</strong> added to cart</li>
+                        <li><strong>512</strong> purchased</li>
+                    </ul>
+
+                    <p class="added-date">Added on 12 July 2026</p>
 
                 </div>
 
                 <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
+                    <a href="cart.html" class="btn btn--primary">Move to Cart</a>
+                    <a href="product-zelda.html" class="btn btn--outline">View Details</a>
+                    <a href="wishlist.html" class="btn btn--outline">Mark Purchased</a>
+                    <a href="wishlist.html" class="btn btn--outline btn--danger">Remove</a>
                 </div>
 
             </article>
 
-            <!-- Game 2 -->
-            <article class="wishlist-card" data-price="44.99">
+            <!-- Wishlist Item 2 -->
+            <article class="wishlist-card">
 
                 <span class="sale-badge">-25%</span>
 
-                <img class="wishlist-image" src="images/mario.jpg" alt="Mario">
+                <a href="product-mario.html">
+                    <img class="wishlist-image" src="images/mario.jpg"
+                         alt="Cover art of Super Mario Bros Wonder">
+                </a>
 
                 <div class="wishlist-info">
 
-                    <h2>Super Mario Bros Wonder</h2>
+                    <h2><a href="product-mario.html">Super Mario Bros Wonder</a></h2>
 
-                    <p>Nintendo Switch</p>
+                    <p>Nintendo Switch &bull; Platformer</p>
 
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
+                    <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(1,932 reviews)</span></div>
 
                     <div class="price">
-
                         <span class="old-price">$59.99</span>
-
                         <span class="new-price">$44.99</span>
-
                     </div>
 
-                    <span class="stock in-stock">
-                        In Stock
-                    </span>
+                    <span class="stock in-stock">In Stock</span>
+
+                    <ul class="wishlist-stats">
+                        <li><strong>958</strong> users wishlisted this</li>
+                        <li><strong>640</strong> added to cart</li>
+                        <li><strong>389</strong> purchased</li>
+                    </ul>
+
+                    <p class="added-date">Added on 08 July 2026</p>
 
                 </div>
 
                 <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
+                    <a href="cart.html" class="btn btn--primary">Move to Cart</a>
+                    <a href="product-mario.html" class="btn btn--outline">View Details</a>
+                    <a href="wishlist.html" class="btn btn--outline">Mark Purchased</a>
+                    <a href="wishlist.html" class="btn btn--outline btn--danger">Remove</a>
                 </div>
 
             </article>
 
-            <!-- Game 3 -->
-            <article class="wishlist-card" data-price="49.99">
+            <!-- Wishlist Item 3 - already purchased -->
+            <article class="wishlist-card is-purchased">
 
                 <span class="sale-badge">-30%</span>
 
-                <img class="wishlist-image" src="images/spiderman2.jpg" alt="Spider-Man">
+                <a href="product-spiderman.html">
+                    <img class="wishlist-image" src="images/spiderman2.jpg"
+                         alt="Cover art of Marvel's Spider-Man 2">
+                </a>
 
                 <div class="wishlist-info">
 
-                    <h2>Marvel's Spider-Man 2</h2>
+                    <h2><a href="product-spiderman.html">Marvel's Spider-Man 2</a></h2>
 
-                    <p>PlayStation 5</p>
+                    <p>PlayStation 5 &bull; Action</p>
 
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
+                    <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(3,107 reviews)</span></div>
 
                     <div class="price">
-
                         <span class="old-price">$69.99</span>
-
                         <span class="new-price">$49.99</span>
-
                     </div>
 
-                    <span class="stock low-stock">
-                        Low Stock
-                    </span>
+                    <span class="stock low-stock">Low Stock</span>
+
+                    <ul class="wishlist-stats">
+                        <li><strong>1,540</strong> users wishlisted this</li>
+                        <li><strong>1,102</strong> added to cart</li>
+                        <li><strong>734</strong> purchased</li>
+                    </ul>
+
+                    <p class="added-date">Added on 02 July 2026</p>
+
+                    <span class="purchased-badge">✔ Purchased</span>
 
                 </div>
 
                 <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
+                    <a href="product-spiderman.html" class="btn btn--outline">View Details</a>
+                    <a href="wishlist.html" class="btn btn--outline">Mark Unpurchased</a>
+                    <a href="wishlist.html" class="btn btn--outline btn--danger">Remove</a>
                 </div>
 
             </article>
 
-            <!-- Game 4 -->
-            <article class="wishlist-card" data-price="39.99">
+            <!-- Wishlist Item 4 -->
+            <article class="wishlist-card">
 
                 <span class="sale-badge">-35%</span>
 
-                <img class="wishlist-image" src="images/eldenring.jpg" alt="Elden Ring">
+                <a href="product-eldenring.html">
+                    <img class="wishlist-image" src="images/eldenring.jpg"
+                         alt="Cover art of Elden Ring">
+                </a>
 
                 <div class="wishlist-info">
 
-                    <h2>Elden Ring</h2>
+                    <h2><a href="product-eldenring.html">Elden Ring</a></h2>
 
-                    <p>PS5 • Xbox</p>
+                    <p>PS5 &bull; Xbox Series X &bull; Souls-like RPG</p>
 
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
+                    <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(4,265 reviews)</span></div>
 
                     <div class="price">
-
                         <span class="old-price">$59.99</span>
-
                         <span class="new-price">$39.99</span>
-
                     </div>
 
-                    <span class="stock out-stock">
-                        Out of Stock
-                    </span>
+                    <span class="stock out-stock">Out of Stock</span>
+
+                    <ul class="wishlist-stats">
+                        <li><strong>2,876</strong> users wishlisted this</li>
+                        <li><strong>1,981</strong> added to cart</li>
+                        <li><strong>1,455</strong> purchased</li>
+                    </ul>
+
+                    <p class="added-date">Added on 28 June 2026</p>
 
                 </div>
 
                 <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
+                    <a href="product-eldenring.html" class="btn btn--outline">View Details</a>
+                    <a href="wishlist.html" class="btn btn--outline">Mark Purchased</a>
+                    <a href="wishlist.html" class="btn btn--outline btn--danger">Remove</a>
                 </div>
 
             </article>
-            <!-- Game 5 -->
-            <article class="wishlist-card" data-price="49.99">
 
-                <span class="sale-badge">-17%</span>
-                <img class="wishlist-image" src="images/mario_kart.jpg" alt="Mario Kart 8 Deluxe">
-
-                <div class="wishlist-info">
-
-                    <h2>Mario Kart 8 Deluxe</h2>
-
-                    <p>Nintendo Switch</p>
-
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
-
-                    <div class="price">
-
-                        <span class="old-price">$59.99</span>
-
-                        <span class="new-price">$49.99</span>
-
-                    </div>
-
-                    <span class="stock in-stock">
-                        In Stock
-                    </span>
-
-                </div>
-
-                <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
-                </div>
-
-            </article>
-            <!-- Game 6 -->
-            <article class="wishlist-card" data-price="59.99">
-
-                <span class="sale-badge">-14%</span>
-
-                <img class="wishlist-image" src="images/bmw.jpg" alt="Black Myth: Wukong">
-
-                <div class="wishlist-info">
-
-                    <h2>Black Myth: Wukong</h2>
-
-                    <p>PlayStation 5 • PC</p>
-
-                    <div class="rating">
-                        ⭐⭐⭐⭐⭐
-                    </div>
-
-                    <div class="price">
-
-                        <span class="old-price">$69.99</span>
-
-                        <span class="new-price">$59.99</span>
-
-                    </div>
-
-                    <span class="stock low-stock">
-                        Low Stock
-                    </span>
-
-                </div>
-
-                <div class="wishlist-actions">
-
-                    <button class="btn btn--primary add-cart">
-                        Add to Cart
-                    </button>
-
-                    <button class="btn btn--outline remove-item">
-                        Remove
-                    </button>
-
-                </div>
-</article>
-            <!-- Game 7 -->
-<article class="wishlist-card" data-price="59.99">
-
-    <span class="sale-badge">-14%</span>
-
-    <img class="wishlist-image" src="images/astrobot.jpg" alt="Astro Bot">
-
-    <div class="wishlist-info">
-
-        <h2>Astro Bot</h2>
-
-        <p>PlayStation 5</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$69.99</span>
-
-            <span class="new-price">$59.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-            <!-- Game 8 -->
-<article class="wishlist-card" data-price="44.99">
-
-    <span class="sale-badge">-25%</span>
-
-    <img class="wishlist-image" src="images/cyberpunk.jpg" alt="Cyberpunk 2077">
-
-    <div class="wishlist-info">
-
-        <h2>Cyberpunk 2077 Ultimate Edition</h2>
-
-        <p>PS5 • Xbox • PC</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$59.99</span>
-
-            <span class="new-price">$44.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-            <!-- Consoles-->
-            <h1><br>Consoles<br></h1>
-            <!-- Console 1 -->
-<article class="wishlist-card" data-price="499.99">
-
-    <span class="sale-badge">-9%</span>
-
-    <img class="wishlist-image" src="images/ps5.jpg" alt="PlayStation 5">
-
-    <div class="wishlist-info">
-
-        <h2>PlayStation 5</h2>
-
-        <p>Sony Console</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$549.99</span>
-
-            <span class="new-price">$499.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Console 2 -->
-<article class="wishlist-card" data-price="499.99">
-
-    <span class="sale-badge">-17%</span>
-
-    <img class="wishlist-image" src="images/xbox.jpg" alt="Xbox Series X">
-    
-    <div class="wishlist-info">
-
-        <h2>Xbox Series X</h2>
-
-        <p>Microsoft Console</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$599.99</span>
-
-            <span class="new-price">$499.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Console 3 -->
-<article class="wishlist-card" data-price="349.99">
-
-    <span class="sale-badge">-13%</span>
-
-    <img class="wishlist-image" src="images/nintendo_oled.jpg" alt="Nintendo Switch OLED">
-    
-    <div class="wishlist-info">
-
-        <h2>Nintendo Switch OLED</h2>
-
-        <p>Nintendo Console</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$399.99</span>
-
-            <span class="new-price">$349.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Console 4 -->
-<article class="wishlist-card" data-price="449.99">
-
-    <span class="sale-badge">-10%</span>
-
-    <img class="wishlist-image" src="images/nintendo_2.jpg" alt="Nintendo Switch 2">
-
-    <div class="wishlist-info">
-
-        <h2>Nintendo Switch 2</h2>
-
-        <p>Nintendo Console</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$499.99</span>
-
-            <span class="new-price">$449.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-            <!-- Accessories -->
-<h1><br>Accessories<br></h1>
-
-<!-- Accessory 1 -->
-<article class="wishlist-card" data-price="69.99">
-
-    <span class="sale-badge">-13%</span>
-
-    <img class="wishlist-image" src="images/ps_controller.jpg" alt="DualSense Wireless Controller">
-
-    <div class="wishlist-info">
-
-        <h2>PlayStation 5 DualSense Wireless Controller</h2>
-
-        <p>PlayStation 5 Accessory</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$79.99</span>
-
-            <span class="new-price">$69.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Accessory 2 -->
-<article class="wishlist-card" data-price="64.99">
-
-    <span class="sale-badge">-19%</span>
-
-    <img class="wishlist-image" src="images/nin_controller.jpg" alt="Nintendo Switch Pro Controller">
-
-    <div class="wishlist-info">
-
-        <h2>Nintendo Switch Pro Controller</h2>
-
-        <p>Nintendo Switch Accessory</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$79.99</span>
-
-            <span class="new-price">$64.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Accessory 3 -->
-<article class="wishlist-card" data-price="89.99">
-
-    <span class="sale-badge">-18%</span>
-
-    <img class="wishlist-image" src="images/pulse_headset.jpg" alt="PULSE Elite Wireless Headset">
-
-    <div class="wishlist-info">
-
-        <h2>PULSE Elite Wireless Headset</h2>
-
-        <p>Gaming Headset</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$109.99</span>
-
-            <span class="new-price">$89.99</span>
-
-        </div>
-
-        <span class="stock low-stock">
-            Low Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-
-<!-- Accessory 4 -->
-<article class="wishlist-card" data-price="44.99">
-
-    <span class="sale-badge">-25%</span>
-
-    <img class="wishlist-image" src="images/ps_charging_dock.jpg" alt="DualSense Charging Station">
-
-    <div class="wishlist-info">
-
-        <h2>DualSense Charging Station</h2>
-
-        <p>PlayStation 5 Accessory</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <div class="price">
-
-            <span class="old-price">$59.99</span>
-
-            <span class="new-price">$44.99</span>
-
-        </div>
-
-        <span class="stock in-stock">
-            In Stock
-        </span>
-
-    </div>
-
-    <div class="wishlist-actions">
-
-        <button class="btn btn--primary add-cart">
-            Add to Cart
-        </button>
-
-        <button class="btn btn--outline remove-item">
-            Remove
-        </button>
-
-    </div>
-
-</article>
-                
         </section>
-        
 
-        <!-- RIGHT -->
-        <aside class="wishlist-summary">
+        <!-- RIGHT: SUMMARY -->
+        <aside class="wishlist-summary" aria-label="Wishlist summary">
 
             <h2>Wishlist Summary</h2>
 
             <div class="summary-row">
-                <span>Items</span>
-                <span id="itemCount">4</span>
+                <span>Items saved</span>
+                <span>4</span>
             </div>
 
             <div class="summary-row">
-                <span>Total</span>
-                <span id="totalPrice">$189.96</span>
+                <span>Available now</span>
+                <span>3</span>
             </div>
 
-            <button class="btn btn--primary summary-btn">
-                Add All To Cart
-            </button>
+            <div class="summary-row">
+                <span>Marked purchased</span>
+                <span>1</span>
+            </div>
 
-            <button class="btn btn--outline summary-btn">
-                Continue Shopping
-            </button>
+            <div class="summary-row">
+                <span>Total value</span>
+                <span>$189.96</span>
+            </div>
+
+            <div class="summary-row">
+                <span>You save</span>
+                <span>$69.99</span>
+            </div>
+
+            <a href="cart.html" class="btn btn--primary summary-btn">Add All To Cart</a>
+            <a href="shop.html" class="btn btn--outline summary-btn">Continue Shopping</a>
 
         </aside>
 
@@ -801,29 +268,33 @@
 
         <div class="recommend-grid">
 
-            <div class="recommend-card">
-                <img class="recommend-image" src="images/kirby.jpg" alt="Kirby Return to Dream Land">
+            <article class="recommend-card">
+                <img class="recommend-image" src="images/kirby.jpg" alt="Cover art of Kirby Return to Dream Land">
                 <h3>Kirby Return to Dream Land</h3>
                 <p>$39.99</p>
-            </div>
+                <a href="shop.html" class="btn btn--outline">View in Shop</a>
+            </article>
 
-            <div class="recommend-card">
-                <img class="recommend-image" src="images/persona3.jpg" alt="Persona 3 Reload">
+            <article class="recommend-card">
+                <img class="recommend-image" src="images/persona3.jpg" alt="Cover art of Persona 3 Reload">
                 <h3>Persona 3 Reload</h3>
                 <p>$49.99</p>
-            </div>
+                <a href="shop.html" class="btn btn--outline">View in Shop</a>
+            </article>
 
-            <div class="recommend-card">
-                <img class="recommend-image" src="images/metaphor.jpg" alt="Metaphor ReFantazio">
+            <article class="recommend-card">
+                <img class="recommend-image" src="images/metaphor.jpg" alt="Cover art of Metaphor ReFantazio">
                 <h3>Metaphor ReFantazio</h3>
                 <p>$59.99</p>
-            </div>
+                <a href="shop.html" class="btn btn--outline">View in Shop</a>
+            </article>
 
-            <div class="recommend-card">
-                <img src="images/animalcrossing.jpg" alt="">
+            <article class="recommend-card">
+                <img class="recommend-image" src="images/animalcrossing.jpg" alt="Cover art of Animal Crossing New Horizons">
                 <h3>Animal Crossing</h3>
                 <p>$42.99</p>
-            </div>
+                <a href="shop.html" class="btn btn--outline">View in Shop</a>
+            </article>
 
         </div>
 
@@ -856,7 +327,7 @@
                 <ul class="social-links">
                     <li><a href="policy.html">Policy</a></li>
                 </ul>
-            </div> 
+            </div>
         </div>
         <div class="footer__bottom">
             <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>

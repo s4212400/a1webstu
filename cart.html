@@ -1,170 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart | ConsoleHaven</title>
-
     <link rel="stylesheet" href="shared.css">
-    <script src="cart.js" defer></script>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="header__container">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
 
-        <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
 
-        <nav class="nav">
-            <ul class="nav__list">
-                <li><a href="index.html" class="nav__link">Home</a></li>
-                <li><a href="shop.html" class="nav__link">Shop</a></li>
-                <li><a href="forum.html" class="nav__link">Forum</a></li>
-                <li><a href="blog.html" class="nav__link">Blog</a></li>
-                <li><a href="wishlist.html" class="nav__link">Wishlist</a></li>
-            </ul>
-        </nav>
+            <nav class="nav" aria-label="Main navigation">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
 
-        <div class="header__actions">
-            <a href="cart.html" class="btn btn--icon">🛒</a>
-            <a href="login.html" class="btn btn--outline">Login</a>
-            <a href="register.html" class="btn btn--primary">Register</a>
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+
         </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="wishlist-hero">
+        <h1>🛒 Shopping Cart</h1>
+        <p>Review your order before checkout.</p>
+    </section>
 
-    </div>
-</header>
+    <!-- CHECKOUT PROGRESS -->
+    <ol class="checkout-steps">
+        <li class="step current" aria-current="step"><span>1</span> Cart</li>
+        <li class="step"><span>2</span> Checkout</li>
+        <li class="step"><span>3</span> Confirmation</li>
+    </ol>
 
-<section class="wishlist-hero">
+    <main class="cart-page">
 
-    <h1>Shopping Cart</h1>
+        <section class="cart-container" aria-label="Items in your cart">
 
-    <p>Review your order before checkout.</p>
+            <!-- Sort / filter cart items (Module 2 requirement) -->
+            <form class="cart-toolbar" action="cart.html" method="get">
+                <label for="cart-sort">Sort items by:</label>
+                <select id="cart-sort" name="sort">
+                    <option value="title-asc">Product title (A–Z)</option>
+                    <option value="title-desc">Product title (Z–A)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
+                    <option value="qty-desc">Quantity (High to Low)</option>
+                    <option value="qty-asc">Quantity (Low to High)</option>
+                </select>
+                <button type="submit" class="btn btn--outline btn--small">Apply</button>
+            </form>
+
+            <!-- Cart Item 1 -->
+            <article class="cart-card">
+
+                <img class="cart-image" src="images/zelda_totk.jpg"
+                     alt="Cover art of The Legend of Zelda: Tears of the Kingdom">
 
-</section>
+                <div class="cart-info">
+                    <h2><a href="product-zelda.html">The Legend of Zelda: Tears of the Kingdom</a></h2>
+                    <p>Nintendo Switch &bull; Standard Edition &bull; Physical</p>
+                    <div class="cart-price">$54.99</div>
+                </div>
 
-<main class="cart-page">
+                <form class="cart-qty-form" action="cart.html" method="get">
+                    <label for="qty-item1">Qty</label>
+                    <input type="number" id="qty-item1" name="quantity" value="1" min="1" max="41">
+                    <button type="submit" class="btn btn--outline btn--small">Update</button>
+                </form>
 
-<section class="cart-container">
+                <a href="cart.html" class="btn btn--outline btn--danger remove-cart">Remove</a>
 
-<article class="cart-card" data-price="54.99">
+            </article>
 
-<img class="cart-image" src="images/zelda_totk.jpg">
+            <!-- Cart Item 2 -->
+            <article class="cart-card">
 
-<div class="cart-info">
+                <img class="cart-image" src="images/spiderman2.jpg"
+                     alt="Cover art of Marvel's Spider-Man 2">
 
-<h2>The Legend of Zelda: Tears of the Kingdom</h2>
+                <div class="cart-info">
+                    <h2>Marvel's Spider-Man 2</h2>
+                    <p>PlayStation 5 &bull; Standard Edition &bull; Physical</p>
+                    <div class="cart-price">$49.99</div>
+                </div>
 
-<p>Nintendo Switch</p>
+                <form class="cart-qty-form" action="cart.html" method="get">
+                    <label for="qty-item2">Qty</label>
+                    <input type="number" id="qty-item2" name="quantity" value="1" min="1" max="6">
+                    <button type="submit" class="btn btn--outline btn--small">Update</button>
+                </form>
 
-<div class="cart-price">$54.99</div>
+                <a href="cart.html" class="btn btn--outline btn--danger remove-cart">Remove</a>
 
-</div>
+            </article>
 
-<div class="quantity">
+            <!-- Cart Item 3 -->
+            <article class="cart-card">
 
-<button class="qty-btn minus">−</button>
+                <img class="cart-image" src="images/ps_controller.jpg"
+                     alt="DualSense wireless controller for PlayStation 5">
 
-<span>1</span>
+                <div class="cart-info">
+                    <h2>DualSense Wireless Controller</h2>
+                    <p>PlayStation 5 &bull; Midnight Black &bull; Brand New</p>
+                    <div class="cart-price">$74.99</div>
+                </div>
 
-<button class="qty-btn plus">+</button>
+                <form class="cart-qty-form" action="cart.html" method="get">
+                    <label for="qty-item3">Qty</label>
+                    <input type="number" id="qty-item3" name="quantity" value="2" min="1" max="52">
+                    <button type="submit" class="btn btn--outline btn--small">Update</button>
+                </form>
 
-</div>
+                <a href="cart.html" class="btn btn--outline btn--danger remove-cart">Remove</a>
 
-<button class="btn btn--outline remove-cart">
+            </article>
 
-Remove
+            <a href="shop.html" class="btn btn--outline continue-link">← Continue Shopping</a>
 
-</button>
+        </section>
 
-</article>
+        <!-- ORDER SUMMARY -->
+        <aside class="cart-summary" aria-label="Order summary">
 
-<article class="cart-card" data-price="49.99">
+            <h2>Order Summary</h2>
 
-<img class="cart-image" src="images/spiderman2.jpg">
+            <div class="summary-row">
+                <span>Items (4)</span>
+                <span>$254.96</span>
+            </div>
 
-<div class="cart-info">
+            <div class="summary-row">
+                <span>Discount</span>
+                <span>&minus;$20.00</span>
+            </div>
 
-<h2>Marvel's Spider-Man 2</h2>
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span>Free</span>
+            </div>
 
-<p>PlayStation 5</p>
+            <div class="summary-row">
+                <span>GST (10%)</span>
+                <span>$23.50</span>
+            </div>
 
-<div class="cart-price">$49.99</div>
+            <div class="summary-row">
+                <span>Total</span>
+                <span>$258.46</span>
+            </div>
 
-</div>
+            <a href="checkout.html" class="btn btn--primary summary-btn">Proceed to Checkout</a>
+            <a href="wishlist.html" class="btn btn--outline summary-btn">View Wishlist</a>
 
-<div class="quantity">
+        </aside>
 
-<button class="qty-btn minus">−</button>
-
-<span>1</span>
-
-<button class="qty-btn plus">+</button>
-
-</div>
-
-<button class="btn btn--outline remove-cart">
-
-Remove
-
-</button>
-
-</article>
-
-</section>
-
-<aside class="cart-summary">
-
-<h2>Order Summary</h2>
-
-<div class="summary-row">
-
-<span>Items</span>
-
-<span>2</span>
-
-</div>
-
-<div class="summary-row">
-
-<span>Subtotal</span>
-
-<span>$104.98</span>
-
-</div>
-
-<div class="summary-row">
-
-<span>Shipping</span>
-
-<span>FREE</span>
-
-</div>
-
-<div class="summary-row">
-
-<strong>Total</strong>
-
-<strong>$104.98</strong>
-
-</div>
-
-<button class="btn btn--primary summary-btn">
-
-Proceed to Checkout
-
-</button>
-
-<button class="btn btn--outline summary-btn">
-
-Continue Shopping
-
-</button>
-
-</aside>
-
-</main>
+    </main>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -193,7 +199,7 @@ Continue Shopping
                 <ul class="social-links">
                     <li><a href="policy.html">Policy</a></li>
                 </ul>
-            </div> 
+            </div>
         </div>
         <div class="footer__bottom">
             <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>

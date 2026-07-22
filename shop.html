@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+
+            <nav class="nav" aria-label="Main navigation">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link active" aria-current="page">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="wishlist-hero">
+        <h1>🛒 Shop Catalog</h1>
+        <p>Browse consoles, accessories and games. Add what you love to your cart.</p>
+    </section>
+
+    <main class="shop-page">
+
+        <!-- SIDEBAR: FILTERS -->
+        <aside class="shop-sidebar" aria-label="Product filters">
+
+            <form class="filter-form" action="shop.html" method="get">
+
+                <h2 class="filter-heading">Search</h2>
+                <div class="form-group">
+                    <label for="search">Product title</label>
+                    <input type="search" id="search" name="search" placeholder="e.g. PlayStation 5">
+                </div>
+
+                <h2 class="filter-heading">Category</h2>
+                <div class="filter-group">
+                    <label><input type="checkbox" name="category" value="console" checked> Consoles</label>
+                    <label><input type="checkbox" name="category" value="game" checked> Games</label>
+                    <label><input type="checkbox" name="category" value="accessory" checked> Accessories</label>
+                </div>
+
+                <h2 class="filter-heading">Platform</h2>
+                <div class="filter-group">
+                    <label><input type="checkbox" name="platform" value="ps5"> PlayStation 5</label>
+                    <label><input type="checkbox" name="platform" value="xbox"> Xbox Series X</label>
+                    <label><input type="checkbox" name="platform" value="switch"> Nintendo Switch</label>
+                </div>
+
+                <h2 class="filter-heading">Condition</h2>
+                <div class="filter-group">
+                    <label><input type="radio" name="condition" value="all" checked> All</label>
+                    <label><input type="radio" name="condition" value="new"> Brand New</label>
+                    <label><input type="radio" name="condition" value="refurb"> Refurbished</label>
+                </div>
+
+                <h2 class="filter-heading">Price Range</h2>
+                <div class="form-group">
+                    <label for="min-price">Minimum ($)</label>
+                    <input type="number" id="min-price" name="min-price" min="0" max="1000" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="max-price">Maximum ($)</label>
+                    <input type="number" id="max-price" name="max-price" min="0" max="1000" value="700">
+                </div>
+
+                <h2 class="filter-heading">Availability</h2>
+                <div class="filter-group">
+                    <label><input type="checkbox" name="stock" value="in" checked> In Stock</label>
+                    <label><input type="checkbox" name="stock" value="low"> Low Stock</label>
+                </div>
+
+                <button type="submit" class="btn btn--primary summary-btn">Apply Filters</button>
+                <button type="reset" class="btn btn--outline summary-btn">Reset</button>
+
+            </form>
+
+        </aside>
+
+        <!-- MAIN: PRODUCT GRID -->
+        <section class="shop-main" aria-label="Product catalog">
+
+            <!-- SORT BAR -->
+            <div class="shop-toolbar">
+
+                <p class="result-count">Showing <strong>20</strong> of <strong>20</strong> products</p>
+
+                <form class="sort-form" action="shop.html" method="get">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort" name="sort">
+                        <option value="title-asc">Title (A–Z)</option>
+                        <option value="title-desc">Title (Z–A)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                        <option value="qty-desc">Quantity (Most in stock)</option>
+                        <option value="qty-asc">Quantity (Least in stock)</option>
+                    </select>
+                    <button type="submit" class="btn btn--outline btn--small">Sort</button>
+                </form>
+
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div class="shop-grid">
+
+                <!-- Product 1 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-8%</span>
+                        <img class="shop-card__image" src="images/ps5.jpg" alt="PlayStation 5 Slim console, white">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">PlayStation 5 Slim</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Console</li>
+                            <li><span>Colour:</span> Glacier White</li>
+                            <li><span>Storage:</span> 1TB SSD</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(1,842)</span></div>
+                        <div class="price">
+                            <span class="old-price">$649.99</span>
+                            <span class="new-price">$599.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 24 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-ps5">Qty</label>
+                            <input type="number" id="qty-ps5" name="quantity" value="1" min="1" max="24">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 2 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/xbox.jpg" alt="Xbox Series X console, black">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-xbox.html">Xbox Series X</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Console</li>
+                            <li><span>Colour:</span> Carbon Black</li>
+                            <li><span>Storage:</span> 1TB SSD</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(1,205)</span></div>
+                        <div class="price">
+                            <span class="new-price">$549.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 17 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-xbox">Qty</label>
+                            <input type="number" id="qty-xbox" name="quantity" value="1" min="1" max="17">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 3 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-12%</span>
+                        <img class="shop-card__image" src="images/nintendo_oled.jpg" alt="Nintendo Switch OLED handheld console">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-switch-oled.html">Nintendo Switch OLED</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Console</li>
+                            <li><span>Colour:</span> Neon Red / Blue</li>
+                            <li><span>Screen:</span> 7" OLED</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,310)</span></div>
+                        <div class="price">
+                            <span class="old-price">$399.99</span>
+                            <span class="new-price">$349.99</span>
+                        </div>
+                        <span class="stock low-stock">Low Stock &mdash; 4 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-oled">Qty</label>
+                            <input type="number" id="qty-oled" name="quantity" value="1" min="1" max="4">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 4 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/ps_controller.jpg" alt="DualSense wireless controller for PlayStation 5">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-dualsense.html">DualSense Wireless Controller</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Accessory</li>
+                            <li><span>Colour:</span> Midnight Black</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(864)</span></div>
+                        <div class="price">
+                            <span class="new-price">$74.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 52 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-dualsense">Qty</label>
+                            <input type="number" id="qty-dualsense" name="quantity" value="1" min="1" max="52">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 5 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-20%</span>
+                        <img class="shop-card__image" src="images/pulse_headset.jpg" alt="Pulse 3D wireless gaming headset">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Pulse 3D Wireless Headset</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Accessory</li>
+                            <li><span>Colour:</span> White</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(731)</span></div>
+                        <div class="price">
+                            <span class="old-price">$99.99</span>
+                            <span class="new-price">$79.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 33 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-headset">Qty</label>
+                            <input type="number" id="qty-headset" name="quantity" value="1" min="1" max="33">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 6 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-20%</span>
+                        <img class="shop-card__image" src="images/zelda_totk.jpg" alt="The Legend of Zelda Tears of the Kingdom game case">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-zelda.html">Zelda: Tears of the Kingdom</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,481)</span></div>
+                        <div class="price">
+                            <span class="old-price">$69.99</span>
+                            <span class="new-price">$54.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 41 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-zelda">Qty</label>
+                            <input type="number" id="qty-zelda" name="quantity" value="1" min="1" max="41">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 7 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-30%</span>
+                        <img class="shop-card__image" src="images/spiderman2.jpg" alt="Marvel's Spider-Man 2 game case">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-spiderman.html">Marvel's Spider-Man 2</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(3,107)</span></div>
+                        <div class="price">
+                            <span class="old-price">$69.99</span>
+                            <span class="new-price">$49.99</span>
+                        </div>
+                        <span class="stock low-stock">Low Stock &mdash; 6 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-spiderman">Qty</label>
+                            <input type="number" id="qty-spiderman" name="quantity" value="1" min="1" max="6">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product 8 -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/mario_kart.jpg" alt="Mario Kart 8 Deluxe game case">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Mario Kart 8 Deluxe</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Edition:</span> Deluxe</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(5,092)</span></div>
+                        <div class="price">
+                            <span class="new-price">$59.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 68 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-kart">Qty</label>
+                            <input type="number" id="qty-kart" name="quantity" value="1" min="1" max="68">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+
+                <!-- Product: Astro Bot -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/astrobot.jpg" alt="Astro Bot game cover art for PlayStation 5">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Astro Bot</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,754)</span></div>
+                        <div class="price">
+                            <span class="new-price">$59.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 37 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-astrobot">Qty</label>
+                            <input type="number" id="qty-astrobot" name="quantity" value="1" min="1" max="37">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Cyberpunk 2077: Ultimate -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-38%</span>
+                        <img class="shop-card__image" src="images/cyberpunk.jpg" alt="Cyberpunk 2077 Ultimate Edition game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Cyberpunk 2077: Ultimate</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PS5 &bull; Xbox Series X</li>
+                            <li><span>Edition:</span> Ultimate</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(3,918)</span></div>
+                        <div class="price">
+                            <span class="old-price">$79.99</span>
+                            <span class="new-price">$49.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 28 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-cyberpunk">Qty</label>
+                            <input type="number" id="qty-cyberpunk" name="quantity" value="1" min="1" max="28">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Elden Ring -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-35%</span>
+                        <img class="shop-card__image" src="images/eldenring.jpg" alt="Elden Ring game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-eldenring.html">Elden Ring</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PS5 &bull; Xbox Series X</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(4,265)</span></div>
+                        <div class="price">
+                            <span class="old-price">$59.99</span>
+                            <span class="new-price">$39.99</span>
+                        </div>
+                        <span class="stock out-stock">Out of Stock &mdash; restocking soon</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-eldenring">Qty</label>
+                            <input type="number" id="qty-eldenring" name="quantity" value="1" min="1" max="1">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Animal Crossing: New Horizons -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/animalcrossing.jpg" alt="Animal Crossing New Horizons game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Animal Crossing: New Horizons</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(6,102)</span></div>
+                        <div class="price">
+                            <span class="new-price">$42.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 55 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-animalcrossing">Qty</label>
+                            <input type="number" id="qty-animalcrossing" name="quantity" value="1" min="1" max="55">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Kirby's Return to Dream Land -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-20%</span>
+                        <img class="shop-card__image" src="images/kirby.jpg" alt="Kirby Return to Dream Land Deluxe game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Kirby's Return to Dream Land</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Edition:</span> Deluxe</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(1,486)</span></div>
+                        <div class="price">
+                            <span class="old-price">$49.99</span>
+                            <span class="new-price">$39.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 22 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-kirby">Qty</label>
+                            <input type="number" id="qty-kirby" name="quantity" value="1" min="1" max="22">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Persona 3 Reload -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/persona3.jpg" alt="Persona 3 Reload game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Persona 3 Reload</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PS5 &bull; Xbox Series X</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,047)</span></div>
+                        <div class="price">
+                            <span class="new-price">$49.99</span>
+                        </div>
+                        <span class="stock low-stock">Low Stock &mdash; 5 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-persona3">Qty</label>
+                            <input type="number" id="qty-persona3" name="quantity" value="1" min="1" max="5">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Metaphor: ReFantazio -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/metaphor.jpg" alt="Metaphor ReFantazio game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Metaphor: ReFantazio</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PS5 &bull; Xbox Series X</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(1,733)</span></div>
+                        <div class="price">
+                            <span class="new-price">$59.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 19 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-metaphor">Qty</label>
+                            <input type="number" id="qty-metaphor" name="quantity" value="1" min="1" max="19">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Gran Turismo 7: BMW Pack -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-22%</span>
+                        <img class="shop-card__image" src="images/bmw.jpg" alt="Gran Turismo 7 BMW edition game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Gran Turismo 7: BMW Pack</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Edition:</span> BMW Collector</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(942)</span></div>
+                        <div class="price">
+                            <span class="old-price">$89.99</span>
+                            <span class="new-price">$69.99</span>
+                        </div>
+                        <span class="stock low-stock">Low Stock &mdash; 3 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-bmw">Qty</label>
+                            <input type="number" id="qty-bmw" name="quantity" value="1" min="1" max="3">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Nintendo Switch Lite -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/nintendo_2.jpg" alt="Nintendo Switch Lite handheld console">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Nintendo Switch Lite</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Console</li>
+                            <li><span>Colour:</span> Turquoise</li>
+                            <li><span>Storage:</span> 32GB</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(3,201)</span></div>
+                        <div class="price">
+                            <span class="new-price">$219.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 31 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-nintendo2">Qty</label>
+                            <input type="number" id="qty-nintendo2" name="quantity" value="1" min="1" max="31">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Switch Pro Controller -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-19%</span>
+                        <img class="shop-card__image" src="images/nin_controller.jpg" alt="Nintendo Switch Pro Controller">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">Switch Pro Controller</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Accessory</li>
+                            <li><span>Colour:</span> Black</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(2,588)</span></div>
+                        <div class="price">
+                            <span class="old-price">$79.99</span>
+                            <span class="new-price">$64.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 44 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-nincontroller">Qty</label>
+                            <input type="number" id="qty-nincontroller" name="quantity" value="1" min="1" max="44">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: DualSense Charging Station -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <img class="shop-card__image" src="images/ps_charging_dock.jpg" alt="PlayStation 5 DualSense charging dock station">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title">DualSense Charging Station</h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Accessory</li>
+                            <li><span>Colour:</span> White</li>
+                            <li><span>Platform:</span> PlayStation 5</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐☆ <span class="rating-count">(671)</span></div>
+                        <div class="price">
+                            <span class="new-price">$34.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 60 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-charging">Qty</label>
+                            <input type="number" id="qty-charging" name="quantity" value="1" min="1" max="60">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+                <!-- Product: Super Mario Bros Wonder -->
+                <article class="shop-card">
+                    <div class="shop-card__image-wrap">
+                        <span class="sale-badge">-25%</span>
+                        <img class="shop-card__image" src="images/mario.jpg" alt="Super Mario Bros Wonder game cover art">
+                    </div>
+                    <div class="shop-card__body">
+                        <h3 class="shop-card__title"><a href="product-mario.html">Super Mario Bros Wonder</a></h3>
+                        <ul class="shop-card__specs">
+                            <li><span>Category:</span> Game</li>
+                            <li><span>Platform:</span> Nintendo Switch</li>
+                            <li><span>Edition:</span> Standard</li>
+                            <li><span>Condition:</span> Brand New</li>
+                        </ul>
+                        <div class="rating">⭐⭐⭐⭐⭐ <span class="rating-count">(1,932)</span></div>
+                        <div class="price">
+                            <span class="old-price">$59.99</span>
+                            <span class="new-price">$44.99</span>
+                        </div>
+                        <span class="stock in-stock">In Stock &mdash; 26 units</span>
+
+                        <form class="add-form" action="cart.html" method="get">
+                            <label for="qty-mariogame">Qty</label>
+                            <input type="number" id="qty-mariogame" name="quantity" value="1" min="1" max="26">
+                            <button type="submit" class="btn btn--primary">Add to Cart</button>
+                        </form>
+                        <a href="wishlist.html" class="btn btn--outline shop-card__wish">♡ Wishlist</a>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- PAGINATION -->
+            <nav class="pagination" aria-label="Product pages">
+                <a href="shop.html" class="page-link active" aria-current="page">1</a>
+                <a href="shop.html" class="page-link">2</a>
+                <a href="shop.html" class="page-link">3</a>
+                <a href="shop.html" class="page-link">Next &rsaquo;</a>
+            </nav>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

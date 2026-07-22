@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+
+            <nav class="nav" aria-label="Main navigation">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="wishlist-hero">
+        <h1>💳 Checkout</h1>
+        <p>Enter your delivery and payment details to complete your order.</p>
+    </section>
+
+    <!-- CHECKOUT PROGRESS -->
+    <ol class="checkout-steps">
+        <li class="step done"><span>1</span> Cart</li>
+        <li class="step current" aria-current="step"><span>2</span> Checkout</li>
+        <li class="step"><span>3</span> Confirmation</li>
+    </ol>
+
+    <main class="checkout-page">
+
+        <!-- FORMS -->
+        <form class="checkout-form" action="order-confirmation.html" method="get">
+
+            <!-- DELIVERY INFORMATION -->
+            <fieldset class="checkout-block">
+                <legend>Delivery Information</legend>
+
+                <div class="field-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first-name" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" placeholder="Nguyen" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="john.gamer@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="0901 234 567" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Street Address</label>
+                    <input type="text" id="address" name="address" placeholder="702 Nguyen Van Linh" required>
+                </div>
+
+                <div class="field-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="Ho Chi Minh City" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Postcode</label>
+                        <input type="text" id="postcode" name="postcode" placeholder="700000" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" required>
+                        <option value="vn">Vietnam</option>
+                        <option value="au">Australia</option>
+                        <option value="sg">Singapore</option>
+                        <option value="jp">Japan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Delivery Notes (optional)</label>
+                    <textarea id="notes" name="notes" rows="3"
+                              placeholder="e.g. Leave at reception"></textarea>
+                </div>
+
+            </fieldset>
+
+            <!-- DELIVERY METHOD -->
+            <fieldset class="checkout-block">
+                <legend>Delivery Method</legend>
+
+                <div class="radio-row">
+                    <label><input type="radio" name="delivery" value="standard" checked>
+                        Standard &mdash; 5 to 7 business days (Free)</label>
+                    <label><input type="radio" name="delivery" value="express">
+                        Express &mdash; 2 to 3 business days ($9.99)</label>
+                    <label><input type="radio" name="delivery" value="pickup">
+                        Store Pickup &mdash; Ready in 24 hours (Free)</label>
+                </div>
+
+            </fieldset>
+
+            <!-- PAYMENT -->
+            <fieldset class="checkout-block">
+                <legend>Payment Details</legend>
+
+                <p class="form-note">🔒 This is a demonstration checkout. Do not enter real card details.</p>
+
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" name="card-name" placeholder="JOHN NGUYEN" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" name="card-number"
+                           placeholder="4111 1111 1111 1111" maxlength="19" required>
+                </div>
+
+                <div class="field-row">
+                    <div class="form-group">
+                        <label for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-type">Card Type</label>
+                    <select id="card-type" name="card-type" required>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="amex">American Express</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-row">
+                    <label><input type="checkbox" name="same-address" checked>
+                        Billing address is the same as delivery address</label>
+                    <label><input type="checkbox" name="terms" required>
+                        I agree to the <a href="policy.html">Terms and Conditions</a></label>
+                </div>
+
+            </fieldset>
+
+            <button type="submit" class="btn btn--primary btn--large checkout-submit">Place Order</button>
+            <a href="cart.html" class="btn btn--outline checkout-back">← Back to Cart</a>
+
+        </form>
+
+        <!-- ORDER SUMMARY -->
+        <aside class="cart-summary" aria-label="Order summary">
+
+            <h2>Your Order</h2>
+
+            <ul class="mini-cart">
+                <li>
+                    <img src="images/zelda_totk.jpg" alt="Cover art of Tears of the Kingdom">
+                    <span class="mini-cart__name">Zelda: Tears of the Kingdom &times;1</span>
+                    <span class="mini-cart__price">$54.99</span>
+                </li>
+                <li>
+                    <img src="images/spiderman2.jpg" alt="Cover art of Marvel's Spider-Man 2">
+                    <span class="mini-cart__name">Marvel's Spider-Man 2 &times;1</span>
+                    <span class="mini-cart__price">$49.99</span>
+                </li>
+                <li>
+                    <img src="images/ps_controller.jpg" alt="DualSense wireless controller">
+                    <span class="mini-cart__name">DualSense Controller &times;2</span>
+                    <span class="mini-cart__price">$149.98</span>
+                </li>
+            </ul>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>$254.96</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Discount</span>
+                <span>&minus;$20.00</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span>Free</span>
+            </div>
+
+            <div class="summary-row">
+                <span>GST (10%)</span>
+                <span>$23.50</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Total</span>
+                <span>$258.46</span>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
