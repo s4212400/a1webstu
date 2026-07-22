@@ -23,7 +23,9 @@
             </nav>
             <div class="header__actions">
                 <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="profile.html" class="btn btn--icon" title="My profile">&#128100;</a>
                 <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="logout.html" class="btn btn--outline">Logout</a>
                 <a href="register.html" class="btn btn--primary">Register</a>
             </div>
         </div>
@@ -36,11 +38,44 @@
                 <h1>ADMIN DASHBOARD</h1>
                 <p class="admin-subtitle">User Account Management</p>
 
+                <p class="admin-notice">&#128272; Restricted area &mdash; visible to accounts with the
+                   Admin role only. Locked users cannot perform any operation in the application.</p>
+
                 <div class="admin-controls">
-                    <div class="search-bar">
-                        <input type="text" placeholder="SEARCH USERS..." class="search-input">
-                        <button class="btn btn--primary">SEARCH</button>
-                    </div>
+                    <form class="search-bar" action="admin.html" method="get">
+                        <input type="search" name="q" placeholder="SEARCH USERS..." class="search-input"
+                               aria-label="Search users by name or email">
+                        <button type="submit" class="btn btn--primary">SEARCH</button>
+                    </form>
+
+                    <form class="admin-filters" action="admin.html" method="get">
+                        <div class="admin-filter">
+                            <label for="filter-role">Role</label>
+                            <select id="filter-role" name="role">
+                                <option value="all">All roles</option>
+                                <option value="admin">Admin</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="standard">Standard user</option>
+                            </select>
+                        </div>
+                        <div class="admin-filter">
+                            <label for="filter-status">Status</label>
+                            <select id="filter-status" name="status">
+                                <option value="all">All statuses</option>
+                                <option value="active">Active</option>
+                                <option value="locked">Locked</option>
+                            </select>
+                        </div>
+                        <div class="admin-filter">
+                            <label for="filter-sort">Sort by</label>
+                            <select id="filter-sort" name="sort">
+                                <option value="joined-desc">Newest first</option>
+                                <option value="joined-asc">Oldest first</option>
+                                <option value="username-asc">Username (A&ndash;Z)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn--outline btn--small">Apply</button>
+                    </form>
                 </div>
 
                 <div class="users-table-wrapper">
@@ -51,6 +86,7 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Joined Date</th>
+                                <th>Role</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -61,6 +97,7 @@
                                 <td>JohnGamer92</td>
                                 <td>john@email.com</td>
                                 <td>Mar 15, 2026</td>
+                                <td><span class="role-badge role-standard">Standard</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -71,6 +108,7 @@
                                 <td>SarahPlayer</td>
                                 <td>sarah@email.com</td>
                                 <td>Apr 02, 2026</td>
+                                <td><span class="role-badge role-moderator">Moderator</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -81,6 +119,7 @@
                                 <td>MikeConsole</td>
                                 <td>mike@email.com</td>
                                 <td>May 10, 2026</td>
+                                <td><span class="role-badge role-standard">Standard</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -91,6 +130,7 @@
                                 <td>EmmaGames</td>
                                 <td>emma@email.com</td>
                                 <td>Jun 01, 2026</td>
+                                <td><span class="role-badge role-standard">Standard</span></td>
                                 <td class="status locked">LOCKED</td>
                                 <td>
                                     <button class="btn btn--small btn--primary">UNLOCK</button>
@@ -101,6 +141,7 @@
                                 <td>AlexPlayer</td>
                                 <td>alex@email.com</td>
                                 <td>Jun 20, 2026</td>
+                                <td><span class="role-badge role-admin">Admin</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -111,6 +152,7 @@
                                 <td>JessicaGeek</td>
                                 <td>jessica@email.com</td>
                                 <td>Jul 05, 2026</td>
+                                <td><span class="role-badge role-standard">Standard</span></td>
                                 <td class="status locked">LOCKED</td>
                                 <td>
                                     <button class="btn btn--small btn--primary">UNLOCK</button>
@@ -121,6 +163,7 @@
                                 <td>ChrisGaming</td>
                                 <td>chris@email.com</td>
                                 <td>Jul 12, 2026</td>
+                                <td><span class="role-badge role-moderator">Moderator</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -131,6 +174,7 @@
                                 <td>LauraNerd</td>
                                 <td>laura@email.com</td>
                                 <td>Jul 18, 2026</td>
+                                <td><span class="role-badge role-standard">Standard</span></td>
                                 <td class="status active">ACTIVE</td>
                                 <td>
                                     <button class="btn btn--small btn--outline">LOCK</button>
@@ -152,6 +196,10 @@
                     <div class="stat-card">
                         <div class="stat-label">Locked Accounts</div>
                         <div class="stat-value">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Admins &amp; Mods</div>
+                        <div class="stat-value">3</div>
                     </div>
                 </div>
 

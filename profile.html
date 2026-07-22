@@ -23,7 +23,9 @@
             </nav>
             <div class="header__actions">
                 <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="profile.html" class="btn btn--icon" title="My profile">&#128100;</a>
                 <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="logout.html" class="btn btn--outline">Logout</a>
                 <a href="register.html" class="btn btn--primary">Register</a>
             </div>
         </div>
@@ -45,6 +47,18 @@
                     </div>
 
                     <div class="profile-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Full Name:</span>
+                            <span class="detail-value">John Nguyen</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Account Role:</span>
+                            <span class="detail-value"><span class="role-badge role-standard">Standard User</span></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Account Status:</span>
+                            <span class="detail-value"><span class="status active">Active</span></span>
+                        </div>
                         <div class="detail-row">
                             <span class="detail-label">Email:</span>
                             <span class="detail-value">john.gamer@email.com</span>
@@ -80,7 +94,18 @@
 
                     <div class="profile-actions">
                         <a href="profile-edit.html" class="btn btn--primary">EDIT PROFILE</a>
+                        <a href="logout.html" class="btn btn--outline">LOG OUT</a>
                         <a href="index.html" class="btn btn--outline">BACK TO HOME</a>
+                    </div>
+
+                    <div class="danger-zone">
+                        <h3>Account Management</h3>
+                        <p>Deactivating hides your profile but keeps your data. Deleting is permanent
+                           and cannot be reversed.</p>
+                        <div class="danger-zone__actions">
+                            <a href="deactivate-account.html" class="btn btn--outline">DEACTIVATE ACCOUNT</a>
+                            <a href="delete-account.html" class="btn btn--outline btn--destructive">DELETE ACCOUNT</a>
+                        </div>
                     </div>
                 </div>
             </div>

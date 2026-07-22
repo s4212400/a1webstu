@@ -23,7 +23,9 @@
             </nav>
             <div class="header__actions">
                 <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="profile.html" class="btn btn--icon" title="My profile">&#128100;</a>
                 <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="logout.html" class="btn btn--outline">Logout</a>
                 <a href="register.html" class="btn btn--primary">Register</a>
             </div>
         </div>
@@ -37,13 +39,21 @@
                 <form class="auth-form">
                     
                     <div class="form-group">
+                        <label for="fullname">Full Name:</label>
+                        <input type="text" id="fullname" name="fullname" value="John Nguyen" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" value="JohnGamer92" required>
+                        <input type="text" id="username" name="username" value="JohnGamer92"
+                               pattern="[A-Za-z0-9_]{3,20}" minlength="3" maxlength="20" required>
+                        <small class="field-hint">3&ndash;20 characters. Must be unique across the site.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" value="john.gamer@email.com" required>
+                        <small class="field-hint">Changing this requires re-verification.</small>
                     </div>
 
                     <div class="form-group">
@@ -63,7 +73,9 @@
 
                     <div class="form-group">
                         <label for="new-password">New Password (leave blank to keep current):</label>
-                        <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
+                        <input type="password" id="new-password" name="new-password"
+                               placeholder="Enter new password" minlength="8" autocomplete="new-password">
+                        <small class="field-hint">Minimum 8 characters. Stored securely using hashing.</small>
                     </div>
 
                     <div class="form-group">
