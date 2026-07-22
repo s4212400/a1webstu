@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | ConsoleHaven</title>
+
+    <link rel="stylesheet" href="shared.css">
+    <script src="cart.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header__container">
+
+        <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+
+        <nav class="nav">
+            <ul class="nav__list">
+                <li><a href="index.html" class="nav__link">Home</a></li>
+                <li><a href="shop.html" class="nav__link">Shop</a></li>
+                <li><a href="forum.html" class="nav__link">Forum</a></li>
+                <li><a href="blog.html" class="nav__link">Blog</a></li>
+                <li><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+            </ul>
+        </nav>
+
+        <div class="header__actions">
+            <a href="cart.html" class="btn btn--icon">🛒</a>
+            <a href="login.html" class="btn btn--outline">Login</a>
+            <a href="register.html" class="btn btn--primary">Register</a>
+        </div>
+
+    </div>
+</header>
+
+<section class="wishlist-hero">
+
+    <h1>Shopping Cart</h1>
+
+    <p>Review your order before checkout.</p>
+
+</section>
+
+<main class="cart-page">
+
+<section class="cart-container">
+
+<article class="cart-card" data-price="54.99">
+
+<img class="cart-image" src="images/zelda_totk.jpg">
+
+<div class="cart-info">
+
+<h2>The Legend of Zelda: Tears of the Kingdom</h2>
+
+<p>Nintendo Switch</p>
+
+<div class="cart-price">$54.99</div>
+
+</div>
+
+<div class="quantity">
+
+<button class="qty-btn minus">−</button>
+
+<span>1</span>
+
+<button class="qty-btn plus">+</button>
+
+</div>
+
+<button class="btn btn--outline remove-cart">
+
+Remove
+
+</button>
+
+</article>
+
+<article class="cart-card" data-price="49.99">
+
+<img class="cart-image" src="images/spiderman2.jpg">
+
+<div class="cart-info">
+
+<h2>Marvel's Spider-Man 2</h2>
+
+<p>PlayStation 5</p>
+
+<div class="cart-price">$49.99</div>
+
+</div>
+
+<div class="quantity">
+
+<button class="qty-btn minus">−</button>
+
+<span>1</span>
+
+<button class="qty-btn plus">+</button>
+
+</div>
+
+<button class="btn btn--outline remove-cart">
+
+Remove
+
+</button>
+
+</article>
+
+</section>
+
+<aside class="cart-summary">
+
+<h2>Order Summary</h2>
+
+<div class="summary-row">
+
+<span>Items</span>
+
+<span>2</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Subtotal</span>
+
+<span>$104.98</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Shipping</span>
+
+<span>FREE</span>
+
+</div>
+
+<div class="summary-row">
+
+<strong>Total</strong>
+
+<strong>$104.98</strong>
+
+</div>
+
+<button class="btn btn--primary summary-btn">
+
+Proceed to Checkout
+
+</button>
+
+<button class="btn btn--outline summary-btn">
+
+Continue Shopping
+
+</button>
+
+</aside>
+
+</main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div> 
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
