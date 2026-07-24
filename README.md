@@ -1,5 +1,6 @@
 # a1webstu
 # ConsoleHaven - Premium Gaming Gear
+An e-commerce and community platform for gaming hardware, retro consoles and tech gear.
 
 This repository contains the source code for the Web Development Group Assignment.
 
