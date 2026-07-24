@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConsoleHaven - Tech News & Blog</title>
+    <link rel="stylesheet" href="shared.css"> 
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="reviews.html" class="nav__link">Reviews</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link active">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Shopping cart">&#128722;</a>
+                <a href="profile.html" class="btn btn--icon" title="My profile">&#128100;</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="logout.html" class="btn btn--outline">Logout</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!--  Main Blog  -->
+    <main id="main-content" class="blog-section">
+
+    <!-- Page Heading -->
+    <div class="blog-header">
+        <h1 class="section-title">Create New Blog Post</h1>
+        <a href="blog.html" class="btn btn--outline">Back to Blog</a>
+    </div>
+
+    <!-- Post Editor Form -->
+    <form class="blog-form" action="blog.html" method="get">
+
+        <!-- Title and Author -->
+        <div class="form-group">
+            <label for="post-title">Post Title</label>
+            <input type="text" id="post-title" name="post-title"
+                   placeholder="Enter a clear, descriptive title" maxlength="100" required>
+            <small class="field-hint">Maximum 100 characters.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="post-author">Author</label>
+            <input type="text" id="post-author" name="post-author" value="JohnGamer92" readonly>
+            <small class="field-hint">Taken from your account and cannot be changed.</small>
+        </div>
+
+        <!-- Date and Category -->
+        <div class="field-row">
+            <div class="form-group">
+                <label for="post-date">Date</label>
+                <input type="date" id="post-date" name="post-date" value="2026-07-24" required>
+            </div>
+
+            <div class="form-group">
+                <label for="post-category">Category</label>
+                <select id="post-category" name="post-category" required>
+                    <option value="">Choose a category</option>
+                    <option value="hardware">Hardware</option>
+                    <option value="retro">Retro</option>
+                    <option value="esports">Esports</option>
+                    <option value="reviews">Reviews</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="form-group">
+            <label for="post-tags">Tags</label>
+            <input type="text" id="post-tags" name="post-tags"
+                   placeholder="nintendo, handheld, review">
+            <small class="field-hint">Separate each tag with a comma.</small>
+        </div>
+
+        <!-- Cover Image -->
+        <div class="form-group">
+            <label for="post-image">Cover Image URL</label>
+            <input type="url" id="post-image" name="post-image"
+                   placeholder="images/example.jpg">
+            <small class="field-hint">Shown as the thumbnail on the blog list page.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="post-image-alt">Image Description</label>
+            <input type="text" id="post-image-alt" name="post-image-alt"
+                   placeholder="Describe the image for screen readers">
+        </div>
+
+        <!-- Summary and body -->
+        <div class="form-group">
+            <label for="post-summary">Summary</label>
+            <textarea id="post-summary" name="post-summary" rows="3" maxlength="200"
+                      placeholder="Short preview shown on the blog list page"></textarea>
+            <small class="field-hint">Maximum 200 characters.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="post-content">Post Content</label>
+            <textarea id="post-content" name="post-content" rows="14"
+                      placeholder="Write your post here" required></textarea>
+        </div>
+
+        <!-- Publishing Options -->
+        <div class="radio-row">
+            <label><input type="radio" name="status" value="publish" checked> Publish now</label>
+            <label><input type="radio" name="status" value="draft"> Save as draft</label>
+        </div>
+
+        <div class="checkbox-row">
+            <label class="inline-check"><input type="checkbox" name="comments" checked>
+                Allow comments on this post</label>
+        </div>
+
+        <!-- Actions -->
+        <div class="blog-form__actions">
+            <button type="submit" class="btn btn--primary btn--large">Publish Post</button>
+            <button type="reset" class="btn btn--outline">Clear Form</button>
+            <a href="blog.html" class="btn btn--outline">Cancel</a>
+        </div>
+
+    </form>
+
+</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                    <li><a href="policy.html">Policy &amp; Terms</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li>&#128231; ConsoleHaven@rmitvnsgs.com</li>
+                    <li>&#128222; +84 1234 68688</li>
+                    <li>&#128205; Nguyen Van Linh blv</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

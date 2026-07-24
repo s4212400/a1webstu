@@ -1,7 +1,7 @@
-/* --- FONT PIXEL TỪ GOOGLE FONTS --- */
+/* --- Font from Googles --- */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
-/* --- 1. CSS VARIABLES (TONE ĐEN - ĐỎ - TRẮNG - PIXEL) --- */
+/* --- Css Variables for decorating --- */
 :root {
     --primary-color: #e50914; 
     --primary-hover: #ff1e27; 
@@ -10,20 +10,14 @@
     --text-main: #ffffff; 
     --text-light: #cccccc; 
     --border-color: #333333; 
-    
-    /* Cài đặt 2 loại font Pixel */
     --font-heading: 'Press Start 2P', cursive;
     --font-body: 'VT323', monospace;
-    
-    /* Giao diện pixel phải vuông vức, KHÔNG bo góc */
     --border-radius: 0px; 
-    
-    /* Đổ bóng kiểu pixel cứng (không nhòe) */
     --shadow-pixel: 4px 4px 0px rgba(229, 9, 20, 0.5);
     --shadow-pixel-hover: 6px 6px 0px rgba(229, 9, 20, 0.8);
 }
 
-/* --- 2. CSS RESET --- */
+/* --- Css Reset set the content at normal form --- */
 * {
     margin: 0;
     padding: 0;
@@ -58,7 +52,7 @@ ul {
     list-style: none;
 }
 
-/* --- 3. PIXEL BUTTON --- */
+/* --- Button --- */
 .btn {
     font-family: var(--font-heading);
     font-size: 0.7rem; 
@@ -106,7 +100,7 @@ ul {
     transform: scale(1.1);
 }
 
-/* --- 4. HEADER & NAV --- */
+/* --- 4. Header and Navigation --- */
 .header {
     background-color: var(--bg-surface);
     border-bottom: 3px solid var(--primary-color);
@@ -153,7 +147,7 @@ ul {
     align-items: center;
 }
 
-/* --- 5. HERO SECTION --- */
+/* --- Hero - demo product --- */
 .hero {
     background: #111;
     background-image: 
@@ -180,7 +174,7 @@ ul {
     color: var(--text-light);
 }
 
-/* --- 6. PRODUCT GRID --- */
+/* --- Product Grid --- */
 .featured {
     max-width: 1200px;
     margin: 60px auto;
@@ -201,7 +195,7 @@ ul {
     gap: 30px;
 }
 
-/* --- 7. PRODUCT CARDS --- */
+/* --- Product Cards --- */
 .card {
     background-color: var(--bg-surface);
     border: 2px solid var(--border-color);
@@ -289,7 +283,7 @@ ul {
     color: var(--primary-color);
 }
 
-/* --- 8. FOOTER --- */
+/* --- Footer --- */
 .footer {
     background-color: var(--bg-surface);
     border-top: 4px solid var(--primary-color);
@@ -339,7 +333,7 @@ ul {
     font-size: 1.2rem;
 }
 
-/* --- 9. RESPONSIVE --- */
+/* --- Responsive --- */
 @media (max-width: 768px) {
     .header__container {
         flex-direction: column;
@@ -352,7 +346,7 @@ ul {
     }
 }
 
-/* --- 10. BLOG MODULE --- */
+/* --- Blog Module --- */
 .blog-section {
     padding: 40px 20px;
     max-width: 1200px;
@@ -453,7 +447,7 @@ ul {
     flex-grow: 1; 
 }
 
-/* --- 11. ARTICLE DETAIL MODULE --- */
+/* --- Article Detail --- */
 .article-detail {
     max-width: 800px; 
     margin: 40px auto;
@@ -574,7 +568,7 @@ ul {
     margin-left: 10px;
 }
 
-/* --- 12. BLOG CONTROLS (SEARCH & FILTER) --- */
+/* --- Blog Controls for searching/filtering --- */
 .blog-controls {
     display: flex;
     flex-direction: column;
@@ -640,9 +634,7 @@ ul {
     }
 }
 
-/* =====================================================
-   13. WISHLIST MODULE
-===================================================== */
+/* --- Wishlist Module --- */
 
 .wishlist-hero{
     padding:80px 20px;
@@ -805,9 +797,8 @@ ul {
     border-color:var(--primary-color);
     color:#fff;
 }
-/* =========================
-   Wishlist Summary
-========================= */
+
+/* --- Wishlist Summary --- */
 
 .wishlist-summary{
     background:var(--bg-surface);
@@ -849,9 +840,7 @@ ul {
     margin-top:15px;
 }
 
-/* =========================
-   Recommended Games
-========================= */
+/* --- Recommended Games --- */
 
 .recommend-section{
     max-width:1200px;
@@ -904,9 +893,7 @@ ul {
     padding:0 18px 18px;
 }
 
-/* =========================
-   Empty Wishlist
-========================= */
+/* --- Empty Wishlist --- */
 
 .empty-wishlist{
     display:flex;
@@ -928,9 +915,7 @@ ul {
     margin-bottom:30px;
 }
 
-/* =========================
-   Responsive
-========================= */
+/* --- Resonponsive --- */
 
 @media (max-width:992px){
 
@@ -982,9 +967,7 @@ ul {
 
 }
 
-/* =====================================================
-   14. SHOPPING CART MODULE
-===================================================== */
+/* --- Shopping Cart Module --- */
 
 .cart-page{
     max-width:1200px;
@@ -1078,9 +1061,7 @@ ul {
     margin-right:20px;
 }
 
-/* =====================
-   CART SUMMARY
-===================== */
+/* --- Cart Summary --- */
 
 .cart-summary{
     background:var(--bg-surface);
@@ -1115,9 +1096,7 @@ ul {
     margin-top:18px;
 }
 
-/* =====================
-   EMPTY CART
-===================== */
+/* --- Empty Carts --- */
 
 .empty-cart{
     display:none;
@@ -1136,9 +1115,7 @@ ul {
     margin-bottom:30px;
 }
 
-/* =====================
-   RESPONSIVE
-===================== */
+/* --- Responsive --- */
 
 @media (max-width:900px){
 
@@ -1189,9 +1166,8 @@ ul {
     font-family:var(--font-heading);
     font-size:1rem;
 }
-/* =====================================================
-   15. WISHLIST ADDITIONS (statistics, purchased state)
-===================================================== */
+
+/* --- Wishlist Demo Function --- */
 
 .wishlist-info h2 a{
     color:var(--text-main);
@@ -1266,9 +1242,7 @@ ul {
     margin-top:12px;
 }
 
-/* =====================================================
-   16. SHOP MODULE (catalog, filters, sorting)
-===================================================== */
+/* --- Shop Catalog Demo Function --- */
 
 .shop-page{
     max-width:1200px;
@@ -1280,7 +1254,7 @@ ul {
     align-items:start;
 }
 
-/* --- Sidebar filters --- */
+/* --- Sidebar Filters --- */
 .shop-sidebar{
     background:var(--bg-surface);
     border:2px solid var(--border-color);
@@ -1353,7 +1327,7 @@ ul {
     text-align:center;
 }
 
-/* --- Toolbar / sorting --- */
+/* --- Toolbar / Sorting --- */
 .shop-toolbar{
     display:flex;
     justify-content:space-between;
@@ -1406,7 +1380,7 @@ ul {
     font-size:0.6rem;
 }
 
-/* --- Product grid --- */
+/* --- Product Grid --- */
 .shop-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
@@ -1530,6 +1504,7 @@ ul {
 }
 
 /* --- Pagination --- */
+
 .pagination{
     display:flex;
     justify-content:center;
@@ -1576,9 +1551,7 @@ ul {
     }
 }
 
-/* =====================================================
-   17. PRODUCT DETAIL PAGE
-===================================================== */
+/* --- Product Detail Page --- */
 
 .product-page{
     max-width:1200px;
@@ -1620,7 +1593,8 @@ ul {
     color:#ffb400;
 }
 
-/* --- Overview layout --- */
+/* --- Overview Layout --- */
+
 .product-overview{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -1629,6 +1603,7 @@ ul {
 }
 
 /* --- Gallery --- */
+
 .product-gallery__main{
     width:100%;
     height:420px;
@@ -1673,7 +1648,8 @@ ul {
     background:var(--bg-color);
 }
 
-/* --- Buy panel --- */
+/* --- Buy Panel --- */
+
 .product-title{
     font-size:1.4rem;
     line-height:1.5;
@@ -1749,7 +1725,8 @@ ul {
     line-height:2;
 }
 
-/* --- Description & specs --- */
+/* --- Description --- */
+
 .product-details{
     margin-bottom:60px;
 }
@@ -1803,6 +1780,7 @@ ul {
 }
 
 /* --- Reviews --- */
+
 .product-reviews{
     margin-bottom:60px;
 }
@@ -1837,6 +1815,7 @@ ul {
 }
 
 /* --- Responsive --- */
+
 @media (max-width:900px){
     .product-overview{
         grid-template-columns:1fr;
@@ -1857,9 +1836,7 @@ ul {
     }
 }
 
-/* =====================================================
-   18. CHECKOUT FLOW (steps, cart, checkout, confirmation)
-===================================================== */
+/* --- Checkout Flow  --- */
 
 /* --- Progress steps --- */
 .checkout-steps{
@@ -1919,7 +1896,8 @@ ul {
     color:#00ff00;
 }
 
-/* --- Cart additions --- */
+/* --- Cart Additions --- */
+
 .cart-toolbar{
     display:flex;
     align-items:center;
@@ -1998,7 +1976,8 @@ ul {
     box-sizing:border-box;
 }
 
-/* --- Checkout page --- */
+/* --- Checkout Page --- */
+
 .checkout-page{
     max-width:1200px;
     margin:45px auto 0;
@@ -2121,7 +2100,8 @@ ul {
     text-align:center;
 }
 
-/* --- Mini cart in checkout sidebar --- */
+/* --- Mini Cart in Checkout --- */
+
 .mini-cart{
     list-style:none;
     margin-bottom:20px;
@@ -2157,7 +2137,8 @@ ul {
     font-size:0.62rem;
 }
 
-/* --- Confirmation page --- */
+/* --- Confirmation Page --- */
+
 .confirm-page{
     max-width:1000px;
     margin:45px auto 0;
@@ -2295,7 +2276,8 @@ ul {
     border-top:2px dashed var(--border-color);
 }
 
-/* --- Checkout flow responsive --- */
+/* --- Checkout Flow Responsive --- */
+
 @media (max-width:900px){
     .checkout-page{
         grid-template-columns:1fr;
@@ -2332,7 +2314,8 @@ ul {
     }
 }
 
-/* ========== AUTH PAGES (Login, Register) ========== */
+/* --- Authentic Page --- */
+
 .auth-section {
     min-height: 75vh;
     display: flex;
@@ -2409,7 +2392,8 @@ ul {
     font-weight: bold;
 }
 
-/* ========== PROFILE PAGES ========== */
+/* --- Profile  --- */
+
 .profile-section {
     min-height: 75vh;
     padding: 60px 20px;
@@ -2528,7 +2512,8 @@ ul {
     text-align: center;
 }
 
-/* ========== ADMIN DASHBOARD ========== */
+/* --- Administration --- */
+
 .admin-section {
     padding: 60px 20px;
     background-color: var(--bg-color);
@@ -2673,7 +2658,8 @@ ul {
     margin-top: 40px;
 }
 
-/* ========== SITEMAP ========== */
+/* --- Sitemap --- */
+
 .sitemap-section {
     padding: 60px 20px;
     background-color: var(--bg-color);
@@ -2791,11 +2777,8 @@ ul {
     }
 }
 
-/* =====================================================
-   19. SHARED ACCOUNT MODULE (auth, roles, danger zone)
-===================================================== */
+/* --- Shared Account Module --- */
 
-/* --- Cart button alignment fix --- */
 .cart-card .remove-cart{
     padding:9px 14px;
     font-size:0.6rem;
@@ -2803,7 +2786,6 @@ ul {
     align-self:center;
 }
 
-/* --- Form hints and inline rows --- */
 .field-hint{
     display:block;
     margin-top:6px;
@@ -2845,7 +2827,6 @@ ul {
     font-size:1.1rem;
 }
 
-/* --- Auth page extras --- */
 .auth-intro{
     color:var(--text-light);
     font-size:1.15rem;
@@ -2912,7 +2893,6 @@ ul {
     border-color:#ff4444;
 }
 
-/* --- Warning panel (delete account) --- */
 .warning-panel{
     padding:20px;
     margin-bottom:25px;
@@ -2966,7 +2946,6 @@ ul {
     color:#ffffff;
 }
 
-/* --- Role badges --- */
 .role-badge{
     display:inline-block;
     padding:5px 10px;
@@ -2994,7 +2973,6 @@ ul {
     border-color:var(--border-color);
 }
 
-/* --- Danger zone on profile --- */
 .danger-zone{
     margin-top:35px;
     padding:22px;
@@ -3021,7 +2999,6 @@ ul {
     gap:12px;
 }
 
-/* --- Admin additions --- */
 .admin-notice{
     padding:14px 18px;
     margin-bottom:30px;
@@ -3087,7 +3064,7 @@ ul {
         width:100%;
     }
 }
-/* --- 20. PAGE HEADER (generic intro block for new list pages) --- */
+
 .page-header {
     max-width: 1200px;
     margin: 40px auto 0;
@@ -3115,7 +3092,6 @@ ul {
     }
 }
 
-/* --- 21. FILTER / SORT TOOLBAR (shared by Forum + Reviews) --- */
 .filter-toolbar {
     display: flex;
     flex-direction: column;
@@ -3172,7 +3148,8 @@ ul {
     }
 }
 
-/* --- 22. FORUM MODULE --- */
+/* --- Forum Module --- */
+
 .forum-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -3300,7 +3277,8 @@ ul {
     }
 }
 
-/* --- 23. THREAD DETAIL --- */
+/* --- Thread Detail --- */
+
 .thread-detail {
     max-width: 850px;
     margin: 40px auto;
@@ -3426,7 +3404,8 @@ ul {
     font-size: 1.1rem;
 }
 
-/* --- 24. POST / CREATE FORM (Forum + Review share this) --- */
+/* --- Post Create Form --- */
+
 .form-section {
     max-width: 750px;
     margin: 40px auto 80px;
@@ -3502,7 +3481,8 @@ ul {
     padding-top: 25px;
 }
 
-/* --- 25. REVIEW MODULE --- */
+/* --- Review Module --- */
+
 .review-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -3595,7 +3575,8 @@ ul {
     color: #ffcc33;
 }
 
-/* --- 26. REVIEW DETAIL --- */
+/* --- Review Detail --- */
+
 .review-detail {
     max-width: 800px;
     margin: 40px auto;
@@ -3657,7 +3638,8 @@ ul {
     border-top: 2px dashed var(--border-color);
 }
 
-/* --- 27. STAR RATING PICKER (pure CSS, no JS) --- */
+/* --- Star Rating --- */
+
 .rating-picker {
     display: flex;
     flex-direction: row-reverse;
@@ -3700,9 +3682,7 @@ ul {
     font-size: 1rem;
 }
 
-/* =====================================================
-   20. UTILITY CLASSES (replaces inline styles)
-===================================================== */
+/* --- Ultility Classes --- */
 
 .u-grow{
     flex-grow:1;
@@ -3714,4 +3694,113 @@ ul {
 
 .auth-box--wide{
     max-width:500px;
+}
+
+.skip-link{
+    position:absolute;
+    top:-60px;
+    left:10px;
+    z-index:200;
+    padding:12px 20px;
+    background:var(--primary-color);
+    color:#ffffff;
+    font-family:var(--font-heading);
+    font-size:0.65rem;
+    border:2px solid #ffffff;
+    transition:top 0.2s;
+}
+
+.skip-link:focus{
+    top:10px;
+    color:#ffffff;
+    outline:3px solid #ffb400;
+}
+
+#main-content{
+    scroll-margin-top:90px;
+}
+
+#main-content:focus{
+    outline:none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+    outline:3px solid #ffb400;
+    outline-offset:2px;
+}
+
+.blog-form{
+    max-width:800px;
+    background:var(--bg-surface);
+    border:2px solid var(--border-color);
+    padding:30px;
+}
+
+.blog-form .form-group{
+    margin-bottom:20px;
+}
+
+.blog-form label{
+    display:block;
+    margin-bottom:8px;
+    font-family:var(--font-heading);
+    font-size:0.62rem;
+    color:var(--text-light);
+    text-transform:uppercase;
+}
+
+.blog-form input,
+.blog-form select,
+.blog-form textarea{
+    width:100%;
+    padding:12px;
+    background:var(--bg-color);
+    border:2px solid var(--border-color);
+    color:var(--text-main);
+    font-family:var(--font-body);
+    font-size:1.1rem;
+    box-sizing:border-box;
+    resize:vertical;
+}
+
+.blog-form input:focus,
+.blog-form select:focus,
+.blog-form textarea:focus{
+    outline:none;
+    border-color:var(--primary-color);
+}
+
+.blog-form input[readonly]{
+    color:#888;
+    cursor:not-allowed;
+}
+
+.blog-form .radio-row,
+.blog-form .checkbox-row{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:2px dashed var(--border-color);
+}
+
+.blog-form__actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:30px;
+    padding-top:25px;
+    border-top:2px dashed var(--border-color);
+}
+
+@media (max-width: 768px){
+    .blog-form{
+        padding:18px;
+    }
+    .blog-form__actions .btn{
+        width:100%;
+        text-align:center;
+    }
 }

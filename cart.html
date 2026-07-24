@@ -9,7 +9,9 @@
 
 <body>
 
-    <!-- HEADER -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
     <header class="header">
         <div class="header__container">
 
@@ -37,24 +39,24 @@
         </div>
     </header>
 
-    <!-- HERO -->
+    <!-- Hero - demo product -->
     <section class="wishlist-hero">
         <h1>🛒 Shopping Cart</h1>
         <p>Review your order before checkout.</p>
     </section>
 
-    <!-- CHECKOUT PROGRESS -->
+    <!-- Checkout Steps -->
     <ol class="checkout-steps">
         <li class="step current" aria-current="step"><span>1</span> Cart</li>
         <li class="step"><span>2</span> Checkout</li>
         <li class="step"><span>3</span> Confirmation</li>
     </ol>
 
-    <main class="cart-page">
+    <main id="main-content" class="cart-page">
 
         <section class="cart-container" aria-label="Items in your cart">
 
-            <!-- Sort / filter cart items (Module 2 requirement) -->
+            <!-- Sort/Filter Items -->
             <form class="cart-toolbar" action="cart.html" method="get">
                 <label for="cart-sort">Sort items by:</label>
                 <select id="cart-sort" name="sort">
@@ -138,7 +140,7 @@
 
         </section>
 
-        <!-- ORDER SUMMARY -->
+        <!-- Order Summary -->
         <aside class="cart-summary" aria-label="Order summary">
 
             <h2>Order Summary</h2>
@@ -175,7 +177,7 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer__container">
             <div class="footer__col">
