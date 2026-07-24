@@ -10,7 +10,7 @@ This project was developed collaboratively by a team of 4 members. Below is the 
     *   Module: Shopping Cart & Checkout + Wishlist
     *   Shared pages: Sitemap 
     *   Header/Footer
-*   **Member 2: Nguyen Trong Giap (SID: )**
+*   **Member 2: Nguyen Trong Giap (SID: S4188314 )**
     *   Module: Discussion Forum
     *   Shared pages: Login + Register
 *   **Member 3: Luong Gia Minh (SID: S4212400)**
