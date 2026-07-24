@@ -16,6 +16,6 @@ This project was developed collaboratively by a team of 4 members. Below is the 
 *   **Member 3: Luong Gia Minh (SID: S4212400)**
     *   Module: Blog & Articles
     *   Shared Page: Home Page + Profile 
-*   **Member 4: Luong Quoc Viet(SID: )**
+*   **Member 4: Luong Quoc Viet(SID: S4154250 )**
     *   Module: Shop + Product
     *   Shared page: Administration 

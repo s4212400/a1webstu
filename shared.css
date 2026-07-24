@@ -2886,7 +2886,7 @@ ul {
 }
 
 .auth-note li::before{
-    content:"\\203A";
+    content:"\203A";
     position:absolute;
     left:0;
     color:var(--primary-color);
@@ -2949,7 +2949,7 @@ ul {
 }
 
 .warning-panel li::before{
-    content:"\\00D7";
+    content:"\00D7";
     position:absolute;
     left:0;
     color:#ff4444;
@@ -3698,4 +3698,20 @@ ul {
 .rating-picker-hint {
     color: var(--text-light);
     font-size: 1rem;
+}
+
+/* =====================================================
+   20. UTILITY CLASSES (replaces inline styles)
+===================================================== */
+
+.u-grow{
+    flex-grow:1;
+}
+
+.u-max300{
+    max-width:300px;
+}
+
+.auth-box--wide{
+    max-width:500px;
 }
