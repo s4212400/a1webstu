@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Forum - ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link active">Forum</a></li>
+                    <li class="nav__item"><a href="reviews.html" class="nav__link">Reviews</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- PAGE HEADER -->
+        <section class="page-header">
+            <div class="page-header__top">
+                <div>
+                    <h2 class="section-title">Discussion Forum</h2>
+                    <p class="page-subtitle">Ask about the rules, debate strategy or share your best plays with the community.</p>
+                </div>
+                <a href="forum-create.html" class="btn btn--create">+ Start New Thread</a>
+            </div>
+        </section>
+
+        <!-- FILTER / SORT TOOLBAR -->
+        <section class="filter-toolbar">
+            <form class="search-bar" action="#" method="get" style="flex-grow:1;">
+                <input type="text" name="q" placeholder="FILTER BY TITLE OR POST CONTENT..." class="search-input">
+                <button type="submit" class="btn btn--primary">Filter</button>
+            </form>
+
+            <div class="filter-toolbar__row">
+                <div class="select-group">
+                    <label for="sort-by">Sort by:</label>
+                    <select id="sort-by" name="sort" class="select-input">
+                        <option value="title-asc">Thread Title (A-Z)</option>
+                        <option value="title-desc">Thread Title (Z-A)</option>
+                        <option value="newest-reply" selected>Most Recent Post</option>
+                        <option value="oldest-reply">Oldest Post</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- THREAD LIST -->
+        <section class="forum-section">
+            <div class="thread-list">
+
+                <!-- Thread 1 -->
+                <article class="thread-card">
+                    <div class="thread-card__icon">📌</div>
+                    <div class="thread-card__body">
+                        <h3 class="thread-card__title"><a href="thread-detail.html">[Rules] Official Ranked Match Settings - Read Before Posting</a></h3>
+                        <p class="thread-card__snippet">Pinning this so new members can check the approved settings for ranked lobbies before they start a dispute thread...</p>
+                        <div class="thread-card__meta">
+                            <span class="tag-pinned">PINNED</span>
+                            <span>👤 ModAdmin</span>
+                            <span>🗓️ Started Jul 02, 2026</span>
+                        </div>
+                    </div>
+                    <div class="thread-card__stats">
+                        <strong>18</strong>
+                        <span>REPLIES</span>
+                    </div>
+                </article>
+
+                <!-- Thread 2 -->
+                <article class="thread-card">
+                    <div class="thread-card__icon">💬</div>
+                    <div class="thread-card__body">
+                        <h3 class="thread-card__title"><a href="thread-detail.html">Best DualSense button remap for fighting games?</a></h3>
+                        <p class="thread-card__snippet">I keep fumbling the special-move inputs with the default layout. What remap are you all using for combos...</p>
+                        <div class="thread-card__meta">
+                            <span>👤 Hoang Nguyen</span>
+                            <span>🗓️ Last reply Jul 20, 2026</span>
+                        </div>
+                    </div>
+                    <div class="thread-card__stats">
+                        <strong>7</strong>
+                        <span>REPLIES</span>
+                    </div>
+                </article>
+
+                <!-- Thread 3 -->
+                <article class="thread-card">
+                    <div class="thread-card__icon">💬</div>
+                    <div class="thread-card__body">
+                        <h3 class="thread-card__title"><a href="thread-detail.html">Switch OLED vs handheld PC for co-op strategy games</a></h3>
+                        <p class="thread-card__snippet">Trying to decide which one to bring on trips. Which handheld actually holds up for long co-op sessions...</p>
+                        <div class="thread-card__meta">
+                            <span>👤 Tien Nguyen</span>
+                            <span>🗓️ Last reply Jul 19, 2026</span>
+                        </div>
+                    </div>
+                    <div class="thread-card__stats">
+                        <strong>4</strong>
+                        <span>REPLIES</span>
+                    </div>
+                </article>
+
+                <!-- Thread 4 -->
+                <article class="thread-card">
+                    <div class="thread-card__icon">🔒</div>
+                    <div class="thread-card__body">
+                        <h3 class="thread-card__title"><a href="thread-detail.html">Is the boss rush exploit in Chapter 7 considered legal in tournaments?</a></h3>
+                        <p class="thread-card__snippet">Saw a clip of a player skipping half the boss fight using a wall clip. Curious if tournament rulesets ban this...</p>
+                        <div class="thread-card__meta">
+                            <span class="tag-locked">LOCKED</span>
+                            <span>👤 SpeedrunSam</span>
+                            <span>🗓️ Last reply Jul 15, 2026</span>
+                        </div>
+                    </div>
+                    <div class="thread-card__stats">
+                        <strong>21</strong>
+                        <span>REPLIES</span>
+                    </div>
+                </article>
+
+                <!-- Thread 5 -->
+                <article class="thread-card">
+                    <div class="thread-card__icon">💬</div>
+                    <div class="thread-card__body">
+                        <h3 class="thread-card__title"><a href="thread-detail.html">Team comp advice for the new ranked season</a></h3>
+                        <p class="thread-card__snippet">The meta shifted a lot after the patch. Looking for a solid 3-player comp that can handle the new elite mobs...</p>
+                        <div class="thread-card__meta">
+                            <span>👤 Minh Tri</span>
+                            <span>🗓️ Last reply Jul 12, 2026</span>
+                        </div>
+                    </div>
+                    <div class="thread-card__stats">
+                        <strong>2</strong>
+                        <span>REPLIES</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

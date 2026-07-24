@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Review - ConsoleHaven</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">🎮 ConsoleHaven</a>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="shop.html" class="nav__link">Shop</a></li>
+                    <li class="nav__item"><a href="forum.html" class="nav__link">Forum</a></li>
+                    <li class="nav__item"><a href="reviews.html" class="nav__link active">Reviews</a></li>
+                    <li class="nav__item"><a href="blog.html" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="wishlist.html" class="nav__link">Wishlist</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <a href="cart.html" class="btn btn--icon" title="Cart">🛒</a>
+                <a href="login.html" class="btn btn--outline">Login</a>
+                <a href="register.html" class="btn btn--primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <p class="thread-detail__breadcrumb"><a href="reviews.html">← Back to Reviews</a></p>
+            <h2 class="section-title">Write a Review</h2>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+                <form action="#" method="post">
+
+                    <div class="form-group">
+                        <label class="form-label" for="product-select">Product</label>
+                        <select id="product-select" name="product" class="select-input form-input">
+                            <option value="dualsense">PS5 DualSense Controller</option>
+                            <option value="xbox-x">Xbox Series X 1TB</option>
+                            <option value="switch-oled">Nintendo Switch OLED</option>
+                            <option value="mech-keyboard">Competitive Mechanical Keyboard</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Rating</label>
+                        <div class="rating-picker-wrap">
+                            <fieldset class="rating-picker">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5" title="5 stars">★</label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" title="4 stars">★</label>
+                                <input type="radio" id="star3" name="rating" value="3" checked>
+                                <label for="star3" title="3 stars">★</label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" title="2 stars">★</label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" title="1 star">★</label>
+                            </fieldset>
+                            <span class="rating-picker-hint">Click a star to set your rating</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="review-title">Review Title</label>
+                        <input type="text" id="review-title" name="title" class="form-input" placeholder="Summarize your experience in a few words" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="review-description">Description</label>
+                        <textarea id="review-description" name="description" class="form-textarea" placeholder="What did you like or dislike? How does it perform over time?" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="review-image">Product Photo (optional)</label>
+                        <div class="file-drop">
+                            <span>Upload a photo of the product you're reviewing</span>
+                            <input type="file" id="review-image" name="image" accept="image/*">
+                            <p class="form-hint">Accepted formats: JPG, PNG, GIF. Max size 5MB.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Reviewer Name</label>
+                        <input type="text" class="form-input" value="Hoang Nguyen" disabled>
+                        <p class="form-hint">Posting as your logged-in account. Date added will be recorded automatically.</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Submit Review</button>
+                        <a href="reviews.html" class="btn btn--outline">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <h4>🎮 ConsoleHaven</h4>
+                <p>Your ultimate destination for premium gaming hardware.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="shop.html">Shop Consoles</a></li>
+                    <li><a href="forum.html">Gamer Forum</a></li>
+                    <li><a href="blog.html">Tech News</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                    <li><a href="admin.html">Administration</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <ul class="social-links">
+                    <li><a href="policy.html">Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 ConsoleHaven Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
