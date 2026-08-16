@@ -71,46 +71,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // SUBMIT and API SERVER
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault(); 
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
 
-            const loginData = {
+        const loginData = {
                 emailUsername: emailUsernameInput.value.trim(),
                 password: passwordInput.value
-            };
+        };
 
-            // 👇 ĐƯA LÊN ĐÂY: Lưu tài khoản ngay và luôn, bất chấp form có lỗi hay không
-            if (rememberCheck.checked) {
+        if (rememberCheck.checked) {
                 localStorage.setItem('rememberedAccount', loginData.emailUsername);
-            } else {
+        } else {
                 localStorage.removeItem('rememberedAccount'); 
-            }
-            // 👆 ---------------------------------------------------------------------
+        }
 
-            // Chặn lại nếu form chưa nhập đủ (như thiếu password)
-            if (!validateForm()) return;
+        if (!validateForm()) return;
 
-            try {
-                const response = await fetch('http://localhost:3000/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(loginData)
-                });
+        try {
+            const response = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData)
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-            if (response.ok) {
-                // Successfully login and stored data in localStorage
-                localStorage.setItem('currentUser', JSON.stringify(data.user));
+        if (response.ok) {
+            // Successfully login and stored data in localStorage
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
 
-                alert("Welcome back, " + data.user.username + "!");
-                window.location.href = 'index.html'; 
+            alert("Welcome back, " + data.user.username + "!");
+            window.location.href = 'index.html'; 
                 
-            } else {
-                showError(emailUsernameInput, data.error);
-                showError(passwordInput, data.error);
-                alert("Login failed: " + data.error);
-            }
+        } else {
+            showError(emailUsernameInput, data.error);
+            showError(passwordInput, data.error);
+            alert("Login failed: " + data.error);
+        }
         } catch (error) {
             console.error("Failed to connect to server:", error);
             alert("Cannot connect to server. Ensure NodeJS is running on port 3000.");
