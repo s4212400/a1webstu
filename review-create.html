@@ -76,11 +76,13 @@
                     <div class="form-group">
                         <label class="form-label" for="review-title">Review Title</label>
                         <input type="text" id="review-title" name="title" class="form-input" placeholder="Summarize your experience in a few words" required>
+                        <span class="error-message" id="title-error"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="review-description">Description</label>
                         <textarea id="review-description" name="description" class="form-textarea" placeholder="What did you like or dislike? How does it perform over time?" required></textarea>
+                        <span class="error-message" id="description-error"></span>
                     </div>
 
                     <div class="form-group">
@@ -145,5 +147,7 @@
         </div>
     </footer>
 
+    <script src="review-create.js"></script>
+    
 </body>
 </html>

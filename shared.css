@@ -3825,3 +3825,11 @@ textarea:focus-visible{
         text-align:center;
     }
 }
+
+/* Error message for live form validation */
+.error-message {
+    display: block;
+    color: #e50914;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
