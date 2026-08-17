@@ -22,14 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic data
     authorInput.value = currentUser.username; 
 
-    // Setting date
-    const dateObj = new Date();
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const today = `${year}-${month}-${day}`; 
-    dateInput.value = today;
-
     // Auto-save draft
     const saveDraft = () => {
         const draftData = {
