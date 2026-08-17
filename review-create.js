@@ -9,6 +9,7 @@ const ratingError = document.querySelector("#rating-error");
 const ratingInputs = document.querySelectorAll('input[name="rating"]');
 
 titleInput.addEventListener("input", () => {
+    localStorage.setItem("reviewTitle", titleInput.value);
     if (titleInput.value.trim() === "") {
         titleError.textContent = "Review title is required.";
     } else {
@@ -17,6 +18,7 @@ titleInput.addEventListener("input", () => {
 });
 
 descriptionInput.addEventListener("input", () => {
+    localStorage.setItem("reviewDescription", descriptionInput.value);
     if (descriptionInput.value.trim().length < 10) {
         descriptionError.textContent = "Description must be at least 10 characters.";
     } else {
@@ -50,6 +52,9 @@ form.addEventListener("submit", (event) => {
 
      if (hasError) {
         event.preventDefault();
+    } else {
+        localStorage.removeItem("reviewTitle");
+        localStorage.removeItem("reviewDescription");
     }
 });
 
@@ -65,3 +70,13 @@ ratingInputs.forEach((star) => {
     });
 });
 
+const savedTitle = localStorage.getItem("reviewTitle");
+const savedDescription = localStorage.getItem("reviewDescription");
+
+if (savedTitle) {
+    titleInput.value = savedTitle;
+}
+
+if (savedDescription) {
+    descriptionInput.value = savedDescription;
+}
