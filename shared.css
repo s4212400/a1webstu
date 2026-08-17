@@ -32,6 +32,27 @@ body {
     line-height: 1.5;
 }
 
+/* --- Custom Scrollbar for whole web --- */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ---Text Selection --- */
+::selection {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
 h1, h2, h3, h4 {
     font-family: var(--font-heading);
     text-transform: uppercase;
