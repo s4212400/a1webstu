@@ -64,7 +64,7 @@ app.post('/login', (req, res) => {
     res.redirect('/'); 
 });
 
-// ROUTES TRANG CHỦ & BLOG
+// ROUTES and BLOG
 
 app.get('/', (req, res) => {
     res.render('index', { blogs: blogs });
