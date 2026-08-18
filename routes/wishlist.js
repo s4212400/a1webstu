@@ -1,6 +1,91 @@
-const express = require('express');
-const router = express.Router();
+const wishlist = [
+    {
+        id: 1,
+        productId: "zelda",
+        name: "The Legend of Zelda: Tears of the Kingdom",
+        productPage: "/product-zelda.html",
+        image: "/images/zelda_totk.jpg",
+        platform: "Nintendo Switch",
+        genre: "Action-Adventure",
+        rating: "⭐⭐⭐⭐⭐",
+        ratingCount: "2,481 reviews",
+        oldPrice: 69.99,
+        newPrice: 54.99,
+        discount: 20,
+        stock: "In Stock",
+        stockClass: "in-stock",
+        usersWishlisted: 1204,
+        addedToCart: 876,
+        purchasedCount: 512,
+        addedDate: "12 July 2026",
+        isPurchased: false
+    },
 
-// Routes - teammate to implement
+    {
+        id: 2,
+        productId: "mario",
+        name: "Super Mario Bros Wonder",
+        productPage: "/product-mario.html",
+        image: "/images/mario.jpg",
+        platform: "Nintendo Switch",
+        genre: "Platformer",
+        rating: "⭐⭐⭐⭐⭐",
+        ratingCount: "1,932 reviews",
+        oldPrice: 59.99,
+        newPrice: 44.99,
+        discount: 25,
+        stock: "In Stock",
+        stockClass: "in-stock",
+        usersWishlisted: 958,
+        addedToCart: 640,
+        purchasedCount: 389,
+        addedDate: "08 July 2026",
+        isPurchased: false
+    },
 
-module.exports = router;
+    {
+        id: 3,
+        productId: "spiderman",
+        name: "Marvel's Spider-Man 2",
+        productPage: "/product-spiderman.html",
+        image: "/images/spiderman2.jpg",
+        platform: "PlayStation 5",
+        genre: "Action",
+        rating: "⭐⭐⭐⭐⭐",
+        ratingCount: "3,107 reviews",
+        oldPrice: 69.99,
+        newPrice: 49.99,
+        discount: 30,
+        stock: "Low Stock",
+        stockClass: "low-stock",
+        usersWishlisted: 1540,
+        addedToCart: 1102,
+        purchasedCount: 734,
+        addedDate: "02 July 2026",
+        isPurchased: true
+    },
+
+    {
+        id: 4,
+        productId: "eldenring",
+        name: "Elden Ring",
+        productPage: "/product-eldenring.html",
+        image: "/images/eldenring.jpg",
+        platform: "PS5",
+        genre: "Souls-like RPG",
+        rating: "⭐⭐⭐⭐⭐",
+        ratingCount: "4,265 reviews",
+        oldPrice: 59.99,
+        newPrice: 39.99,
+        discount: 35,
+        stock: "Out of Stock",
+        stockClass: "out-stock",
+        usersWishlisted: 2876,
+        addedToCart: 1981,
+        purchasedCount: 1455,
+        addedDate: "28 June 2026",
+        isPurchased: false
+    }
+];
+
+module.exports = wishlist;

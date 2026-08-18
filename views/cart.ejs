@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shopping Cart | ConsoleHaven</title>
+
+    <link rel="stylesheet" href="/shared.css">
+
+</head>
+
+<body>
+
+
+<a href="#main-content" class="skip-link">
+    Skip to main content
+</a>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="header__container">
+
+
+        <a href="/" class="logo">
+            🎮 ConsoleHaven
+        </a>
+
+
+        <nav class="nav" aria-label="Main navigation">
+
+            <ul class="nav__list">
+
+                <li class="nav__item">
+                    <a href="/" class="nav__link">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/shop" class="nav__link">
+                        Shop
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/forum" class="nav__link">
+                        Forum
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/reviews" class="nav__link">
+                        Reviews
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/blog" class="nav__link">
+                        Blog
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/wishlist" class="nav__link">
+                        Wishlist
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header__actions">
+
+
+            <!-- Cart -->
+
+            <a
+                href="/cart"
+                class="btn btn--icon"
+                title="Shopping cart"
+            >
+                🛒
+            </a>
+
+
+            <!-- My Profile -->
+
+            <a
+                href="/profile"
+                class="btn btn--icon"
+                title="My profile"
+            >
+                &#128100;
+            </a>
+
+
+            <% if (user) { %>
+
+
+                <span class="welcome-user">
+                    Welcome, <%= user.username %>
+                </span>
+
+
+                <a
+                    href="/logout"
+                    class="btn btn--outline"
+                >
+                    Logout
+                </a>
+
+
+            <% } else { %>
+
+
+                <a
+                    href="/login"
+                    class="btn btn--outline"
+                >
+                    Login
+                </a>
+
+
+                <a
+                    href="/register"
+                    class="btn btn--primary"
+                >
+                    Register
+                </a>
+
+
+            <% } %>
+
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="wishlist-hero">
+
+    <h1>
+        Shopping Cart
+    </h1>
+
+    <p>
+        Review the products you want to purchase.
+    </p>
+
+</section>
+
+
+<!-- MAIN -->
+
+<main
+    id="main-content"
+    class="wishlist-page"
+>
+
+
+<% if (cart.length === 0) { %>
+
+
+    <!-- EMPTY CART -->
+
+    <section
+        class="wishlist-container"
+        aria-label="Empty cart"
+    >
+
+        <article class="wishlist-card">
+
+            <div class="wishlist-info">
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    You haven't added any products to your cart yet.
+                </p>
+
+                <a
+                    href="/shop"
+                    class="btn btn--primary"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+<% } else { %>
+
+
+    <%
+        const totalItems = cart.reduce(
+            (total, item) => total + item.quantity,
+            0
+        );
+
+        const subtotal = cart.reduce(
+            (total, item) =>
+                total + (item.newPrice * item.quantity),
+            0
+        );
+
+        const savings = cart.reduce(
+            (total, item) =>
+                total +
+                ((item.oldPrice - item.newPrice) * item.quantity),
+            0
+        );
+
+        const shipping = subtotal >= 100 ? 0 : 9.99;
+
+        const total = subtotal + shipping;
+    %>
+
+
+    <!-- CART ITEMS -->
+
+    <section
+        class="wishlist-container"
+        aria-label="Cart items"
+    >
+
+
+        <% cart.forEach(item => { %>
+
+
+            <article class="wishlist-card">
+
+
+                <!-- Product Image -->
+
+                <a href="<%= item.productPage %>">
+
+                    <img
+                        class="wishlist-image"
+                        src="<%= item.image %>"
+                        alt="Cover art of <%= item.name %>"
+                    >
+
+                </a>
+
+
+                <!-- Product Information -->
+
+                <div class="wishlist-info">
+
+
+                    <h2>
+
+                        <a href="<%= item.productPage %>">
+                            <%= item.name %>
+                        </a>
+
+                    </h2>
+
+
+                    <p>
+
+                        <%= item.platform %>
+
+                        &bull;
+
+                        <%= item.genre %>
+
+                    </p>
+
+
+                    <div class="rating">
+
+                        <%= item.rating %>
+
+                        <span class="rating-count">
+
+                            (<%= item.ratingCount %>)
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="price">
+
+                        <span class="old-price">
+
+                            $<%= item.oldPrice.toFixed(2) %>
+
+                        </span>
+
+
+                        <span class="new-price">
+
+                            $<%= item.newPrice.toFixed(2) %>
+
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        class="stock <%= item.stockClass %>"
+                    >
+
+                        <%= item.stock %>
+
+                    </span>
+
+
+                    <p>
+
+                        Quantity:
+
+                        <strong>
+                            <%= item.quantity %>
+                        </strong>
+
+                    </p>
+
+
+                    <p>
+
+                        Item total:
+
+                        <strong>
+
+                            $<%= (
+                                item.newPrice *
+                                item.quantity
+                            ).toFixed(2) %>
+
+                        </strong>
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- Cart Actions -->
+
+                <div class="wishlist-actions">
+
+
+                    <a
+                        href="/cart/remove/<%= item.id %>"
+                        class="btn btn--outline btn--danger"
+                    >
+                        Remove
+                    </a>
+
+
+                </div>
+
+
+            </article>
+
+
+        <% }) %>
+
+
+    </section>
+
+
+    <!-- CART SUMMARY -->
+
+    <aside
+        class="wishlist-summary"
+        aria-label="Cart summary"
+    >
+
+
+        <h2>
+            Cart Summary
+        </h2>
+
+
+        <div class="summary-row">
+
+            <span>
+                Items
+            </span>
+
+            <span>
+                <%= totalItems %>
+            </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Subtotal
+            </span>
+
+            <span>
+                $<%= subtotal.toFixed(2) %>
+            </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                You save
+            </span>
+
+            <span>
+                $<%= savings.toFixed(2) %>
+            </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Shipping
+            </span>
+
+            <span>
+
+                <% if (shipping === 0) { %>
+
+                    FREE
+
+                <% } else { %>
+
+                    $<%= shipping.toFixed(2) %>
+
+                <% } %>
+
+            </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <strong>
+                Total
+            </strong>
+
+            <strong>
+                $<%= total.toFixed(2) %>
+            </strong>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="btn btn--primary summary-btn"
+            onclick="alert('Checkout function coming soon!')"
+        >
+            Proceed to Checkout
+        </button>
+
+
+        <a
+            href="/shop"
+            class="btn btn--outline summary-btn"
+        >
+            Continue Shopping
+        </a>
+
+
+    </aside>
+
+
+<% } %>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+
+    <div class="footer__container">
+
+
+        <div class="footer__col">
+
+            <h4>
+                🎮 ConsoleHaven
+            </h4>
+
+            <p>
+                Your ultimate destination for premium gaming hardware.
+            </p>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <ul>
+
+                <li>
+                    <a href="/shop">
+                        Shop Consoles
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/forum">
+                        Gamer Forum
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/blog">
+                        Tech News
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>
+                Support
+            </h4>
+
+            <ul>
+
+                <li>
+                    <a href="/sitemap">
+                        Sitemap
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin">
+                        Administration
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/policy">
+                        Policy &amp; Terms
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>
+                Contact Us
+            </h4>
+
+            <ul>
+
+                <li>
+                    📧 ConsoleHaven@rmitvnsgs.com
+                </li>
+
+                <li>
+                    📞 +84 1234 68688
+                </li>
+
+                <li>
+                    📍 Nguyen Van Linh blv
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer__bottom">
+
+        <p>
+            &copy; 2026 ConsoleHaven Team.
+            All rights reserved.
+        </p>
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="header">
+    <div class="header__container">
+
+        <a href="/" class="logo">🎮 ConsoleHaven</a>
+
+        <nav class="nav" aria-label="Main navigation">
+            <ul class="nav__list">
+
+                <li class="nav__item">
+                    <a href="/" class="nav__link">Home</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/shop" class="nav__link">Shop</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/forum" class="nav__link">Forum</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/reviews" class="nav__link">Reviews</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/blog" class="nav__link">Blog</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/wishlist"
+                       class="nav__link active"
+                       aria-current="page">
+                        Wishlist
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+<div class="header__actions">
+
+    <a
+        href="/cart"
+        class="btn btn--icon"
+        title="Shopping cart"
+    >
+        🛒
+    </a>
+
+    <a
+        href="/profile"
+        class="btn btn--icon"
+        title="My profile"
+    >
+        &#128100;
+    </a>
+
+    <% if (user) { %>
+
+        <span class="welcome-user">
+            Welcome, <%= user.username %>
+        </span>
+
+        <a
+            href="/logout"
+            class="btn btn--outline"
+        >
+            Logout
+        </a>
+
+    <% } else { %>
+
+        <a
+            href="/login"
+            class="btn btn--outline"
+        >
+            Login
+        </a>
+
+        <a
+            href="/register"
+            class="btn btn--primary"
+        >
+            Register
+        </a>
+
+    <% } %>
+
+</div>
+
+    </div>
+</header>
+
+
+<section class="wishlist-hero">
+
+    <h1>My Wishlist</h1>
+
+    <p>
+        Save products you are interested in and come back to them later.
+    </p>
+
+</section>
+
+
+<main id="main-content" class="wishlist-page">
+
+    <section class="wishlist-container"
+             aria-label="Saved wishlist items">
+
+        <% wishlist.forEach(item => { %>
+
+            <article class="wishlist-card <%= item.isPurchased ? 'is-purchased' : '' %>">
+
+                <span class="sale-badge">
+                    -<%= item.discount %>%
+                </span>
+
+                <a href="<%= item.productPage %>">
+                    <img
+                        class="wishlist-image"
+                        src="<%= item.image %>"
+                        alt="Cover art of <%= item.name %>"
+                    >
+                </a>
+
+                <div class="wishlist-info">
+
+                    <h2>
+                        <a href="<%= item.productPage %>">
+                            <%= item.name %>
+                        </a>
+                    </h2>
+
+                    <p>
+                        <%= item.platform %>
+                        &bull;
+                        <%= item.genre %>
+                    </p>
+
+                    <div class="rating">
+
+                        <%= item.rating %>
+
+                        <span class="rating-count">
+                            (<%= item.ratingCount %>)
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <span class="old-price">
+                            $<%= item.oldPrice.toFixed(2) %>
+                        </span>
+
+                        <span class="new-price">
+                            $<%= item.newPrice.toFixed(2) %>
+                        </span>
+
+                    </div>
+
+                    <span class="stock <%= item.stockClass %>">
+                        <%= item.stock %>
+                    </span>
+
+                    <ul class="wishlist-stats">
+
+                        <li>
+                            <strong>
+                                <%= item.usersWishlisted.toLocaleString() %>
+                            </strong>
+                            users wishlisted this
+                        </li>
+
+                        <li>
+                            <strong>
+                                <%= item.addedToCart.toLocaleString() %>
+                            </strong>
+                            added to cart
+                        </li>
+
+                        <li>
+                            <strong>
+                                <%= item.purchasedCount.toLocaleString() %>
+                            </strong>
+                            purchased
+                        </li>
+
+                    </ul>
+
+                    <p class="added-date">
+                        Added on <%= item.addedDate %>
+                    </p>
+
+                    <% if (item.isPurchased) { %>
+
+                        <span class="purchased-badge">
+                            ✔ Purchased
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="wishlist-actions">
+
+                    <% if (!item.isPurchased && item.stock !== "Out of Stock") { %>
+
+                        <a
+                            href="/wishlist/move/<%= item.id %>"
+                            class="btn btn--primary">
+                            Move to Cart
+                        </a>
+
+                    <% } %>
+
+                    <a
+                        href="<%= item.productPage %>"
+                        class="btn btn--outline">
+                        View Details
+                    </a>
+
+                    <% if (item.isPurchased) { %>
+
+                        <a
+                            href="/wishlist/unpurchase/<%= item.id %>"
+                            class="btn btn--outline">
+                            Mark Unpurchased
+                        </a>
+
+                    <% } else { %>
+
+                        <a
+                            href="/wishlist/purchase/<%= item.id %>"
+                            class="btn btn--outline">
+                            Mark Purchased
+                        </a>
+
+                    <% } %>
+
+                    <a
+                        href="/wishlist/remove/<%= item.id %>"
+                        class="btn btn--outline btn--danger">
+                        Remove
+                    </a>
+
+                </div>
+
+            </article>
+
+        <% }) %>
+
+    </section>
+
+
+    <%
+        const availableItems = wishlist.filter(
+            item => item.stock !== "Out of Stock"
+        );
+
+        const purchasedItems = wishlist.filter(
+            item => item.isPurchased
+        );
+
+        const totalValue = wishlist.reduce(
+            (total, item) => total + item.newPrice,
+            0
+        );
+
+        const totalSavings = wishlist.reduce(
+            (total, item) => total + (item.oldPrice - item.newPrice),
+            0
+        );
+    %>
+
+
+    <aside class="wishlist-summary"
+           aria-label="Wishlist summary">
+
+        <h2>Wishlist Summary</h2>
+
+        <div class="summary-row">
+            <span>Items saved</span>
+            <span><%= wishlist.length %></span>
+        </div>
+
+        <div class="summary-row">
+            <span>Available now</span>
+            <span><%= availableItems.length %></span>
+        </div>
+
+        <div class="summary-row">
+            <span>Marked purchased</span>
+            <span><%= purchasedItems.length %></span>
+        </div>
+
+        <div class="summary-row">
+            <span>Total value</span>
+            <span>$<%= totalValue.toFixed(2) %></span>
+        </div>
+
+        <div class="summary-row">
+            <span>You save</span>
+            <span>$<%= totalSavings.toFixed(2) %></span>
+        </div>
+
+        <a href="/cart"
+           class="btn btn--primary summary-btn">
+            Add All To Cart
+        </a>
+
+        <a href="/shop"
+           class="btn btn--outline summary-btn">
+            Continue Shopping
+        </a>
+
+    </aside>
+
+</main>
+
+
+<section class="recommend-section">
+
+    <h2>You May Also Like</h2>
+
+    <div class="recommend-grid">
+
+        <article class="recommend-card">
+
+            <img
+                class="recommend-image"
+                src="/images/kirby.jpg"
+                alt="Cover art of Kirby Return to Dream Land"
+            >
+
+            <h3>Kirby Return to Dream Land</h3>
+
+            <p>$39.99</p>
+
+            <a href="/shop"
+               class="btn btn--outline">
+                View in Shop
+            </a>
+
+        </article>
+
+
+        <article class="recommend-card">
+
+            <img
+                class="recommend-image"
+                src="/images/persona3.jpg"
+                alt="Cover art of Persona 3 Reload"
+            >
+
+            <h3>Persona 3 Reload</h3>
+
+            <p>$49.99</p>
+
+            <a href="/shop"
+               class="btn btn--outline">
+                View in Shop
+            </a>
+
+        </article>
+
+
+        <article class="recommend-card">
+
+            <img
+                class="recommend-image"
+                src="/images/metaphor.jpg"
+                alt="Cover art of Metaphor ReFantazio"
+            >
+
+            <h3>Metaphor ReFantazio</h3>
+
+            <p>$59.99</p>
+
+            <a href="/shop"
+               class="btn btn--outline">
+                View in Shop
+            </a>
+
+        </article>
+
+
+        <article class="recommend-card">
+
+            <img
+                class="recommend-image"
+                src="/images/animalcrossing.jpg"
+                alt="Cover art of Animal Crossing New Horizons"
+            >
+
+            <h3>Animal Crossing</h3>
+
+            <p>$42.99</p>
+
+            <a href="/shop"
+               class="btn btn--outline">
+                View in Shop
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <div class="footer__container">
+
+        <div class="footer__col">
+
+            <h4>🎮 ConsoleHaven</h4>
+
+            <p>
+                Your ultimate destination for premium gaming hardware.
+            </p>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Quick Links</h4>
+
+            <ul>
+
+                <li>
+                    <a href="/shop">
+                        Shop Consoles
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/forum">
+                        Gamer Forum
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/blog">
+                        Tech News
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Support</h4>
+
+            <ul>
+
+                <li>
+                    <a href="/sitemap">
+                        Sitemap
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin">
+                        Administration
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/policy">
+                        Policy &amp; Terms
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Contact Us</h4>
+
+            <ul>
+
+                <li>
+                    &#128231; ConsoleHaven@rmitvnsgs.com
+                </li>
+
+                <li>
+                    &#128222; +84 1234 68688
+                </li>
+
+                <li>
+                    &#128205; Nguyen Van Linh blv
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer__bottom">
+
+        <p>
+            &copy; 2026 ConsoleHaven Team.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
