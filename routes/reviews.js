@@ -95,4 +95,49 @@ router.post('/delete/:id', (req, res) => {
     res.redirect('/reviews');
 });
 
+// GET /reviews/edit/:id - show edit form with existing data
+router.get('/edit/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+    const review = reviews.find(r => r.id === reviewId);
+
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    res.render('review-edit', { review: review, user: req.session.user || null });
+});
+
+// POST /reviews/edit/:id - save updated review
+router.post('/edit/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+    const { product, rating, title, description } = req.body;
+
+    // Server-side validation
+    let errors = [];
+    if (!title || title.trim() === "") {
+        errors.push("Review title is required.");
+    }
+    if (!description || description.trim().length < 10) {
+        errors.push("Description must be at least 10 characters.");
+    }
+
+    // Find the review to update
+    const review = reviews.find(r => r.id === reviewId);
+
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    if (errors.length > 0) {
+        return res.render('review-edit', { review: review, user: req.session.user || null, errors: errors });
+    }
+
+    // Update the review's fields
+    review.title = title;
+    review.excerpt = description;
+    review.rating = parseInt(rating);
+
+    res.redirect('/reviews');
+});
+
 module.exports = router;
