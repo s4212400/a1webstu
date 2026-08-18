@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= thread.title %> | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="thread-detail">
+
+            <div class="thread-detail__header">
+                <p class="thread-detail__breadcrumb"><a href="/forum">← Back to Forum</a></p>
+                <h1 class="thread-detail__title"><%= thread.title %></h1>
+                <p class="thread-detail__breadcrumb"><%= thread.replies %> replies &nbsp;•&nbsp; Started <%= thread.date %></p>
+            </div>
+
+            <!-- Original post -->
+            <article class="post-block post-block--op">
+                <div class="post-block__side">
+                    <div class="post-block__avatar">🕹️</div>
+                    <div class="post-block__author"><%= thread.author %></div>
+                    <div class="post-block__role">Original Poster</div>
+                </div>
+                <div class="post-block__main">
+                    <div class="post-block__meta">
+                        <span>Posted: <%= thread.date %></span>
+                        <span>Post #1</span>
+                    </div>
+                    <div class="post-block__content">
+                        <p><%= thread.snippet %></p>
+                    </div>
+                    <div class="post-block__actions">
+                        <a href="/forum/edit/<%= thread.id %>" class="btn btn--outline btn--small">Edit</a>
+                        <form action="/forum/delete/<%= thread.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn--danger btn--small">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+
+            <h2 class="replies-title">Replies (<%= thread.repliesList ? thread.repliesList.length : 0 %>)</h2>
+
+            <!-- Replies generated from data -->
+            <% if (thread.repliesList && thread.repliesList.length > 0) { %>
+                <% thread.repliesList.forEach((reply, index) => { %>
+                    <article class="post-block">
+                        <div class="post-block__side">
+                            <div class="post-block__avatar">👾</div>
+                            <div class="post-block__author"><%= reply.author %></div>
+                            <div class="post-block__role">Member</div>
+                        </div>
+                        <div class="post-block__main">
+                            <div class="post-block__meta">
+                                <span>Posted: <%= reply.date %></span>
+                                <span>Post #<%= index + 2 %></span>
+                            </div>
+                            <div class="post-block__content">
+                                <% if (reply.deleted) { %>
+                                    <p>[This post has been removed by the author]</p>
+                                <% } else { %>
+                                    <p><%= reply.content %></p>
+                                <% } %>
+                            </div>
+                            <% if (!reply.deleted) { %>
+                                <div class="post-block__actions">
+                                    <form action="/forum/<%= thread.id %>/reply/<%= reply.id %>/delete" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn--danger btn--small">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    </article>
+                <% }) %>
+            <% } %>
+
+            <!-- Reply form -->
+            <form class="comment-form" action="/forum/<%= thread.id %>/reply" method="POST">
+                <label class="form-label" for="reply-box">Post a Reply</label>
+                <textarea id="reply-box" name="content" rows="4" placeholder="Share your strategy or answer..." required></textarea>
+                <button type="submit" class="btn btn--primary">Post Reply</button>
+            </form>
+
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

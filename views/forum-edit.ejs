@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Thread | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="page-header">
+            <p class="thread-detail__breadcrumb"><a href="/forum">← Back to Forum</a></p>
+            <h1 class="section-title">Edit Thread</h1>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+
+                <form action="/forum/edit/<%= thread.id %>" method="POST" novalidate>
+
+                    <div class="form-group">
+                        <label class="form-label" for="thread-title">Thread Title</label>
+                        <input type="text" id="thread-title" name="title" class="form-input" value="<%= thread.title %>">
+                        <span class="error-message" id="title-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="thread-content">Content</label>
+                        <textarea id="thread-content" name="snippet" class="form-textarea"><%= thread.snippet %></textarea>
+                        <span class="error-message" id="content-error"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Save Changes</button>
+                        <a href="/forum" class="btn btn--outline">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

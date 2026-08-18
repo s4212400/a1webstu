@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="page-header">
+            <div class="page-header__top">
+                <div>
+                    <h1 class="section-title">Discussion Forum</h1>
+                    <p class="page-subtitle">Ask about the rules, debate strategy or share your best plays with the community.</p>
+                </div>
+                <a href="/forum/create" class="btn btn--create">+ Start New Thread</a>
+            </div>
+        </section>
+
+        <!-- Filter toolbar (client-side JS handles live search/sort) -->
+        <section class="filter-toolbar">
+            <div class="search-bar u-grow">
+                <input type="text" name="q" placeholder="FILTER BY TITLE OR POST CONTENT..." class="search-input">
+            </div>
+
+            <div class="filter-toolbar__row">
+                <div class="select-group">
+                    <label for="sort-by">Sort by:</label>
+                    <select id="sort-by" name="sort" class="select-input">
+                        <option value="title-asc">Thread Title (A-Z)</option>
+                        <option value="title-desc">Thread Title (Z-A)</option>
+                        <option value="newest-reply" selected>Most Recent Post</option>
+                        <option value="oldest-reply">Oldest Post</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Thread list generated from server data -->
+        <section class="forum-section">
+            <div class="thread-list">
+
+                <% threads.forEach(thread => { %>
+                    <article class="thread-card">
+                        <div class="thread-card__icon">💬</div>
+                        <div class="thread-card__body">
+                            <h2 class="thread-card__title">
+                                <a href="/forum/<%= thread.id %>"><%= thread.title %></a>
+                            </h2>
+                            <p class="thread-card__snippet"><%= thread.snippet %></p>
+                            <div class="thread-card__meta">
+                                <span>👤 <%= thread.author %></span>
+                                <span>🗓️ <%= thread.date %></span>
+                            </div>
+                            
+                        <div class="thread-card__stats">
+                            <strong><%= thread.replies %></strong>
+                            <span>REPLIES</span>
+                        </div>
+                    </article>
+                <% }) %>
+
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="/forum.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start New Thread | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="page-header">
+            <p class="thread-detail__breadcrumb"><a href="/forum">← Back to Forum</a></p>
+            <h1 class="section-title">Start New Thread</h1>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+
+                <form action="/forum/create" method="POST" novalidate>
+
+                    <div class="form-group">
+                        <label class="form-label" for="thread-title">Thread Title</label>
+                        <input type="text" id="thread-title" name="title" class="form-input" placeholder="What is your thread about?">
+                        <span class="error-message" id="title-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="thread-content">Content</label>
+                        <textarea id="thread-content" name="snippet" class="form-textarea" placeholder="Write your post here..."></textarea>
+                        <span class="error-message" id="content-error"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Post Thread</button>
+                        <a href="/forum" class="btn btn--outline">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="/forum-create.js"></script>
+</body>
+</html>
