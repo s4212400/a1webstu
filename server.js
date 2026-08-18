@@ -246,24 +246,16 @@ let wishlist = [
 app.locals.wishlist = wishlist;
 
 // Reviews route
-//const reviewsRouter = require('./routes/reviews');
-//app.use('/reviews', reviewsRouter);
+const reviewsRouter = require('./routes/reviews');
+app.use('/reviews', reviewsRouter);
 
 // Blog route (teammate)
 const blogRouter = require('./routes/blog');
 app.use('/blog', blogRouter);
 
-// Cart route (teammate)
-const cartRouter = require('./routes/cart');
-app.use('/cart', cartRouter);
-
 // Forum route (teammate)
 const forumRouter = require('./routes/forum');
 app.use('/forum', forumRouter);
-
-//Wishlist route (teammate)
-const wishlistRouter = require('./routes/wishlist');
-app.use('/wishlist', wishlistRouter);
 
 // Home
 app.get('/', (req, res) => {
