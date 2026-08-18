@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+
+<main id="main-content">
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero__content">
+            <h1 id="hero-title">Level Up Your Setup</h1>
+            <p>Discover the latest consoles, elite controllers and ultimate gaming gear.</p>
+            <a href="/shop" class="btn btn--primary btn--large">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Grid Layout -->
+    <section class="featured">
+        <h2 class="section-title">Trending Gear</h2>
+        <div class="product-grid">
+            
+            <!-- Product Card 1 -->
+            <article class="card">
+                <div class="card__image-container">
+                    <img src="/images/ps_controller.jpg" alt="PS5 DualSense Controller" class="card__image">
+                    <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                </div>
+                <div class="card__content">
+                    <h3 class="card__title"><a href="/product-dualsense">PS5 DualSense Controller</a></h3>
+                    <div class="card__meta">
+                        <span>Haptic Feedback</span>
+                        <span>Wireless</span>
+                    </div>
+                    <div class="card__rating">⭐⭐⭐⭐⭐ (3.2k)</div>
+                    <div class="card__footer">
+                        <span class="card__price">$69.99</span>
+                        <button class="btn btn--primary">Add to Cart</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product Card 2 -->
+            <article class="card">
+                <div class="card__image-container">
+                    <img src="/images/xbox.jpg" alt="Xbox Series X Console" class="card__image">
+                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                </div>
+                <div class="card__content">
+                    <h3 class="card__title"><a href="/product-xbox">Xbox Series X 1TB</a></h3>
+                    <div class="card__meta">
+                        <span>4K Gaming</span>
+                        <span>120 FPS</span>
+                    </div>
+                    <div class="card__rating">⭐⭐⭐⭐⭐ (5.1k)</div>
+                    <div class="card__footer">
+                        <span class="card__price">$499.99</span>
+                        <button class="btn btn--primary">Add to Cart</button>
+                    </div>
+                </div>
+            </article>
+
+             <!-- Product Card 3 -->
+             <article class="card">
+                <div class="card__image-container">
+                    <img src="/images/nintendo_oled.jpg" alt="Nintendo Switch OLED" class="card__image">
+                    <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                </div>
+                <div class="card__content">
+                    <h3 class="card__title"><a href="/product-switch-oled">Nintendo Switch OLED</a></h3>
+                    <div class="card__meta">
+                        <span>7-inch Screen</span>
+                        <span>Handheld</span>
+                    </div>
+                    <div class="card__rating">⭐⭐⭐⭐ (2.8k)</div>
+                    <div class="card__footer">
+                        <span class="card__price">$349.99</span>
+                        <button class="btn btn--primary">Add to Cart</button>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="featured" style="margin-top: 40px;">
+        <h2 class="section-title">Latest Tech News</h2>
+        <div class="product-grid" id="dynamic-blog-container">
+
+            <% if (typeof blogs !== 'undefined' && blogs.length > 0) { %>
+                <% blogs.slice(0, 3).forEach(function(post) { %>
+                    <article class="card">
+                        <div class="card__content">
+                            <h3 class="card__title"><a href="/blog/<%= post.id %>"><%= post.title %></a></h3>
+                            <div class="card__meta" style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
+                                <span>Tác giả: <%= post.author %></span> | 
+                                <span><%= post.date %></span>
+                            </div>
+                            <p><%= post.content.substring(0, 100) %>...</p>
+                            <a href="/blog/<%= post.id %>" style="color: var(--primary-color); text-decoration: none; font-weight: bold; margin-top: 10px; display: inline-block;">Read more &rarr;</a>
+                        </div>
+                    </article>
+                <% }); %>
+            <% } else { %>
+                <p style="text-align: center; width: 100%; grid-column: 1 / -1; color: #888;">
+                    Hệ thống chưa có tin tức công nghệ nào. Hãy <a href="/blog-create" style="color: var(--primary-color);">tạo bài viết đầu tiên</a>!
+                </p>
+            <% } %>
+
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
