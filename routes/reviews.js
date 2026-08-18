@@ -37,4 +37,52 @@ router.get('/', (req, res) => {
     res.render('reviews', { reviews: reviews, user: req.session.user || null });
 });
 
+router.get('/create', (req, res) => {
+    res.render('review-create', { user: req.session.user || null });
+});
+
+// POST /reviews/create - handle new review submission
+router.post('/create', (req, res) => {
+    const { product, rating, title, description } = req.body;
+
+    // Server-side validation
+    let errors = [];
+    if (!title || title.trim() === "") {
+        errors.push("Review title is required.");
+    }
+    if (!description || description.trim().length < 10) {
+        errors.push("Description must be at least 10 characters.");
+    }
+    if (!product) {
+        errors.push("Please select a product.");
+    }
+    if (!rating) {
+        errors.push("Please select a rating.");
+    }
+
+    // If errors, show form again with error messages
+    if (errors.length > 0) {
+        return res.render('review-create', {
+            user: req.session.user || null,
+            errors: errors
+        });
+    }
+
+    // No errors - create the new review
+    const newReview = {
+        id: Date.now(),
+        title: title,
+        excerpt: description,
+        rating: parseInt(rating),
+        reviewer: req.session.user ? req.session.user.fullname : "Guest",
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        image: "images/ps_controller.jpg"
+    };
+
+    reviews.push(newReview);
+
+    // Go back to reviews list to see the new review
+    res.redirect('/reviews');
+});
+
 module.exports = router;
