@@ -85,4 +85,14 @@ router.post('/create', (req, res) => {
     res.redirect('/reviews');
 });
 
+// POST /reviews/delete/:id - delete a review
+router.post('/delete/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+
+    // Keep only reviews whose id is NOT the one to delete
+    reviews = reviews.filter(review => review.id !== reviewId);
+
+    res.redirect('/reviews');
+});
+
 module.exports = router;
