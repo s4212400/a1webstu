@@ -2,7 +2,6 @@ const searchInput = document.querySelector('.search-input');
 const starFilter = document.querySelector('#star-filter');
 const sortSelect = document.querySelector('#review-sort');
 const cards = document.querySelectorAll('.review-card');
-new Date("July 19,2026")
 
 console.log("Search input:", searchInput);
 console.log("Number of review cards:" , cards.length);

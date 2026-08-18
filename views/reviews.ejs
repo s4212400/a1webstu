@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="reviews-section">
+            <div class="container">
+
+                <h1 class="section-title">Product Reviews &amp; Ratings</h1>
+
+                <!-- Toolbar: search, filter, sort -->
+                <div class="reviews-toolbar">
+                    <input type="text" class="search-input" placeholder="SEARCH BY TITLE, REVIEWER OR KEYWORD...">
+                    <select id="star-filter" class="select-input">
+                        <option value="all">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars &amp; Up</option>
+                        <option value="3">3 Stars &amp; Up</option>
+                    </select>
+                    <select id="review-sort" class="select-input">
+                        <option value="newest">Date Added (Newest)</option>
+                        <option value="oldest">Date Added (Oldest)</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                        <option value="reviewer-asc">Reviewer Name (A-Z)</option>
+                        <option value="stars-desc">Highest Rated</option>
+                    </select>
+                </div>
+
+                <!-- Review grid: generated from server data -->
+                <div class="review-grid">
+
+                    <% reviews.forEach(review => { %>
+                        <article class="review-card">
+                            <div class="review-card__image">
+                                <img src="<%= review.image %>" alt="<%= review.title %>">
+                            </div>
+                            <div class="review-card__content">
+                                <div class="review-card__stars">
+                                    <%= "⭐".repeat(review.rating) %> <span><%= review.rating %>.0 / 5</span>
+                                </div>
+                                <h2 class="review-card__title">
+                                    <a href="/reviews/<%= review.id %>"><%= review.title %></a>
+                                </h2>
+                                <p class="review-card__excerpt"><%= review.excerpt %></p>
+                                <div class="review-card__meta">
+                                    <span class="reviewer-name"><%= review.reviewer %></span>
+                                    <span><%= review.date %></span>
+                                </div>
+                            </div>
+                        </article>
+                    <% }) %>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="/reviews.js"></script>
+</body>
+</html>
