@@ -37,4 +37,107 @@ router.get('/', (req, res) => {
     res.render('reviews', { reviews: reviews, user: req.session.user || null });
 });
 
+router.get('/create', (req, res) => {
+    res.render('review-create', { user: req.session.user || null });
+});
+
+// POST /reviews/create - handle new review submission
+router.post('/create', (req, res) => {
+    const { product, rating, title, description } = req.body;
+
+    // Server-side validation
+    let errors = [];
+    if (!title || title.trim() === "") {
+        errors.push("Review title is required.");
+    }
+    if (!description || description.trim().length < 10) {
+        errors.push("Description must be at least 10 characters.");
+    }
+    if (!product) {
+        errors.push("Please select a product.");
+    }
+    if (!rating) {
+        errors.push("Please select a rating.");
+    }
+
+    // If errors, show form again with error messages
+    if (errors.length > 0) {
+        return res.render('review-create', {
+            user: req.session.user || null,
+            errors: errors
+        });
+    }
+
+    // No errors - create the new review
+    const newReview = {
+        id: Date.now(),
+        title: title,
+        excerpt: description,
+        rating: parseInt(rating),
+        reviewer: req.session.user ? req.session.user.fullname : "Guest",
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        image: "images/ps_controller.jpg"
+    };
+
+    reviews.push(newReview);
+
+    // Go back to reviews list to see the new review
+    res.redirect('/reviews');
+});
+
+// POST /reviews/delete/:id - delete a review
+router.post('/delete/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+
+    // Keep only reviews whose id is NOT the one to delete
+    reviews = reviews.filter(review => review.id !== reviewId);
+
+    res.redirect('/reviews');
+});
+
+// GET /reviews/edit/:id - show edit form with existing data
+router.get('/edit/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+    const review = reviews.find(r => r.id === reviewId);
+
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    res.render('review-edit', { review: review, user: req.session.user || null });
+});
+
+// POST /reviews/edit/:id - save updated review
+router.post('/edit/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+    const { product, rating, title, description } = req.body;
+
+    // Server-side validation
+    let errors = [];
+    if (!title || title.trim() === "") {
+        errors.push("Review title is required.");
+    }
+    if (!description || description.trim().length < 10) {
+        errors.push("Description must be at least 10 characters.");
+    }
+
+    // Find the review to update
+    const review = reviews.find(r => r.id === reviewId);
+
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    if (errors.length > 0) {
+        return res.render('review-edit', { review: review, user: req.session.user || null, errors: errors });
+    }
+
+    // Update the review's fields
+    review.title = title;
+    review.excerpt = description;
+    review.rating = parseInt(rating);
+
+    res.redirect('/reviews');
+});
+
 module.exports = router;

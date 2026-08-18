@@ -58,6 +58,10 @@
                                     <span class="reviewer-name"><%= review.reviewer %></span>
                                     <span><%= review.date %></span>
                                 </div>
+                                 <form action="/reviews/delete/<%= review.id %>" method="POST">
+                                     <a href="/reviews/edit/<%= review.id %>" class="btn btn--outline btn--small">Edit</a>
+                                    <button type="submit" class="btn btn--danger btn--small">Delete</button>
+                                </form>
                             </div>
                         </article>
                     <% }) %>
