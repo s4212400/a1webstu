@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Header -->
+<header class="header">
+    <div class="header__container">
+
+        <a href="/" class="logo">🎮 ConsoleHaven</a>
+
+        <nav class="nav" aria-label="Main navigation">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/" class="nav__link">Home</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/shop" class="nav__link active" aria-current="page">Shop</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/forum" class="nav__link">Forum</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/blog" class="nav__link">Blog</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/wishlist" class="nav__link">Wishlist</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="header__actions">
+
+            <a href="/cart" class="btn btn--icon" title="Shopping cart">🛒</a>
+
+            <% if (user) { %>
+
+                <a href="/profile" class="btn btn--icon" title="My profile">
+                    👤
+                </a>
+
+                <span class="btn btn--outline">
+                    <%= user.username %>
+                </span>
+
+                <a href="/logout" class="btn btn--outline">
+                    Logout
+                </a>
+
+            <% } else { %>
+
+                <a href="/login" class="btn btn--outline">
+                    Login
+                </a>
+
+                <a href="/register" class="btn btn--primary">
+                    Register
+                </a>
+
+            <% } %>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- Hero -->
+<section class="wishlist-hero">
+    <h1>Shop Catalog</h1>
+
+    <p>
+        Browse consoles, accessories and games.
+        Add what you love to your cart.
+    </p>
+</section>
+
+
+<main id="main-content" class="shop-page">
+
+    <!-- Filters -->
+    <aside class="shop-sidebar" aria-label="Product filters">
+
+        <form class="filter-form" action="/shop" method="get">
+
+            <h2 class="filter-heading">Search</h2>
+
+            <div class="form-group">
+
+                <label for="search">
+                    Product title
+                </label>
+
+                <input
+                    type="search"
+                    id="search"
+                    name="search"
+                    placeholder="e.g. PlayStation 5"
+                >
+
+            </div>
+
+
+            <h2 class="filter-heading">Category</h2>
+
+            <div class="filter-group">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="console"
+                        checked
+                    >
+                    Consoles
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="game"
+                        checked
+                    >
+                    Games
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="category"
+                        value="accessory"
+                        checked
+                    >
+                    Accessories
+                </label>
+
+            </div>
+
+
+            <h2 class="filter-heading">Platform</h2>
+
+            <div class="filter-group">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="platform"
+                        value="ps5"
+                    >
+                    PlayStation 5
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="platform"
+                        value="xbox"
+                    >
+                    Xbox Series X
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="platform"
+                        value="switch"
+                    >
+                    Nintendo Switch
+                </label>
+
+            </div>
+
+
+            <h2 class="filter-heading">Condition</h2>
+
+            <div class="filter-group">
+
+                <label>
+                    <input
+                        type="radio"
+                        name="condition"
+                        value="all"
+                        checked
+                    >
+                    All
+                </label>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="condition"
+                        value="new"
+                    >
+                    Brand New
+                </label>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="condition"
+                        value="refurb"
+                    >
+                    Refurbished
+                </label>
+
+            </div>
+
+
+            <h2 class="filter-heading">Price Range</h2>
+
+            <div class="form-group">
+
+                <label for="min-price">
+                    Minimum ($)
+                </label>
+
+                <input
+                    type="number"
+                    id="min-price"
+                    name="min-price"
+                    min="0"
+                    max="1000"
+                    value="0"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="max-price">
+                    Maximum ($)
+                </label>
+
+                <input
+                    type="number"
+                    id="max-price"
+                    name="max-price"
+                    min="0"
+                    max="1000"
+                    value="700"
+                >
+
+            </div>
+
+
+            <h2 class="filter-heading">Availability</h2>
+
+            <div class="filter-group">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="stock"
+                        value="in"
+                        checked
+                    >
+                    In Stock
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="stock"
+                        value="low"
+                    >
+                    Low Stock
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn--primary summary-btn"
+            >
+                Apply Filters
+            </button>
+
+            <button
+                type="reset"
+                class="btn btn--outline summary-btn"
+            >
+                Reset
+            </button>
+
+        </form>
+
+    </aside>
+
+
+    <!-- Product section -->
+    <section
+        class="shop-main"
+        aria-label="Product catalog"
+    >
+
+        <!-- Toolbar -->
+        <div class="shop-toolbar">
+
+            <p class="result-count">
+
+                Showing
+                <strong><%= products.length %></strong>
+                of
+                <strong><%= products.length %></strong>
+                products
+
+            </p>
+
+
+            <form
+                class="sort-form"
+                action="/shop"
+                method="get"
+            >
+
+                <label for="sort">
+                    Sort by:
+                </label>
+
+                <select
+                    id="sort"
+                    name="sort"
+                >
+
+                    <option value="title-asc">
+                        Title (A–Z)
+                    </option>
+
+                    <option value="title-desc">
+                        Title (Z–A)
+                    </option>
+
+                    <option value="price-asc">
+                        Price (Low to High)
+                    </option>
+
+                    <option value="price-desc">
+                        Price (High to Low)
+                    </option>
+
+                    <option value="qty-desc">
+                        Quantity (Most in stock)
+                    </option>
+
+                    <option value="qty-asc">
+                        Quantity (Least in stock)
+                    </option>
+
+                </select>
+
+                <button
+                    type="submit"
+                    class="btn btn--outline btn--small"
+                >
+                    Sort
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Product Grid -->
+        <div class="shop-grid">
+
+            <% products.forEach(product => { %>
+
+                <article class="shop-card">
+
+                    <div class="shop-card__image-wrap">
+
+                        <% if (product.discount) { %>
+
+                            <span class="sale-badge">
+                                -<%= product.discount %>%
+                            </span>
+
+                        <% } %>
+
+
+                        <img
+                            class="shop-card__image"
+                            src="<%= product.image %>"
+                            alt="<%= product.name %>"
+                        >
+
+                    </div>
+
+
+                    <div class="shop-card__body">
+
+                        <h3 class="shop-card__title">
+                            <%= product.name %>
+                        </h3>
+
+
+                        <ul class="shop-card__specs">
+
+                            <li>
+                                <span>Category:</span>
+
+                                <%= product.category.charAt(0).toUpperCase() +
+                                    product.category.slice(1) %>
+                            </li>
+
+
+                            <% if (product.category === 'console') { %>
+
+                                <% if (product.id === 1) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Glacier White
+                                    </li>
+
+                                    <li>
+                                        <span>Storage:</span>
+                                        1TB SSD
+                                    </li>
+
+                                <% } else if (product.id === 2) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Carbon Black
+                                    </li>
+
+                                    <li>
+                                        <span>Storage:</span>
+                                        1TB SSD
+                                    </li>
+
+                                <% } else if (product.id === 3) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Neon Red / Blue
+                                    </li>
+
+                                    <li>
+                                        <span>Screen:</span>
+                                        7" OLED
+                                    </li>
+
+                                <% } else if (product.id === 17) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Turquoise
+                                    </li>
+
+                                    <li>
+                                        <span>Storage:</span>
+                                        32GB
+                                    </li>
+
+                                <% } %>
+
+
+                            <% } else if (product.category === 'accessory') { %>
+
+                                <% if (product.id === 4) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Midnight Black
+                                    </li>
+
+                                <% } else if (product.id === 5) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        White
+                                    </li>
+
+                                <% } else if (product.id === 18) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        Black
+                                    </li>
+
+                                <% } else if (product.id === 19) { %>
+
+                                    <li>
+                                        <span>Colour:</span>
+                                        White
+                                    </li>
+
+                                <% } %>
+
+
+                                <li>
+                                    <span>Platform:</span>
+
+                                    <% if (product.platform === 'ps5') { %>
+                                        PlayStation 5
+                                    <% } else if (product.platform === 'switch') { %>
+                                        Nintendo Switch
+                                    <% } else { %>
+                                        Xbox Series X
+                                    <% } %>
+
+                                </li>
+
+
+                            <% } else { %>
+
+                                <li>
+                                    <span>Platform:</span>
+
+                                    <% if (product.platform === 'ps5') { %>
+                                        PlayStation 5
+                                    <% } else if (product.platform === 'switch') { %>
+                                        Nintendo Switch
+                                    <% } else if (product.platform === 'xbox') { %>
+                                        Xbox Series X
+                                    <% } %>
+
+                                </li>
+
+                                <li>
+                                    <span>Edition:</span>
+
+                                    <% if (product.id === 8) { %>
+                                        Deluxe
+                                    <% } else if (product.id === 13) { %>
+                                        Deluxe
+                                    <% } else if (product.id === 16) { %>
+                                        BMW Collector
+                                    <% } else if (product.id === 10) { %>
+                                        Ultimate
+                                    <% } else { %>
+                                        Standard
+                                    <% } %>
+
+                                </li>
+
+                            <% } %>
+
+
+                            <li>
+                                <span>Condition:</span>
+                                Brand New
+                            </li>
+
+                        </ul>
+
+
+                        <div class="rating">
+
+                            <% if (product.rating === 5) { %>
+                                ⭐⭐⭐⭐⭐
+                            <% } else { %>
+                                ⭐⭐⭐⭐☆
+                            <% } %>
+
+                            <span class="rating-count">
+                                (<%= product.ratingCount.toLocaleString() %>)
+                            </span>
+
+                        </div>
+
+
+                        <div class="price">
+
+                            <% if (product.oldPrice) { %>
+
+                                <span class="old-price">
+                                    $<%= product.oldPrice.toFixed(2) %>
+                                </span>
+
+                            <% } %>
+
+
+                            <span class="new-price">
+                                $<%= product.price.toFixed(2) %>
+                            </span>
+
+                        </div>
+
+
+                        <% if (product.stock === 0) { %>
+
+                            <span class="stock out-stock">
+                                Out of Stock — restocking soon
+                            </span>
+
+                        <% } else if (product.stock <= 6) { %>
+
+                            <span class="stock low-stock">
+                                Low Stock — <%= product.stock %> units
+                            </span>
+
+                        <% } else { %>
+
+                            <span class="stock in-stock">
+                                In Stock — <%= product.stock %> units
+                            </span>
+
+                        <% } %>
+
+
+                        <!-- Add to Cart -->
+                        <form
+                            class="add-form"
+                            action="/cart/add/<%= product.id %>"
+                            method="post"
+                        >
+
+                            <label for="qty-<%= product.id %>">
+                                Qty
+                            </label>
+
+                            <input
+                                type="number"
+                                id="qty-<%= product.id %>"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="<%= product.stock > 0 ? product.stock : 1 %>"
+                                <%= product.stock === 0 ? 'disabled' : '' %>
+                            >
+
+                            <input
+                                type="hidden"
+                                name="productId"
+                                value="<%= product.id %>"
+                            >
+
+                            <button
+                                type="submit"
+                                class="btn btn--primary"
+                                <%= product.stock === 0 ? 'disabled' : '' %>
+                            >
+
+                                <%= product.stock === 0
+                                    ? 'Out of Stock'
+                                    : 'Add to Cart' %>
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- Add to Wishlist -->
+                        <form action="/wishlist/add/<%= product.id %>" method="POST">
+                            <button
+                                type="submit"
+                                class="btn btn--outline"
+                            >
+                                ♡ Add to Wishlist
+                            </button>
+                        </form>
+
+                    </div>
+
+                </article>
+
+            <% }); %>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <nav
+            class="pagination"
+            aria-label="Product pages"
+        >
+
+            <a
+                href="/shop"
+                class="page-link active"
+                aria-current="page"
+            >
+                1
+            </a>
+
+            <a
+                href="/shop"
+                class="page-link"
+            >
+                2
+            </a>
+
+            <a
+                href="/shop"
+                class="page-link"
+            >
+                3
+            </a>
+
+            <a
+                href="/shop"
+                class="page-link"
+            >
+                Next ›
+            </a>
+
+        </nav>
+
+    </section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="footer">
+
+    <div class="footer__container">
+
+        <div class="footer__col">
+
+            <h4>🎮 ConsoleHaven</h4>
+
+            <p>
+                Your ultimate destination for premium gaming hardware.
+            </p>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Quick Links</h4>
+
+            <ul>
+
+                <li>
+                    <a href="/shop">
+                        Shop Consoles
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/forum">
+                        Gamer Forum
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/blog">
+                        Tech News
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Support</h4>
+
+            <ul>
+
+                <li>
+                    <a href="/sitemap">
+                        Sitemap
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin">
+                        Administration
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/policy">
+                        Policy &amp; Terms
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="footer__col">
+
+            <h4>Contact Us</h4>
+
+            <ul>
+
+                <li>
+                    📧 ConsoleHaven@rmitvnsgs.com
+                </li>
+
+                <li>
+                    📞 +84 1234 68688
+                </li>
+
+                <li>
+                    📍 Nguyen Van Linh blv
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer__bottom">
+
+        <p>
+            &copy; 2026 ConsoleHaven Team.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

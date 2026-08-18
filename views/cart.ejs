@@ -176,7 +176,7 @@
 >
 
 
-<% if (cart.length === 0) { %>
+<% if (!cart || cart.length === 0) { %>
 
 
     <!-- EMPTY CART -->
@@ -217,20 +217,41 @@
 
     <%
         const totalItems = cart.reduce(
-            (total, item) => total + item.quantity,
+            (total, item) => total + (Number(item.quantity) || 0),
             0
         );
 
         const subtotal = cart.reduce(
-            (total, item) =>
-                total + (item.newPrice * item.quantity),
+            (total, item) => {
+
+                const currentPrice = Number(
+                    item.price ?? item.newPrice ?? 0
+                );
+
+                const quantity = Number(item.quantity) || 0;
+
+                return total + (currentPrice * quantity);
+            },
             0
         );
 
         const savings = cart.reduce(
-            (total, item) =>
-                total +
-                ((item.oldPrice - item.newPrice) * item.quantity),
+            (total, item) => {
+
+                const oldPrice = Number(
+                    item.oldPrice ?? item.price ?? item.newPrice ?? 0
+                );
+
+                const currentPrice = Number(
+                    item.price ?? item.newPrice ?? 0
+                );
+
+                const quantity = Number(item.quantity) || 0;
+
+                return total + (
+                    Math.max(0, oldPrice - currentPrice) * quantity
+                );
+            },
             0
         );
 
@@ -250,13 +271,27 @@
 
         <% cart.forEach(item => { %>
 
+            <%
+                const currentPrice = Number(
+                    item.price ?? item.newPrice ?? 0
+                );
+
+                const oldPrice = Number(
+                    item.oldPrice ?? currentPrice
+                );
+
+                const quantity = Number(item.quantity) || 1;
+
+                const itemTotal = currentPrice * quantity;
+            %>
+
 
             <article class="wishlist-card">
 
 
                 <!-- Product Image -->
 
-                <a href="<%= item.productPage %>">
+                <a href="<%= item.productPage || '#' %>">
 
                     <img
                         class="wishlist-image"
@@ -274,7 +309,7 @@
 
                     <h2>
 
-                        <a href="<%= item.productPage %>">
+                        <a href="<%= item.productPage || '#' %>">
                             <%= item.name %>
                         </a>
 
@@ -283,53 +318,77 @@
 
                     <p>
 
-                        <%= item.platform %>
+                        <%= item.platform || '' %>
 
-                        &bull;
+                        <% if (item.platform && (item.genre || item.category)) { %>
 
-                        <%= item.genre %>
+                            &bull;
+
+                        <% } %>
+
+                        <%= item.genre || item.category || '' %>
 
                     </p>
 
 
                     <div class="rating">
 
-                        <%= item.rating %>
+                        <%= item.rating || '' %>
 
-                        <span class="rating-count">
+                        <% if (item.ratingCount) { %>
 
-                            (<%= item.ratingCount %>)
+                            <span class="rating-count">
 
-                        </span>
+                                (<%= item.ratingCount %>)
+
+                            </span>
+
+                        <% } %>
 
                     </div>
 
 
                     <div class="price">
 
-                        <span class="old-price">
+                        <% if (oldPrice > currentPrice) { %>
 
-                            $<%= item.oldPrice.toFixed(2) %>
+                            <span class="old-price">
 
-                        </span>
+                                $<%= oldPrice.toFixed(2) %>
+
+                            </span>
+
+                        <% } %>
 
 
                         <span class="new-price">
 
-                            $<%= item.newPrice.toFixed(2) %>
+                            $<%= currentPrice.toFixed(2) %>
 
                         </span>
 
                     </div>
 
 
-                    <span
-                        class="stock <%= item.stockClass %>"
-                    >
+                    <% if (item.stock !== undefined) { %>
 
-                        <%= item.stock %>
+                        <span
+                            class="stock <%= item.stockClass || (item.stock > 0 ? 'in-stock' : 'out-stock') %>"
+                        >
 
-                    </span>
+                            <% if (typeof item.stock === 'number') { %>
+
+                                <%= item.stock > 0 ? 'In Stock' : 'Out of Stock' %>
+
+                            <% } else { %>
+
+                                <%= item.stock %>
+
+                            <% } %>
+
+                        </span>
+
+                    <% } %>
 
 
                     <p>
@@ -337,7 +396,7 @@
                         Quantity:
 
                         <strong>
-                            <%= item.quantity %>
+                            <%= quantity %>
                         </strong>
 
                     </p>
@@ -349,10 +408,7 @@
 
                         <strong>
 
-                            $<%= (
-                                item.newPrice *
-                                item.quantity
-                            ).toFixed(2) %>
+                            $<%= itemTotal.toFixed(2) %>
 
                         </strong>
 
