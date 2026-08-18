@@ -3833,3 +3833,10 @@ textarea:focus-visible{
     font-size: 0.85rem;
     margin-top: 5px;
 }
+
+.footer__heading {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    margin-bottom: 15px;
+    color: var(--text-light);
+}
