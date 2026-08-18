@@ -1,81 +1,92 @@
 const express = require('express');
-const cors = require('cors');
+const session = require('express-session');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
-app.use(express.json());
+// View engine EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Mock database
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(__dirname));
+
+// Session to remember logged-in user
+app.use(session({
+    secret: 'consolehaven-secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+// In-memory users
 let users = [
-    { 
-        id: 1, 
+    {
+        id: 1,
         fullname: "Admin Test",
-        username: "admin123", 
-        email: "admin@gmail.com", 
+        username: "admin123",
+        email: "admin@gmail.com",
         password: "password123",
         description: "I am the admin"
-    } 
+    }
 ];
 
-// API Routes
-// REGISTER
-app.post('/api/register', (req, res) => {
-    const { fullname, username, email, description, password } = req.body;
+// Reviews route
+const reviewsRouter = require('./routes/reviews');
+app.use('/reviews', reviewsRouter);
 
-    // Server-side Validation 1
-    if (!username || !email || !password) {
-        return res.status(400).json({ error: "Missing required fields!" });
-    }
-    // Server-side Validation 2
-    const userExists = users.find(u => u.username === username || u.email === email);
-    if (userExists) {
-        return res.status(409).json({ error: "Username or Email is already taken!" });
-    }
-
-    const newUser = {
-        id: Date.now(), 
-        fullname,
-        username,
-        email,
-        description,
-        password 
-    };
-    
-    users.push(newUser);
-    
-    console.log("=> Có User mới đăng ký:", newUser.username);
-    res.status(201).json({ message: "Account created successfully!" });
+// Home
+app.get('/', (req, res) => {
+    res.render('index', { user: req.session.user || null });
 });
 
-// LOGIN
-app.post('/api/login', (req, res) => {
-    const { emailUsername, password } = req.body;
+// Login
+app.get('/login', (req, res) => {
+    res.render('login', { error: null, user: null });
+});
 
-    // Look up mock database
-    const user = users.find(u => 
-        (u.username === emailUsername || u.email === emailUsername) && 
+app.post('/login', (req, res) => {
+    const { emailUsername, password } = req.body;
+    const user = users.find(u =>
+        (u.username === emailUsername || u.email === emailUsername) &&
         u.password === password
     );
-
     if (user) {
-        console.log("=> User đăng nhập thành công:", user.username);
-        res.status(200).json({ 
-            message: "Login successful!",
-            user: { 
-                id: user.id, 
-                fullname: user.fullname,
-                username: user.username, 
-                email: user.email 
-            } 
-        });
+        req.session.user = user;
+        res.redirect('/reviews');
     } else {
-        res.status(401).json({ error: "Incorrect email/username or password!" });
+        res.render('login', { error: "Incorrect email or password.", user: null });
     }
+});
+
+// Logout
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+});
+
+// Register
+app.get('/register', (req, res) => {
+    res.render('register', { error: null, user: null });
+});
+
+app.post('/register', (req, res) => {
+    const { fullname, username, email, description, password } = req.body;
+    if (!username || !email || !password) {
+        return res.render('register', { error: "Missing required fields.", user: null });
+    }
+    const exists = users.find(u => u.username === username || u.email === email);
+    if (exists) {
+        return res.render('register', { error: "Username or email already taken.", user: null });
+    }
+    const newUser = { id: Date.now(), fullname, username, email, description, password };
+    users.push(newUser);
+    res.redirect('/login');
 });
 
 // Run server
 app.listen(PORT, () => {
-    console.log(`🚀 NodeJS Server is running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
