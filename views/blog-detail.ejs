@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= post.title %> - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="blog-detail-section" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+            
+            <a href="/blog" class="btn btn--outline" style="margin-bottom: 30px; display: inline-block;">&larr; BACK TO DATABANKS</a>
+            
+            <h1 class="section-title" style="margin-bottom: 10px; font-size: 2.5rem; text-transform: uppercase;"><%= post.title %></h1>
+            <div class="blog-meta" style="color: #888; margin-bottom: 30px; font-family: monospace; border-bottom: 1px dashed #444; padding-bottom: 15px;">
+                <span>AUTHOR: <%= post.author || 'UNKNOWN' %></span> | 
+                <span>DATE: [ <%= post.date %> ]</span> | 
+                <span>CATEGORY: <%= post.category || 'GENERAL' %></span>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" style="max-width: 100%; border: 2px solid #ff4444; box-shadow: 4px 4px 0px #ff4444;">
+            </div>
+            
+            <div class="blog-content" style="font-size: 1.1rem; line-height: 1.8; color: #ddd;">
+                <%- post.content %> 
+            </div>
+            
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

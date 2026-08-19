@@ -1,4 +1,15 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <%- include('partials/header') %>
 
 <!--  Main Blog  -->
 <main id="main-content">
@@ -10,7 +21,6 @@
     
         <!-- Blog Controls -->
         <div class="blog-controls">
-
             <form class="search-bar" action="/blog" method="GET">
                 <input type="text" name="search" placeholder="SEARCH DATABANKS..." class="search-input">
                 <button type="submit" class="btn btn--primary">SEARCH</button> 
@@ -34,7 +44,8 @@
                         <div class="blog-card__content">
                             <span class="blog-card__date">[ <%= post.date %> ]</span>
                             <h3 class="blog-card__title"><a href="/blog/<%= post.id %>"><%= post.title %></a></h3>     
-                            <p class="blog-card__excerpt"><%= post.content.substring(0, 120) %>...</p> 
+
+                            <p class="blog-card__excerpt"><%= post.content ? post.content.substring(0, 120) : '' %>...</p> 
                             <a href="/blog/<%= post.id %>" class="btn btn--outline">READ MORE</a>
                         </div>
                     </article>
@@ -50,3 +61,6 @@
 </main>
 
 <%- include('partials/footer') %>
+
+</body>
+</html>

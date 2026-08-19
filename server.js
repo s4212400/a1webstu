@@ -26,14 +26,16 @@ let users = [
     { id: 1, fullname: "Admin Test", username: "admin123", email: "admin@gmail.com", password: "password123", description: "I am the admin" }
 ];
 
-let blogs = [];
-
 // ===== MODULE ROUTES =====
 const reviewsRouter = require('./routes/reviews');
 app.use('/reviews', reviewsRouter);
 
 const forumRouter = require('./routes/forum');
 app.use('/forum', forumRouter);
+
+// New Blog Router
+const blogRouter = require('./routes/blog');
+app.use('/', blogRouter);
 
 // Cart and Wishlist routes - add back when teammates implement them
 // const cartRouter = require('./routes/cart');
@@ -93,37 +95,9 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
-// ===== HOME + BLOG =====
+// ===== HOME =====
 app.get('/', (req, res) => {
-    res.render('index', { blogs: blogs, user: req.session.user || null });
-});
-
-app.get('/blog', (req, res) => {
-    res.render('blog', { blogs: blogs, user: req.session.user || null });
-});
-
-app.get('/blog-create', (req, res) => {
-    res.render('blog-create', { user: req.session.user || null });
-});
-
-app.post('/blog-create', (req, res) => {
-    const { title, author, date, category, tags, image, content } = req.body;
-
-    const newPost = {
-        id: Date.now(),
-        title,
-        author,
-        date,
-        category,
-        tags,
-        content,
-        imageUrl: image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'
-    };
-
-    blogs.unshift(newPost);
-    console.log("=> Successfully created new blog:", title);
-
-    res.redirect('/blog');
+    res.render('index', { blogs: blogRouter.blogs, user: req.session.user || null });
 });
 
 // ===== RUN SERVER =====
