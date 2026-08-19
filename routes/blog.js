@@ -3,17 +3,14 @@ const router = express.Router();
 
 let blogs = [];
 
-// Route hiển thị danh sách Blog (Đã được nâng cấp tính năng Search)
 router.get('/blog', (req, res) => {
     const searchQuery = req.query.search; 
     let displayBlogs = blogs; 
 
-    // Nếu người dùng nhập chữ vào ô tìm kiếm, tiến hành lọc
     if (searchQuery) {
         const lowerCaseQuery = searchQuery.toLowerCase();
         
         displayBlogs = blogs.filter(post => {
-            // Lọc theo tiêu đề hoặc nội dung bài viết
             const matchTitle = (post.title || '').toLowerCase().includes(lowerCaseQuery);
             const matchContent = (post.content || '').toLowerCase().includes(lowerCaseQuery);
             
@@ -21,7 +18,6 @@ router.get('/blog', (req, res) => {
         });
     }
 
-    // Render ra giao diện kết quả đã lọc
     res.render('blog', { blogs: displayBlogs, user: req.session.user || null });
 });
 
