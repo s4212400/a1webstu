@@ -54,10 +54,13 @@ router.get('/blog-create', requireAuth, (req, res) => {
 });
 
 router.post('/blog-create', requireAuth, (req, res) => {
-    const { title, author, date, category, tags, image, content } = req.body;
+    const { title, date, category, tags, image, content } = req.body;
+    const currentAuthor = req.session.user.username;
     const newPost = {
         id: Date.now(),
-        title, author, date, category, tags, content,
+        title,
+        author: currentAuthor,
+        date, category, tags, content,
         imageUrl: image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'
     };
     blogs.unshift(newPost);
@@ -74,12 +77,11 @@ router.get('/blog/:id/edit', requireAuth, (req, res) => {
 
 router.post('/blog/:id/edit', requireAuth, (req, res) => {
     const blogId = Number(req.params.id);
-    const { title, author, category, image, content } = req.body;
+    const { title, category, image, content } = req.body;
     const postIndex = blogs.findIndex(b => b.id === blogId);
     
     if (postIndex !== -1) {
         blogs[postIndex].title = title;
-        blogs[postIndex].author = author;
         blogs[postIndex].category = category;
         blogs[postIndex].imageUrl = image || blogs[postIndex].imageUrl;
         blogs[postIndex].content = content;

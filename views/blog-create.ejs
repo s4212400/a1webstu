@@ -27,8 +27,16 @@
 
         <div class="form-group">
             <label for="post-author">Author</label>
-            <input type="text" id="post-author" name="author" value="Admin" required>
-            <small class="field-hint">Enter the author's name.</small>
+            <input 
+                type="text" 
+                id="post-author" 
+                name="author" 
+                value="<%= user.username %>" 
+                readonly 
+                style="background-color: #222; color: #888; cursor: not-allowed;"
+                required
+            >
+            <small class="field-hint">Posting as <%= user.username %>.</small>
         </div>
 
         <div class="field-row">
