@@ -23,7 +23,7 @@
                 <span>CATEGORY: <%= post.category || 'GENERAL' %></span>
             </div>
 
-            <% if (user) { %>
+            <% if (user && (user.username === post.author || user.username === 'admin123')) { %>
                 <div class="blog-actions" style="margin-bottom: 25px; display: flex; gap: 15px;">
                     <a href="/blog/<%= post.id %>/edit" class="btn btn--outline" style="border-color: #f39c12; color: #f39c12;">EDIT RECORD</a>
                     
