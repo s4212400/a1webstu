@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/shared.css">
 </head>
 <body>
+
     <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <%- include('partials/header') %>
 
     <main id="main-content">
@@ -16,22 +18,24 @@
                 <h1>SIGN IN TO CONSOLEHAVEN</h1>
                 
                 <% if (typeof error !== 'undefined' && error) { %>
-                    <div class="warning-panel" style="margin-bottom: 20px; border: 2px solid #ff4444; padding: 10px;">
+                    <div class="warning-panel" style="margin-bottom: 20px; border: 2px solid #ff4444; padding: 10px; border-radius: 4px; background-color: #fff0f0;">
                         <p style="color: #ff4444; margin: 0; text-align: center; font-weight: bold;"><%= error %></p>
                     </div>
                 <% } %>
 
                 <form class="auth-form" action="/login" method="POST" novalidate>
                     <div class="form-group">
-                        <label>Email or Username</label>
-                        <input type="text" name="emailUsername" required>
+                        <label class="form-label" for="login-email">Email or Username</label>
+                        <input id="login-email" type="text" name="emailUsername" required>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="password" required>
+                        <label class="form-label" for="login-password">Password</label>
+                        <input id="login-password" type="password" name="password" required>
                     </div>
+                    
                     <button type="submit" class="btn btn--primary btn--large auth-full-btn">Login</button>
                 </form>
+
                 <div class="auth-link">
                     <p>Don't have an account? <a href="/register">Register here</a></p>
                 </div>
@@ -40,5 +44,6 @@
     </main>
 
     <%- include('partials/footer') %>
+    
 </body>
 </html>

@@ -307,6 +307,7 @@ let products = [
 app.locals.products = products;
 
 // Reviews route
+// ===== MODULE ROUTES =====
 const reviewsRouter = require('./routes/reviews');
 app.use('/reviews', reviewsRouter);
 
@@ -318,6 +319,12 @@ app.use('/blog', blogRouter);
 const forumRouter = require('./routes/forum');
 app.use('/forum', forumRouter);
 
+
+// Cart and Wishlist routes - add back when teammates implement them
+// const cartRouter = require('./routes/cart');
+// app.use('/cart', cartRouter);
+// const wishlistRouter = require('./routes/wishlist');
+// app.use('/wishlist', wishlistRouter);
 
 // Home
 app.get('/', (req, res) => {
@@ -399,7 +406,12 @@ app.use('/cart', cartRouter);
 // Wishlist route
 app.use('/wishlist', wishlistRouter);
 
-// Run server
+// ===== HOME =====
+app.get('/', (req, res) => {
+    res.render('index', { blogs: blogRouter.blogs, user: req.session.user || null });
+});
+
+// ===== RUN SERVER =====
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop | ConsoleHaven</title>
     <link rel="stylesheet" href="/shared.css">
+
+    <style>
+        .nav__link-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            line-height: 18px;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,37 +44,63 @@
 
         <nav class="nav" aria-label="Main navigation">
             <ul class="nav__list">
+
                 <li class="nav__item">
-                    <a href="/" class="nav__link">Home</a>
+                    <a href="/" class="nav__link">
+                        Home
+                    </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="/shop" class="nav__link active" aria-current="page">Shop</a>
+                    <a href="/shop" class="nav__link active" aria-current="page">
+                        Shop
+                    </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="/forum" class="nav__link">Forum</a>
+                    <a href="/forum" class="nav__link">
+                        Forum
+                    </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="/blog" class="nav__link">Blog</a>
+                    <a href="/reviews" class="nav__link">
+                        Reviews
+                    </a>
                 </li>
 
                 <li class="nav__item">
-                    <a href="/wishlist" class="nav__link">Wishlist</a>
+                    <a href="/blog" class="nav__link">
+                        Blog
+                    </a>
                 </li>
+
+                <li class="nav__item">
+                    <a href="/wishlist" class="nav__link-wrapper">
+                        <span class="nav__link">Wishlist</span>
+                        <span id="wishlist-badge" class="nav-badge">0</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/cart" class="nav__link-wrapper">
+                        <span class="nav__link">🛒</span>
+                        <span id="cart-badge" class="nav-badge">0</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="/profile" class="nav__link">
+                        👤
+                    </a>
+                </li>
+
             </ul>
         </nav>
 
         <div class="header__actions">
 
-            <a href="/cart" class="btn btn--icon" title="Shopping cart">🛒</a>
-
             <% if (user) { %>
-
-                <a href="/profile" class="btn btn--icon" title="My profile">
-                    👤
-                </a>
 
                 <span class="btn btn--outline">
                     <%= user.username %>
@@ -79,12 +130,14 @@
 
 <!-- Hero -->
 <section class="wishlist-hero">
+
     <h1>Shop Catalog</h1>
 
     <p>
         Browse consoles, accessories and games.
         Add what you love to your cart.
     </p>
+
 </section>
 
 
@@ -391,7 +444,6 @@
 
                         <% } %>
 
-
                         <img
                             class="shop-card__image"
                             src="<%= product.image %>"
@@ -586,7 +638,6 @@
 
                             <% } %>
 
-
                             <span class="new-price">
                                 $<%= product.price.toFixed(2) %>
                             </span>
@@ -617,8 +668,8 @@
 
                         <!-- Add to Cart -->
                         <form
-                            class="add-form"
-                            action="/cart/add/<%= product.id %>"
+                            class="add-form cart-form"
+                            action="/cart/add"
                             method="post"
                         >
 
@@ -658,13 +709,25 @@
 
 
                         <!-- Add to Wishlist -->
-                        <form action="/wishlist/add/<%= product.id %>" method="POST">
+                        <form
+                            class="wishlist-form"
+                            action="/wishlist/add"
+                            method="POST"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="productId"
+                                value="<%= product.id %>"
+                            >
+
                             <button
                                 type="submit"
                                 class="btn btn--outline"
                             >
                                 ♡ Add to Wishlist
                             </button>
+
                         </form>
 
                     </div>
@@ -753,8 +816,14 @@
                 </li>
 
                 <li>
+                    <a href="/reviews">
+                        Reviews
+                    </a>
+                </li>
+
+                <li>
                     <a href="/blog">
-                        Tech News
+                        Blog
                     </a>
                 </li>
 
@@ -827,6 +896,48 @@
     </div>
 
 </footer>
+
+
+<script>
+
+    const wishlistCount =
+        <%= typeof wishlistCount !== 'undefined' ? wishlistCount : 0 %>;
+
+    const cartCount =
+        <%= typeof cartCount !== 'undefined' ? cartCount : 0 %>;
+
+
+    const wishlistBadge =
+        document.getElementById('wishlist-badge');
+
+    const cartBadge =
+        document.getElementById('cart-badge');
+
+
+    if (wishlistCount > 0) {
+
+        wishlistBadge.textContent = wishlistCount;
+        wishlistBadge.style.display = 'flex';
+
+    } else {
+
+        wishlistBadge.style.display = 'none';
+
+    }
+
+
+    if (cartCount > 0) {
+
+        cartBadge.textContent = cartCount;
+        cartBadge.style.display = 'flex';
+
+    } else {
+
+        cartBadge.style.display = 'none';
+
+    }
+
+</script>
 
 </body>
 </html>

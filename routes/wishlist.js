@@ -1,91 +1,274 @@
-const wishlist = [
-    {
-        id: 1,
-        productId: "zelda",
-        name: "The Legend of Zelda: Tears of the Kingdom",
-        productPage: "/product-zelda.html",
-        image: "/images/zelda_totk.jpg",
-        platform: "Nintendo Switch",
-        genre: "Action-Adventure",
-        rating: "⭐⭐⭐⭐⭐",
-        ratingCount: "2,481 reviews",
-        oldPrice: 69.99,
-        newPrice: 54.99,
-        discount: 20,
-        stock: "In Stock",
-        stockClass: "in-stock",
-        usersWishlisted: 1204,
-        addedToCart: 876,
-        purchasedCount: 512,
-        addedDate: "12 July 2026",
-        isPurchased: false
-    },
+const express = require('express');
 
-    {
-        id: 2,
-        productId: "mario",
-        name: "Super Mario Bros Wonder",
-        productPage: "/product-mario.html",
-        image: "/images/mario.jpg",
-        platform: "Nintendo Switch",
-        genre: "Platformer",
-        rating: "⭐⭐⭐⭐⭐",
-        ratingCount: "1,932 reviews",
-        oldPrice: 59.99,
-        newPrice: 44.99,
-        discount: 25,
-        stock: "In Stock",
-        stockClass: "in-stock",
-        usersWishlisted: 958,
-        addedToCart: 640,
-        purchasedCount: 389,
-        addedDate: "08 July 2026",
-        isPurchased: false
-    },
+const router = express.Router();
 
-    {
-        id: 3,
-        productId: "spiderman",
-        name: "Marvel's Spider-Man 2",
-        productPage: "/product-spiderman.html",
-        image: "/images/spiderman2.jpg",
-        platform: "PlayStation 5",
-        genre: "Action",
-        rating: "⭐⭐⭐⭐⭐",
-        ratingCount: "3,107 reviews",
-        oldPrice: 69.99,
-        newPrice: 49.99,
-        discount: 30,
-        stock: "Low Stock",
-        stockClass: "low-stock",
-        usersWishlisted: 1540,
-        addedToCart: 1102,
-        purchasedCount: 734,
-        addedDate: "02 July 2026",
-        isPurchased: true
-    },
 
-    {
-        id: 4,
-        productId: "eldenring",
-        name: "Elden Ring",
-        productPage: "/product-eldenring.html",
-        image: "/images/eldenring.jpg",
-        platform: "PS5",
-        genre: "Souls-like RPG",
-        rating: "⭐⭐⭐⭐⭐",
-        ratingCount: "4,265 reviews",
-        oldPrice: 59.99,
-        newPrice: 39.99,
-        discount: 35,
-        stock: "Out of Stock",
-        stockClass: "out-stock",
-        usersWishlisted: 2876,
-        addedToCart: 1981,
-        purchasedCount: 1455,
-        addedDate: "28 June 2026",
-        isPurchased: false
+// Wishlist data
+let wishlist = [];
+
+
+// Make wishlist available to server.js and other routes
+router.use((req, res, next) => {
+    req.app.locals.wishlist = wishlist;
+    next();
+});
+
+
+// Show Wishlist
+router.get('/', (req, res) => {
+
+    const wishlistCount = wishlist.reduce(
+        (total, item) => total + (item.wishlistClicks || 1),
+        0
+    );
+
+    const cart = req.app.locals.cart || [];
+
+    const cartCount = cart.reduce(
+        (total, item) => total + (item.quantity || 0),
+        0
+    );
+
+    res.render('wishlist', {
+        wishlist: wishlist,
+        wishlistCount: wishlistCount,
+        cartCount: cartCount,
+        user: req.session.user || null
+    });
+
+});
+
+
+// Add product to Wishlist
+router.post('/add', (req, res) => {
+
+    const productId = Number(req.body.productId);
+
+    const products = req.app.locals.products;
+
+    const product = products.find(
+        product => product.id === productId
+    );
+
+    if (!product) {
+        return res.redirect('/shop');
     }
-];
 
-module.exports = wishlist;
+
+    // Prevent duplicate wishlist entries
+    const existingItem = wishlist.find(
+        item => item.productId === product.id
+    );
+
+
+    if (existingItem) {
+
+        existingItem.wishlistClicks =
+            (existingItem.wishlistClicks || 1) + 1;
+
+        return res.redirect('/shop');
+    }
+
+
+    // Add product to wishlist
+    wishlist.push({
+
+        id: Date.now(),
+
+        productId: product.id,
+
+        name: product.name,
+
+        productPage: `/product-${product.id}.html`,
+
+        image: product.image,
+
+        platform: product.platform,
+
+        genre: product.category,
+
+        rating: product.rating === 5
+            ? "⭐⭐⭐⭐⭐"
+            : "⭐⭐⭐⭐☆",
+
+        ratingCount: product.ratingCount
+            ? `${product.ratingCount.toLocaleString()} reviews`
+            : "",
+
+        oldPrice: product.oldPrice,
+
+        newPrice: product.price,
+
+        discount: product.discount || 0,
+
+        stock: product.stock === 0
+            ? "Out of Stock"
+            : product.stock <= 6
+                ? "Low Stock"
+                : "In Stock",
+
+        stockClass: product.stock === 0
+            ? "out-stock"
+            : product.stock <= 6
+                ? "low-stock"
+                : "in-stock",
+
+        usersWishlisted: 0,
+
+        wishlistClicks: 1,
+
+        addedToCart: 0,
+
+        purchasedCount: 0,
+
+        addedDate: new Date().toLocaleDateString(
+            'en-GB',
+            {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }
+        ),
+
+        isPurchased: false
+
+    });
+
+
+    res.redirect('/shop');
+
+});
+
+
+// Move to Cart
+router.get('/move/:id', (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const item = wishlist.find(
+        item => item.id === id
+    );
+
+
+    if (!item) {
+        return res.redirect('/wishlist');
+    }
+
+
+    if (item.isPurchased) {
+        return res.redirect('/wishlist');
+    }
+
+
+    if (item.stock === 'Out of Stock') {
+        return res.redirect('/wishlist');
+    }
+
+
+    const cart = req.app.locals.cart;
+
+
+    const existingItem = cart.find(
+        cartItem => cartItem.id === item.productId
+    );
+
+
+    if (existingItem) {
+
+        existingItem.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            id: item.productId,
+
+            name: item.name,
+
+            image: item.image,
+
+            price: item.newPrice,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    item.addedToCart =
+        (item.addedToCart || 0) + 1;
+
+
+    res.redirect('/wishlist');
+
+});
+
+
+// Mark Purchased
+router.get('/purchase/:id', (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const item = wishlist.find(
+        item => item.id === id
+    );
+
+
+    if (!item) {
+        return res.redirect('/wishlist');
+    }
+
+
+    item.isPurchased = true;
+
+    res.redirect('/wishlist');
+
+});
+
+
+// Mark Unpurchased
+router.get('/unpurchase/:id', (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const item = wishlist.find(
+        item => item.id === id
+    );
+
+
+    if (!item) {
+        return res.redirect('/wishlist');
+    }
+
+
+    item.isPurchased = false;
+
+    res.redirect('/wishlist');
+
+});
+
+
+// Remove from Wishlist
+router.get('/remove/:id', (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const index = wishlist.findIndex(
+        item => item.id === id
+    );
+
+
+    if (index === -1) {
+        return res.redirect('/wishlist');
+    }
+
+
+    wishlist.splice(index, 1);
+
+    res.redirect('/wishlist');
+
+});
+
+
+module.exports = router;

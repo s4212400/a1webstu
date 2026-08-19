@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Record - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="auth-section" style="max-width: 800px; margin: 40px auto; padding: 20px;">
+            <div class="auth-box" style="width: 100%;">
+                <h1 style="color: #f39c12; margin-bottom: 30px;">[ SYSTEM UPDATE: EDIT RECORD ]</h1>
+                
+                <form class="auth-form" action="/blog/<%= post.id %>/edit" method="POST">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="edit-title">Title</label>
+                        <input id="edit-title" type="text" name="title" value="<%= post.title %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="edit-author">Author</label>
+                        <input id="edit-author" type="text" name="author" value="<%= post.author %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="edit-category">Category (ALL/Hardware/Retro/Esports)</label>
+                        <input id="edit-category" type="text" name="category" value="<%= post.category %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="edit-image">Image URL</label>
+                        <input id="edit-image" type="text" name="image" value="<%= post.imageUrl %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="edit-content">Content</label>
+                        <textarea id="edit-content" name="content" rows="10" required style="width: 100%; padding: 10px; background-color: #111; color: #fff; border: 1px solid #444;"><%= post.content %></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn--primary btn--large auth-full-btn" style="background-color: #f39c12; border-color: #f39c12; color: #000;">SAVE OVERRIDE</button>
+                    <a href="/blog/<%= post.id %>" class="btn btn--outline btn--large auth-full-btn" style="margin-top: 15px; text-align: center;">CANCEL UPDATE</a>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
