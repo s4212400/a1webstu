@@ -618,6 +618,81 @@ app.get('/', (req, res) => {
     });
 });
 
+// ===== DEACTIVATE ACCOUNT =====
+app.get('/deactivate-account', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    res.render('deactivate-account', { user: req.session.user, error: null });
+});
+
+// ===== DELETE ACCOUNT =====
+app.get('/delete-account', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    res.render('delete-account', { user: req.session.user, error: null });
+});
+
+app.post('/deactivate-account', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+    const { deactivatePassword } = req.body;
+
+    // Verify password before deactivating
+    const currentUser = users.find(u => u.id === req.session.user.id);
+    if (!currentUser || currentUser.password !== deactivatePassword) {
+        return res.render('deactivate-account', {
+            user: req.session.user,
+            error: "Incorrect password. Please try again."
+        });
+    }
+
+    // Mark account inactive (kept in data, not deleted)
+    currentUser.status = "inactive";
+    console.log("=> Account deactivated:", currentUser.username);
+
+    // Log out after deactivating
+    req.session.destroy();
+    res.redirect('/login');
+});
+
+app.post('/delete-account', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+    const deletePassword = req.body.deletePassword;
+    const deleteConfirm = req.body["delete-confirm"];
+
+    const currentUser = users.find(u => u.id === req.session.user.id);
+
+    // Check password
+    if (!currentUser || currentUser.password !== deletePassword) {
+        return res.render('delete-account', {
+            user: req.session.user,
+            error: "Incorrect password. Please try again."
+        });
+    }
+
+    // Check the user typed DELETE to confirm
+    if (deleteConfirm !== "DELETE") {
+        return res.render('delete-account', {
+            user: req.session.user,
+            error: "Please type DELETE to confirm."
+        });
+    }
+
+    // Passed all checks - permanently remove the user
+    users = users.filter(u => u.id !== req.session.user.id);
+    console.log("=> Account deleted:", currentUser.username);
+
+    req.session.destroy();
+    res.redirect('/register');
+});
+
 // ===== RUN SERVER =====
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
