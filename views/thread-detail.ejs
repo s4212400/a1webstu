@@ -45,7 +45,7 @@
                 </div>
             </article>
 
-            <h2 class="replies-title">Replies (<%= thread.repliesList ? thread.repliesList.length : 0 %>)</h2>
+            <h2 class="replies-title">Replies (<%= thread.repliesList ? thread.repliesList.filter(r => !r.deleted).length : 0 %>)</h2>
 
             <!-- Replies generated from data -->
             <% if (thread.repliesList && thread.repliesList.length > 0) { %>

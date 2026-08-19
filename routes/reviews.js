@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// In-memory reviews data
+// In-memory reviews data (temporary store for A2)
 let reviews = [
     {
         id: 1,
@@ -10,7 +10,7 @@ let reviews = [
         rating: 5,
         reviewer: "Hoang Nguyen",
         date: "Jul 19, 2026",
-        image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=500&q=80"
+        image: "/images/ps_controller.jpg"
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ let reviews = [
         rating: 4,
         reviewer: "Tien Nguyen",
         date: "Jul 15, 2026",
-        image: "images/xbox.jpg"
+        image: "/images/xbox.jpg"
     },
     {
         id: 3,
@@ -28,21 +28,39 @@ let reviews = [
         rating: 4,
         reviewer: "Minh Tri",
         date: "Jul 10, 2026",
-        image: "images/nintendo_oled.jpg"
+        image: "/images/nintendo_oled.jpg"
+    },
+    {
+        id: 4,
+        title: "Solid all-round console for the price point",
+        excerpt: "Been using this as my main setup for a month now and it handles everything I throw at it without issues.",
+        rating: 5,
+        reviewer: "Admin Test",
+        date: "Jul 22, 2026",
+        image: "/images/ps5.jpg"
     }
 ];
+
+// Middleware - only logged-in users may create/edit/delete
+const requireLogin = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    next();
+};
 
 // GET /reviews - show all reviews
 router.get('/', (req, res) => {
     res.render('reviews', { reviews: reviews, user: req.session.user || null });
 });
 
-router.get('/create', (req, res) => {
-    res.render('review-create', { user: req.session.user || null });
+// GET /reviews/create - show create form (login required)
+router.get('/create', requireLogin, (req, res) => {
+    res.render('review-create', { user: req.session.user });
 });
 
-// POST /reviews/create - handle new review submission
-router.post('/create', (req, res) => {
+// POST /reviews/create - handle new review (login required)
+router.post('/create', requireLogin, (req, res) => {
     const { product, rating, title, description } = req.body;
 
     // Server-side validation
@@ -60,43 +78,26 @@ router.post('/create', (req, res) => {
         errors.push("Please select a rating.");
     }
 
-    // If errors, show form again with error messages
     if (errors.length > 0) {
-        return res.render('review-create', {
-            user: req.session.user || null,
-            errors: errors
-        });
+        return res.render('review-create', { user: req.session.user, errors: errors });
     }
 
-    // No errors - create the new review
     const newReview = {
         id: Date.now(),
         title: title,
         excerpt: description,
         rating: parseInt(rating),
-        reviewer: req.session.user ? req.session.user.fullname : "Guest",
+        reviewer: req.session.user.fullname,
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        image: "images/ps_controller.jpg"
+        image: "/images/ps_controller.jpg"
     };
 
     reviews.push(newReview);
-
-    // Go back to reviews list to see the new review
     res.redirect('/reviews');
 });
 
-// POST /reviews/delete/:id - delete a review
-router.post('/delete/:id', (req, res) => {
-    const reviewId = parseInt(req.params.id);
-
-    // Keep only reviews whose id is NOT the one to delete
-    reviews = reviews.filter(review => review.id !== reviewId);
-
-    res.redirect('/reviews');
-});
-
-// GET /reviews/edit/:id - show edit form with existing data
-router.get('/edit/:id', (req, res) => {
+// GET /reviews/edit/:id - show edit form (login + owner required)
+router.get('/edit/:id', requireLogin, (req, res) => {
     const reviewId = parseInt(req.params.id);
     const review = reviews.find(r => r.id === reviewId);
 
@@ -104,13 +105,28 @@ router.get('/edit/:id', (req, res) => {
         return res.redirect('/reviews');
     }
 
-    res.render('review-edit', { review: review, user: req.session.user || null });
+    // Only the author can edit their own review
+    if (review.reviewer !== req.session.user.fullname) {
+        return res.redirect('/reviews');
+    }
+
+    res.render('review-edit', { review: review, user: req.session.user });
 });
 
-// POST /reviews/edit/:id - save updated review
-router.post('/edit/:id', (req, res) => {
+// POST /reviews/edit/:id - save updated review (login + owner required)
+router.post('/edit/:id', requireLogin, (req, res) => {
     const reviewId = parseInt(req.params.id);
     const { product, rating, title, description } = req.body;
+
+    const review = reviews.find(r => r.id === reviewId);
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    // Only the author can edit their own review
+    if (review.reviewer !== req.session.user.fullname) {
+        return res.redirect('/reviews');
+    }
 
     // Server-side validation
     let errors = [];
@@ -121,23 +137,45 @@ router.post('/edit/:id', (req, res) => {
         errors.push("Description must be at least 10 characters.");
     }
 
-    // Find the review to update
+    if (errors.length > 0) {
+        return res.render('review-edit', { review: review, user: req.session.user, errors: errors });
+    }
+
+    review.title = title;
+    review.excerpt = description;
+    review.rating = parseInt(rating);
+
+    res.redirect('/reviews');
+});
+
+// POST /reviews/delete/:id - delete a review (login + owner required)
+router.post('/delete/:id', requireLogin, (req, res) => {
+    const reviewId = parseInt(req.params.id);
     const review = reviews.find(r => r.id === reviewId);
 
     if (!review) {
         return res.redirect('/reviews');
     }
 
-    if (errors.length > 0) {
-        return res.render('review-edit', { review: review, user: req.session.user || null, errors: errors });
+    // Only the author can delete their own review
+    if (review.reviewer !== req.session.user.fullname) {
+        return res.redirect('/reviews');
     }
 
-    // Update the review's fields
-    review.title = title;
-    review.excerpt = description;
-    review.rating = parseInt(rating);
-
+    reviews = reviews.filter(r => r.id !== reviewId);
     res.redirect('/reviews');
+});
+
+// GET /reviews/:id - show one review detail (MUST be last - :id catches everything)
+router.get('/:id', (req, res) => {
+    const reviewId = parseInt(req.params.id);
+    const review = reviews.find(r => r.id === reviewId);
+
+    if (!review) {
+        return res.redirect('/reviews');
+    }
+
+    res.render('review-detail', { review: review, user: req.session.user || null });
 });
 
 module.exports = router;

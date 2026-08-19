@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= review.title %> | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <article class="review-detail">
+            <p class="thread-detail__breadcrumb"><a href="/reviews">← Back to Reviews</a></p>
+
+            <div class="review-detail__hero">
+                <img src="<%= review.image %>" alt="<%= review.title %>">
+            </div>
+
+            <div class="review-detail__header">
+                <div class="review-detail__stars">
+                    <%= "⭐".repeat(review.rating) %> <span><%= review.rating %>.0 out of 5</span>
+                </div>
+                <h1 class="review-detail__title"><%= review.title %></h1>
+                <p class="review-detail__meta">
+                    Reviewed by <strong><%= review.reviewer %></strong>
+                    &nbsp;•&nbsp; Date Added: <%= review.date %>
+                </p>
+            </div>
+
+            <div class="review-detail__body">
+                <p><%= review.excerpt %></p>
+            </div>
+
+            <div class="review-detail__actions">
+                <a href="/reviews/edit/<%= review.id %>" class="btn btn--outline btn--small">Edit Review</a>
+                <form action="/reviews/delete/<%= review.id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn--danger btn--small">Delete Review</button>
+                </form>
+            </div>
+        </article>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

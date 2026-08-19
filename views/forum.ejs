@@ -58,11 +58,11 @@
                             <p class="thread-card__snippet"><%= thread.snippet %></p>
                             <div class="thread-card__meta">
                                 <span>👤 <%= thread.author %></span>
-                                <span>🗓️ <%= thread.date %></span>
+                                <span class="thread-date">🗓️ <%= thread.date %></span>
                             </div>
                             
                         <div class="thread-card__stats">
-                            <strong><%= thread.replies %></strong>
+                            <strong><%= thread.repliesList ? thread.repliesList.filter(r => !r.deleted).length : 0 %></strong>
                             <span>REPLIES</span>
                         </div>
                     </article>

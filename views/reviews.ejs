@@ -18,7 +18,10 @@
         <section class="reviews-section">
             <div class="container">
 
-                <h1 class="section-title">Product Reviews &amp; Ratings</h1>
+                <div class="page-header__top">
+                    <h1 class="section-title">Product Reviews &amp; Ratings</h1>
+                    <a href="/reviews/create" class="btn btn--create">+ Write a Review</a>
+                </div>
 
                 <!-- Toolbar: search, filter, sort -->
                 <div class="reviews-toolbar">
@@ -58,10 +61,16 @@
                                     <span class="reviewer-name"><%= review.reviewer %></span>
                                     <span><%= review.date %></span>
                                 </div>
-                                 <form action="/reviews/delete/<%= review.id %>" method="POST">
-                                     <a href="/reviews/edit/<%= review.id %>" class="btn btn--outline btn--small">Edit</a>
-                                    <button type="submit" class="btn btn--danger btn--small">Delete</button>
-                                </form>
+
+                                <!-- Edit/Delete only shown on the logged-in user's own reviews -->
+                                <% if (user && review.reviewer === user.fullname) { %>
+                                    <div class="review-card__actions">
+                                        <a href="/reviews/edit/<%= review.id %>" class="btn btn--outline btn--small">Edit</a>
+                                        <form action="/reviews/delete/<%= review.id %>" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn--danger btn--small">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>
                             </div>
                         </article>
                     <% }) %>
