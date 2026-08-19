@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deactivate Account - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="auth-section">
+            <div class="auth-box">
+                <h1>DEACTIVATE ACCOUNT</h1>
+
+                <div class="auth-note">
+                    <p><strong>What happens when you deactivate:</strong></p>
+                    <ul>
+                        <li>Your profile is hidden from other users</li>
+                        <li>Your posts and reviews show as "Inactive User"</li>
+                        <li>Your data is kept and nothing is deleted</li>
+                        <li>Logging in again reactivates your account instantly</li>
+                    </ul>
+                </div>
+
+                 <% if (error) { %>
+                    <p class="error-message"><%= error %></p>
+                <% } %>
+
+                <form class="auth-form" action="/deactivate-account" method="POST">
+
+                    <div class="form-group">
+                        <label for="deactivate-duration">Deactivate for:</label>
+                        <select id="deactivate-duration" name="duration">
+                            <option value="indefinite">Until I log in again</option>
+                            <option value="30">30 days</option>
+                            <option value="90">90 days</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deactivatepassword">Confirm your password:</label>
+                        <input type="password" id="deactivate-password" name="deactivatePassword"
+                               placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <label class="inline-check"><input type="checkbox" name="confirm" required>
+                            I want to deactivate my account</label>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--large">DEACTIVATE ACCOUNT</button>
+                </form>
+
+                <a href="/delete-account" class="btn btn--outline btn--destructive auth-full-btn">
+                    PERMANENTLY DELETE INSTEAD</a>
+                <p class="auth-link"><a href="/profile">Cancel and return to profile</a></p>
+            </div>
+        </section>
+    </main>
+   
+    <%- include('partials/footer') %>
+
+</body>
+</html>

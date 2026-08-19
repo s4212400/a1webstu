@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="auth-section">
+            <div class="auth-box auth-box--danger">
+                <h1>DELETE ACCOUNT</h1>
+
+                <div class="warning-panel">
+                    <p class="warning-title">&#9888; This action cannot be undone</p>
+                    <p>Deleting your account will permanently remove:</p>
+                    <ul>
+                        <li>Your profile, username and login credentials</li>
+                        <li>Your wishlist and saved items</li>
+                        <li>Your order history and saved addresses</li>
+                        <li>Your forum threads, blog posts and reviews</li>
+                    </ul>
+                </div>
+
+                <div class="auth-note">
+                    <p><strong>Would deactivating be enough?</strong></p>
+                    <p>Deactivating hides your profile and pauses your account, but keeps your
+                       data so you can return later. You can reactivate at any time by logging in.</p>
+                </div>
+
+                <% if (error) { %>
+                    <p class="error-message"><%= error %></p>
+                <% } %>
+                
+                <form class="auth-form" action="/delete-account" method="POST">
+
+                    <div class="form-group">
+                        <label for="delete-reason">Reason for leaving (optional):</label>
+                        <select id="delete-reason" name="delete-reason">
+                            <option value="">Prefer not to say</option>
+                            <option value="unused">I no longer use the site</option>
+                            <option value="privacy">Privacy concerns</option>
+                            <option value="duplicate">I have another account</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delete-password">Confirm your password:</label>
+                        <input type="password" id="delete-password" name="deletePassword"
+                               placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delete-confirm">Type DELETE to confirm:</label>
+                        <input type="text" id="delete-confirm" name="delete-confirm"
+                               placeholder="DELETE" pattern="DELETE" required>
+                        <small class="field-hint">This must match exactly, in capital letters.</small>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <label class="inline-check"><input type="checkbox" name="understand" required>
+                            I understand that this permanently deletes my data</label>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--large btn--destructive">
+                        PERMANENTLY DELETE ACCOUNT</button>
+                </form>
+
+                <a href="/deactivate-account" class="btn btn--outline auth-full-btn">
+                    DEACTIVATE INSTEAD</a>
+                <p class="auth-link"><a href="/profile">Cancel and return to profile</a></p>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('partials/footer') %>
+
+</body>
+</html>
