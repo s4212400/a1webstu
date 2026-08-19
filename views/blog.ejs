@@ -27,10 +27,17 @@
             </form>
             
             <div class="blog-categories">
-                <button type="button" class="category-btn active">ALL</button>
-                <button type="button" class="category-btn">HARDWARE</button>
-                <button type="button" class="category-btn">RETRO</button>
-                <button type="button" class="category-btn">ESPORTS</button>
+                <button type="button" class="category-btn <%= currentCategory === 'ALL' ? 'active' : '' %>" 
+                        onclick="window.location.href='/blog'">ALL</button>
+                
+                <button type="button" class="category-btn <%= currentCategory === 'Hardware' ? 'active' : '' %>" 
+                        onclick="window.location.href='/blog?category=Hardware'">HARDWARE</button>
+                
+                <button type="button" class="category-btn <%= currentCategory === 'Retro' ? 'active' : '' %>" 
+                        onclick="window.location.href='/blog?category=Retro'">RETRO</button>
+                
+                <button type="button" class="category-btn <%= currentCategory === 'Esports' ? 'active' : '' %>" 
+                        onclick="window.location.href='/blog?category=Esports'">ESPORTS</button>
             </div>
         </div>
         
