@@ -23,6 +23,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
+// Logout
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
 // In-memory users
 let users = [
     {
@@ -313,7 +319,7 @@ app.use('/reviews', reviewsRouter);
 
 // Blog route (teammate)
 const blogRouter = require('./routes/blog');
-app.use('/blog', blogRouter);
+app.use('/', blogRouter);
 
 // Forum route (teammate)
 const forumRouter = require('./routes/forum');
@@ -571,9 +577,13 @@ app.post('/login', (req, res) => {
         (u.username === emailUsername || u.email === emailUsername) &&
         u.password === password
     );
+    
     if (user) {
         req.session.user = user;
-        res.redirect('/reviews');
+        
+        console.log("=> Successfully logged in:", user.username);
+        
+        res.redirect('/'); 
     } else {
         res.render('login', { error: "Incorrect email or password.", user: null });
     }
@@ -612,9 +622,13 @@ app.use('/wishlist', wishlistRouter);
 
 // ===== HOME =====
 app.get('/', (req, res) => {
+    const msg = req.session.successMessage;
+    req.session.successMessage = null; 
+
     res.render('index', {
         blogs: blogRouter.blogs || [],
-        user: req.session.user || null
+        user: req.session.user || null,
+        successMessage: msg 
     });
 });
 
