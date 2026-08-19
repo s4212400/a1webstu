@@ -326,11 +326,6 @@ app.use('/forum', forumRouter);
 // const wishlistRouter = require('./routes/wishlist');
 // app.use('/wishlist', wishlistRouter);
 
-// Home
-app.get('/', (req, res) => {
-    res.render('index', { user: req.session.user || null });
-});
-
 // Shop
 app.get('/shop', (req, res) => {
 
@@ -347,15 +342,224 @@ app.get('/shop', (req, res) => {
         0
     );
 
-    res.render('shop', {
-        products: products,
-        wishlistCount: wishlistCount,
-        cartCount: cartCount,
-        user: req.session.user || null
+
+    // =========================
+    // FILTER VALUES
+    // =========================
+
+    const search = (req.query.search || '').trim().toLowerCase();
+
+    const categories = Array.isArray(req.query.category)
+        ? req.query.category
+        : req.query.category
+            ? [req.query.category]
+            : [];
+
+    const platforms = Array.isArray(req.query.platform)
+        ? req.query.platform
+        : req.query.platform
+            ? [req.query.platform]
+            : [];
+
+    const condition = req.query.condition || 'all';
+
+    const minPrice =
+        req.query['min-price'] !== undefined &&
+        req.query['min-price'] !== ''
+            ? Number(req.query['min-price'])
+            : 0;
+
+    const maxPrice =
+        req.query['max-price'] !== undefined &&
+        req.query['max-price'] !== ''
+            ? Number(req.query['max-price'])
+            : Infinity;
+
+    const stockOptions = Array.isArray(req.query.stock)
+        ? req.query.stock
+        : req.query.stock
+            ? [req.query.stock]
+            : [];
+
+    const sort = req.query.sort || 'title-asc';
+
+
+    // =========================
+    // FILTER PRODUCTS
+    // =========================
+
+    let filteredProducts = products.filter(product => {
+
+        // Search
+        const productName =
+            String(product.name || '').toLowerCase();
+
+        if (
+            search &&
+            !productName.includes(search)
+        ) {
+            return false;
+        }
+
+
+        // Category
+        if (
+            categories.length > 0 &&
+            !categories.includes(product.category)
+        ) {
+            return false;
+        }
+
+
+        // Platform
+        if (
+            platforms.length > 0 &&
+            !platforms.includes(product.platform)
+        ) {
+            return false;
+        }
+
+
+        // Condition
+        const productCondition =
+            product.condition || 'new';
+
+        if (
+            condition !== 'all' &&
+            productCondition !== condition
+        ) {
+            return false;
+        }
+
+
+        // Price
+        const price = Number(product.price) || 0;
+
+        if (price < minPrice || price > maxPrice) {
+            return false;
+        }
+
+
+        // Availability
+        if (stockOptions.length > 0) {
+
+            const stock = Number(product.stock) || 0;
+
+            let stockMatch = false;
+
+
+            // In Stock = anything above 0
+            if (
+                stockOptions.includes('in') &&
+                stock > 0
+            ) {
+                stockMatch = true;
+            }
+
+
+            // Low Stock = 1–6
+            if (
+                stockOptions.includes('low') &&
+                stock > 0 &&
+                stock <= 6
+            ) {
+                stockMatch = true;
+            }
+
+
+            if (!stockMatch) {
+                return false;
+            }
+
+        }
+
+
+        return true;
+
     });
 
+
+    // =========================
+    // SORT
+    // =========================
+
+    filteredProducts.sort((a, b) => {
+
+        switch (sort) {
+
+            case 'title-asc':
+
+                return String(a.name || '')
+                    .localeCompare(
+                        String(b.name || '')
+                    );
+
+
+            case 'title-desc':
+
+                return String(b.name || '')
+                    .localeCompare(
+                        String(a.name || '')
+                    );
+
+
+            case 'price-asc':
+
+                return (
+                    Number(a.price) -
+                    Number(b.price)
+                );
+
+
+            case 'price-desc':
+
+                return (
+                    Number(b.price) -
+                    Number(a.price)
+                );
+
+
+            case 'qty-desc':
+
+                return (
+                    Number(b.stock) -
+                    Number(a.stock)
+                );
+
+
+            case 'qty-asc':
+
+                return (
+                    Number(a.stock) -
+                    Number(b.stock)
+                );
+
+
+            default:
+
+                return String(a.name || '')
+                    .localeCompare(
+                        String(b.name || '')
+                    );
+
+        }
+
+    });
+
+
+    // =========================
+    // RENDER SHOP
+    // =========================
+
+res.render('shop', {
+    products: filteredProducts,
+    wishlistCount: wishlistCount,
+    cartCount: cartCount,
+    user: req.session.user || null,
+    query: req.query
 });
 
+});
 // Login
 app.get('/login', (req, res) => {
     res.render('login', { error: null, user: null });
@@ -408,7 +612,10 @@ app.use('/wishlist', wishlistRouter);
 
 // ===== HOME =====
 app.get('/', (req, res) => {
-    res.render('index', { blogs: blogRouter.blogs, user: req.session.user || null });
+    res.render('index', {
+        blogs: blogRouter.blogs || [],
+        user: req.session.user || null
+    });
 });
 
 // ===== RUN SERVER =====

@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Shop | ConsoleHaven</title>
+
     <link rel="stylesheet" href="/shared.css">
 
     <style>
+
         .nav__link-wrapper {
             position: relative;
             display: inline-block;
@@ -29,109 +38,244 @@
             justify-content: center;
             line-height: 18px;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
 
-<!-- Header -->
+<a href="#main-content" class="skip-link">
+    Skip to main content
+</a>
+
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
+
     <div class="header__container">
 
-        <a href="/" class="logo">🎮 ConsoleHaven</a>
 
-        <nav class="nav" aria-label="Main navigation">
+        <a href="/" class="logo">
+            🎮 ConsoleHaven
+        </a>
+
+
+
+        <nav
+            class="nav"
+            aria-label="Main navigation"
+        >
+
             <ul class="nav__list">
 
+
                 <li class="nav__item">
-                    <a href="/" class="nav__link">
+
+                    <a
+                        href="/"
+                        class="nav__link"
+                    >
                         Home
                     </a>
+
                 </li>
 
+
+
                 <li class="nav__item">
-                    <a href="/shop" class="nav__link active" aria-current="page">
+
+                    <a
+                        href="/shop"
+                        class="nav__link active"
+                        aria-current="page"
+                    >
                         Shop
                     </a>
+
                 </li>
 
+
+
                 <li class="nav__item">
-                    <a href="/forum" class="nav__link">
+
+                    <a
+                        href="/forum"
+                        class="nav__link"
+                    >
                         Forum
                     </a>
+
                 </li>
 
+
+
                 <li class="nav__item">
-                    <a href="/reviews" class="nav__link">
+
+                    <a
+                        href="/reviews"
+                        class="nav__link"
+                    >
                         Reviews
                     </a>
+
                 </li>
 
+
+
                 <li class="nav__item">
-                    <a href="/blog" class="nav__link">
+
+                    <a
+                        href="/blog"
+                        class="nav__link"
+                    >
                         Blog
                     </a>
+
                 </li>
 
+
+
+                <!-- Wishlist -->
+
                 <li class="nav__item">
-                    <a href="/wishlist" class="nav__link-wrapper">
-                        <span class="nav__link">Wishlist</span>
-                        <span id="wishlist-badge" class="nav-badge">0</span>
+
+                    <a
+                        href="/wishlist"
+                        class="nav__link-wrapper"
+                    >
+
+                        <span class="nav__link">
+                            Wishlist
+                        </span>
+
+                        <span
+                            id="wishlist-badge"
+                            class="nav-badge"
+                        >
+                            0
+                        </span>
+
                     </a>
+
                 </li>
 
+
+
+                <!-- Cart -->
+
                 <li class="nav__item">
-                    <a href="/cart" class="nav__link-wrapper">
-                        <span class="nav__link">🛒</span>
-                        <span id="cart-badge" class="nav-badge">0</span>
+
+                    <a
+                        href="/cart"
+                        class="nav__link-wrapper"
+                    >
+
+                        <span class="nav__link">
+                            🛒
+                        </span>
+
+                        <span
+                            id="cart-badge"
+                            class="nav-badge"
+                        >
+                            0
+                        </span>
+
                     </a>
+
                 </li>
 
+
+
+                <!-- Profile -->
+
                 <li class="nav__item">
-                    <a href="/profile" class="nav__link">
+
+                    <a
+                        href="/profile"
+                        class="nav__link"
+                    >
                         👤
                     </a>
+
                 </li>
 
+
             </ul>
+
         </nav>
+
+
+
+        <!-- Login / Register -->
 
         <div class="header__actions">
 
+
             <% if (user) { %>
+
 
                 <span class="btn btn--outline">
                     <%= user.username %>
                 </span>
 
-                <a href="/logout" class="btn btn--outline">
+
+                <a
+                    href="/logout"
+                    class="btn btn--outline"
+                >
                     Logout
                 </a>
 
+
             <% } else { %>
 
-                <a href="/login" class="btn btn--outline">
+
+                <a
+                    href="/login"
+                    class="btn btn--outline"
+                >
                     Login
                 </a>
 
-                <a href="/register" class="btn btn--primary">
+
+                <a
+                    href="/register"
+                    class="btn btn--primary"
+                >
                     Register
                 </a>
 
+
             <% } %>
+
 
         </div>
 
+
     </div>
+
 </header>
 
 
-<!-- Hero -->
+
+
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="wishlist-hero">
 
-    <h1>Shop Catalog</h1>
+    <h1>
+        Shop Catalog
+    </h1>
 
     <p>
         Browse consoles, accessories and games.
@@ -141,144 +285,403 @@
 </section>
 
 
-<main id="main-content" class="shop-page">
 
-    <!-- Filters -->
-    <aside class="shop-sidebar" aria-label="Product filters">
 
-        <form class="filter-form" action="/shop" method="get">
+<!-- =========================
+     MAIN
+========================= -->
 
-            <h2 class="filter-heading">Search</h2>
+<main
+    id="main-content"
+    class="shop-page"
+>
+
+
+
+    <!-- =========================
+         FILTER SIDEBAR
+    ========================= -->
+
+    <aside
+        class="shop-sidebar"
+        aria-label="Product filters"
+    >
+
+
+        <form
+            class="filter-form"
+            action="/shop"
+            method="GET"
+        >
+
+
+
+            <!-- SEARCH -->
+
+            <h2 class="filter-heading">
+                Search
+            </h2>
+
 
             <div class="form-group">
+
 
                 <label for="search">
                     Product title
                 </label>
+
 
                 <input
                     type="search"
                     id="search"
                     name="search"
                     placeholder="e.g. PlayStation 5"
+                    value="<%= typeof query !== 'undefined' && query.search ? query.search : '' %>"
                 >
+
 
             </div>
 
 
-            <h2 class="filter-heading">Category</h2>
+
+
+            <!-- CATEGORY -->
+
+            <h2 class="filter-heading">
+                Category
+            </h2>
+
 
             <div class="filter-group">
 
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="category"
                         value="console"
-                        checked
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.category &&
+                                (
+                                    Array.isArray(query.category)
+                                        ? query.category.includes('console')
+                                        : query.category === 'console'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } else if (
+                            typeof query === 'undefined' ||
+                            !query.category
+                        ) { %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Consoles
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="category"
                         value="game"
-                        checked
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.category &&
+                                (
+                                    Array.isArray(query.category)
+                                        ? query.category.includes('game')
+                                        : query.category === 'game'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } else if (
+                            typeof query === 'undefined' ||
+                            !query.category
+                        ) { %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Games
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="category"
                         value="accessory"
-                        checked
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.category &&
+                                (
+                                    Array.isArray(query.category)
+                                        ? query.category.includes('accessory')
+                                        : query.category === 'accessory'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } else if (
+                            typeof query === 'undefined' ||
+                            !query.category
+                        ) { %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Accessories
+
                 </label>
+
 
             </div>
 
 
-            <h2 class="filter-heading">Platform</h2>
+
+
+            <!-- PLATFORM -->
+
+            <h2 class="filter-heading">
+                Platform
+            </h2>
+
 
             <div class="filter-group">
 
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="platform"
                         value="ps5"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.platform &&
+                                (
+                                    Array.isArray(query.platform)
+                                        ? query.platform.includes('ps5')
+                                        : query.platform === 'ps5'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     PlayStation 5
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="platform"
                         value="xbox"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.platform &&
+                                (
+                                    Array.isArray(query.platform)
+                                        ? query.platform.includes('xbox')
+                                        : query.platform === 'xbox'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Xbox Series X
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="platform"
                         value="switch"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.platform &&
+                                (
+                                    Array.isArray(query.platform)
+                                        ? query.platform.includes('switch')
+                                        : query.platform === 'switch'
+                                )
+                            ) {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Nintendo Switch
+
                 </label>
+
 
             </div>
 
 
-            <h2 class="filter-heading">Condition</h2>
+
+
+            <!-- CONDITION -->
+
+            <h2 class="filter-heading">
+                Condition
+            </h2>
+
 
             <div class="filter-group">
 
+
                 <label>
+
                     <input
                         type="radio"
                         name="condition"
                         value="all"
-                        checked
+
+                        <%
+                            if (
+                                typeof query === 'undefined' ||
+                                !query.condition ||
+                                query.condition === 'all'
+                            )
+                        {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     All
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="radio"
                         name="condition"
                         value="new"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.condition === 'new'
+                            )
+                            {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Brand New
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="radio"
                         name="condition"
                         value="refurb"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.condition === 'refurb'
+                            )
+                            {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Refurbished
+
                 </label>
+
 
             </div>
 
 
-            <h2 class="filter-heading">Price Range</h2>
+
+
+            <!-- PRICE -->
+
+            <h2 class="filter-heading">
+                Price Range
+            </h2>
+
+
 
             <div class="form-group">
+
 
                 <label for="min-price">
                     Minimum ($)
                 </label>
+
 
                 <input
                     type="number"
@@ -286,16 +689,22 @@
                     name="min-price"
                     min="0"
                     max="1000"
-                    value="0"
+
+                    value="<%= typeof query !== 'undefined' && query['min-price'] ? query['min-price'] : '0' %>"
                 >
+
 
             </div>
 
+
+
             <div class="form-group">
+
 
                 <label for="max-price">
                     Maximum ($)
                 </label>
+
 
                 <input
                     type="number"
@@ -303,37 +712,93 @@
                     name="max-price"
                     min="0"
                     max="1000"
-                    value="700"
+
+                    value="<%= typeof query !== 'undefined' && query['max-price'] ? query['max-price'] : '700' %>"
                 >
+
 
             </div>
 
 
-            <h2 class="filter-heading">Availability</h2>
+
+
+            <!-- AVAILABILITY -->
+
+            <h2 class="filter-heading">
+                Availability
+            </h2>
+
 
             <div class="filter-group">
 
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="stock"
                         value="in"
-                        checked
+
+                        <%
+                            if (
+                                typeof query === 'undefined' ||
+                                !query.stock ||
+                                (
+                                    Array.isArray(query.stock)
+                                        ? query.stock.includes('in')
+                                        : query.stock === 'in'
+                                )
+                            )
+                            {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     In Stock
+
                 </label>
 
+
+
                 <label>
+
                     <input
                         type="checkbox"
                         name="stock"
                         value="low"
+
+                        <%
+                            if (
+                                typeof query !== 'undefined' &&
+                                query.stock &&
+                                (
+                                    Array.isArray(query.stock)
+                                        ? query.stock.includes('low')
+                                        : query.stock === 'low'
+                                )
+                            )
+                            {
+                        %>
+
+                            checked
+
+                        <% } %>
                     >
+
                     Low Stock
+
                 </label>
+
 
             </div>
 
+
+
+
+            <!-- BUTTONS -->
 
             <button
                 type="submit"
@@ -342,78 +807,263 @@
                 Apply Filters
             </button>
 
-            <button
-                type="reset"
+
+
+            <a
+                href="/shop"
                 class="btn btn--outline summary-btn"
             >
                 Reset
-            </button>
+            </a>
+
 
         </form>
+
 
     </aside>
 
 
-    <!-- Product section -->
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
+
     <section
         class="shop-main"
         aria-label="Product catalog"
     >
 
-        <!-- Toolbar -->
+
+
+        <!-- TOOLBAR -->
+
         <div class="shop-toolbar">
+
 
             <p class="result-count">
 
                 Showing
-                <strong><%= products.length %></strong>
-                of
-                <strong><%= products.length %></strong>
+
+                <strong>
+                    <%= products.length %>
+                </strong>
+
                 products
 
             </p>
 
 
+
+            <!-- SORT -->
+
             <form
                 class="sort-form"
                 action="/shop"
-                method="get"
+                method="GET"
             >
+
+
+                <% if (typeof query !== 'undefined') { %>
+
+
+                    <% if (query.search) { %>
+
+                        <input
+                            type="hidden"
+                            name="search"
+                            value="<%= query.search %>"
+                        >
+
+                    <% } %>
+
+
+
+                    <% if (query.category) { %>
+
+                        <%
+                            const selectedCategories =
+                                Array.isArray(query.category)
+                                    ? query.category
+                                    : [query.category];
+                        %>
+
+
+                        <% selectedCategories.forEach(category => { %>
+
+                            <input
+                                type="hidden"
+                                name="category"
+                                value="<%= category %>"
+                            >
+
+                        <% }); %>
+
+                    <% } %>
+
+
+
+                    <% if (query.platform) { %>
+
+                        <%
+                            const selectedPlatforms =
+                                Array.isArray(query.platform)
+                                    ? query.platform
+                                    : [query.platform];
+                        %>
+
+
+                        <% selectedPlatforms.forEach(platform => { %>
+
+                            <input
+                                type="hidden"
+                                name="platform"
+                                value="<%= platform %>"
+                            >
+
+                        <% }); %>
+
+                    <% } %>
+
+
+
+                    <% if (query.condition) { %>
+
+                        <input
+                            type="hidden"
+                            name="condition"
+                            value="<%= query.condition %>"
+                        >
+
+                    <% } %>
+
+
+
+                    <% if (query['min-price']) { %>
+
+                        <input
+                            type="hidden"
+                            name="min-price"
+                            value="<%= query['min-price'] %>"
+                        >
+
+                    <% } %>
+
+
+
+                    <% if (query['max-price']) { %>
+
+                        <input
+                            type="hidden"
+                            name="max-price"
+                            value="<%= query['max-price'] %>"
+                        >
+
+                    <% } %>
+
+
+
+                    <% if (query.stock) { %>
+
+                        <%
+                            const selectedStock =
+                                Array.isArray(query.stock)
+                                    ? query.stock
+                                    : [query.stock];
+                        %>
+
+
+                        <% selectedStock.forEach(stock => { %>
+
+                            <input
+                                type="hidden"
+                                name="stock"
+                                value="<%= stock %>"
+                            >
+
+                        <% }); %>
+
+                    <% } %>
+
+
+                <% } %>
+
+
 
                 <label for="sort">
                     Sort by:
                 </label>
+
 
                 <select
                     id="sort"
                     name="sort"
                 >
 
-                    <option value="title-asc">
+
+                    <option
+                        value="title-asc"
+                        <%= !query || !query.sort || query.sort === 'title-asc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Title (A–Z)
                     </option>
 
-                    <option value="title-desc">
+
+                    <option
+                        value="title-desc"
+                        <%= query && query.sort === 'title-desc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Title (Z–A)
                     </option>
 
-                    <option value="price-asc">
+
+                    <option
+                        value="price-asc"
+                        <%= query && query.sort === 'price-asc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Price (Low to High)
                     </option>
 
-                    <option value="price-desc">
+
+                    <option
+                        value="price-desc"
+                        <%= query && query.sort === 'price-desc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Price (High to Low)
                     </option>
 
-                    <option value="qty-desc">
+
+                    <option
+                        value="qty-desc"
+                        <%= query && query.sort === 'qty-desc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Quantity (Most in stock)
                     </option>
 
-                    <option value="qty-asc">
+
+                    <option
+                        value="qty-asc"
+                        <%= query && query.sort === 'qty-asc'
+                            ? 'selected'
+                            : '' %>
+                    >
                         Quantity (Least in stock)
                     </option>
 
+
                 </select>
+
+
 
                 <button
                     type="submit"
@@ -422,27 +1072,41 @@
                     Sort
                 </button>
 
+
             </form>
+
 
         </div>
 
 
-        <!-- Product Grid -->
+
+
+        <!-- PRODUCT GRID -->
+
         <div class="shop-grid">
+
 
             <% products.forEach(product => { %>
 
+
                 <article class="shop-card">
 
+
+                    <!-- IMAGE -->
+
                     <div class="shop-card__image-wrap">
+
 
                         <% if (product.discount) { %>
 
                             <span class="sale-badge">
+
                                 -<%= product.discount %>%
+
                             </span>
 
                         <% } %>
+
 
                         <img
                             class="shop-card__image"
@@ -450,27 +1114,47 @@
                             alt="<%= product.name %>"
                         >
 
+
                     </div>
 
 
+
+
+                    <!-- BODY -->
+
                     <div class="shop-card__body">
 
+
                         <h3 class="shop-card__title">
+
                             <%= product.name %>
+
                         </h3>
 
 
+
+
+                        <!-- SPECS -->
+
                         <ul class="shop-card__specs">
 
+
                             <li>
-                                <span>Category:</span>
+
+                                <span>
+                                    Category:
+                                </span>
+
 
                                 <%= product.category.charAt(0).toUpperCase() +
                                     product.category.slice(1) %>
+
                             </li>
 
 
+
                             <% if (product.category === 'console') { %>
+
 
                                 <% if (product.id === 1) { %>
 
@@ -484,6 +1168,7 @@
                                         1TB SSD
                                     </li>
 
+
                                 <% } else if (product.id === 2) { %>
 
                                     <li>
@@ -496,6 +1181,7 @@
                                         1TB SSD
                                     </li>
 
+
                                 <% } else if (product.id === 3) { %>
 
                                     <li>
@@ -507,6 +1193,7 @@
                                         <span>Screen:</span>
                                         7" OLED
                                     </li>
+
 
                                 <% } else if (product.id === 17) { %>
 
@@ -523,7 +1210,9 @@
                                 <% } %>
 
 
+
                             <% } else if (product.category === 'accessory') { %>
+
 
                                 <% if (product.id === 4) { %>
 
@@ -532,6 +1221,7 @@
                                         Midnight Black
                                     </li>
 
+
                                 <% } else if (product.id === 5) { %>
 
                                     <li>
@@ -539,12 +1229,14 @@
                                         White
                                     </li>
 
+
                                 <% } else if (product.id === 18) { %>
 
                                     <li>
                                         <span>Colour:</span>
                                         Black
                                     </li>
+
 
                                 <% } else if (product.id === 19) { %>
 
@@ -556,126 +1248,230 @@
                                 <% } %>
 
 
+
                                 <li>
-                                    <span>Platform:</span>
+
+                                    <span>
+                                        Platform:
+                                    </span>
+
 
                                     <% if (product.platform === 'ps5') { %>
+
                                         PlayStation 5
+
                                     <% } else if (product.platform === 'switch') { %>
+
                                         Nintendo Switch
-                                    <% } else { %>
+
+                                    <% } else if (product.platform === 'xbox') { %>
+
                                         Xbox Series X
+
                                     <% } %>
 
                                 </li>
+
 
 
                             <% } else { %>
 
+
                                 <li>
-                                    <span>Platform:</span>
+
+                                    <span>
+                                        Platform:
+                                    </span>
+
 
                                     <% if (product.platform === 'ps5') { %>
+
                                         PlayStation 5
+
                                     <% } else if (product.platform === 'switch') { %>
+
                                         Nintendo Switch
+
                                     <% } else if (product.platform === 'xbox') { %>
+
                                         Xbox Series X
+
                                     <% } %>
 
                                 </li>
+
+
 
                                 <li>
-                                    <span>Edition:</span>
+
+                                    <span>
+                                        Edition:
+                                    </span>
+
 
                                     <% if (product.id === 8) { %>
+
                                         Deluxe
+
                                     <% } else if (product.id === 13) { %>
+
                                         Deluxe
+
                                     <% } else if (product.id === 16) { %>
+
                                         BMW Collector
+
                                     <% } else if (product.id === 10) { %>
+
                                         Ultimate
+
                                     <% } else { %>
+
                                         Standard
+
                                     <% } %>
 
                                 </li>
+
 
                             <% } %>
 
 
+
+                            <!-- CONDITION -->
+
                             <li>
-                                <span>Condition:</span>
-                                Brand New
+
+                                <span>
+                                    Condition:
+                                </span>
+
+
+                                <%= product.condition === 'refurb'
+                                    ? 'Refurbished'
+                                    : 'Brand New' %>
+
+
                             </li>
+
 
                         </ul>
 
 
+
+
+                        <!-- RATING -->
+
                         <div class="rating">
 
+
                             <% if (product.rating === 5) { %>
+
                                 ⭐⭐⭐⭐⭐
+
                             <% } else { %>
+
                                 ⭐⭐⭐⭐☆
+
                             <% } %>
 
+
                             <span class="rating-count">
+
                                 (<%= product.ratingCount.toLocaleString() %>)
+
                             </span>
+
 
                         </div>
 
 
+
+
+                        <!-- PRICE -->
+
                         <div class="price">
+
 
                             <% if (product.oldPrice) { %>
 
                                 <span class="old-price">
+
                                     $<%= product.oldPrice.toFixed(2) %>
+
                                 </span>
 
                             <% } %>
 
+
                             <span class="new-price">
+
                                 $<%= product.price.toFixed(2) %>
+
                             </span>
+
 
                         </div>
 
 
+
+
+                        <!-- STOCK -->
+
                         <% if (product.stock === 0) { %>
 
+
                             <span class="stock out-stock">
+
                                 Out of Stock — restocking soon
+
                             </span>
+
 
                         <% } else if (product.stock <= 6) { %>
 
+
                             <span class="stock low-stock">
-                                Low Stock — <%= product.stock %> units
+
+                                Low Stock —
+                                <%= product.stock %>
+                                units
+
                             </span>
+
 
                         <% } else { %>
 
+
                             <span class="stock in-stock">
-                                In Stock — <%= product.stock %> units
+
+                                In Stock —
+                                <%= product.stock %>
+                                units
+
                             </span>
+
 
                         <% } %>
 
 
-                        <!-- Add to Cart -->
+
+
+                        <!-- ADD TO CART -->
+
                         <form
                             class="add-form cart-form"
                             action="/cart/add"
-                            method="post"
+                            method="POST"
                         >
 
-                            <label for="qty-<%= product.id %>">
+
+                            <label
+                                for="qty-<%= product.id %>"
+                            >
                                 Qty
                             </label>
+
 
                             <input
                                 type="number"
@@ -683,9 +1479,15 @@
                                 name="quantity"
                                 value="1"
                                 min="1"
-                                max="<%= product.stock > 0 ? product.stock : 1 %>"
-                                <%= product.stock === 0 ? 'disabled' : '' %>
+                                max="<%= product.stock > 0
+                                    ? product.stock
+                                    : 1 %>"
+
+                                <%= product.stock === 0
+                                    ? 'disabled'
+                                    : '' %>
                             >
+
 
                             <input
                                 type="hidden"
@@ -693,10 +1495,14 @@
                                 value="<%= product.id %>"
                             >
 
+
                             <button
                                 type="submit"
                                 class="btn btn--primary"
-                                <%= product.stock === 0 ? 'disabled' : '' %>
+
+                                <%= product.stock === 0
+                                    ? 'disabled'
+                                    : '' %>
                             >
 
                                 <%= product.stock === 0
@@ -705,15 +1511,20 @@
 
                             </button>
 
+
                         </form>
 
 
-                        <!-- Add to Wishlist -->
+
+
+                        <!-- ADD TO WISHLIST -->
+
                         <form
                             class="wishlist-form"
                             action="/wishlist/add"
                             method="POST"
                         >
+
 
                             <input
                                 type="hidden"
@@ -721,29 +1532,68 @@
                                 value="<%= product.id %>"
                             >
 
+
                             <button
                                 type="submit"
                                 class="btn btn--outline"
                             >
+
                                 ♡ Add to Wishlist
+
                             </button>
+
 
                         </form>
 
+
                     </div>
+
 
                 </article>
 
+
             <% }); %>
+
 
         </div>
 
 
-        <!-- Pagination -->
+
+
+        <% if (products.length === 0) { %>
+
+
+            <div
+                style="
+                    width: 100%;
+                    text-align: center;
+                    padding: 40px 20px;
+                "
+            >
+
+                <h3>
+                    No products found
+                </h3>
+
+                <p>
+                    Try changing your filters.
+                </p>
+
+            </div>
+
+
+        <% } %>
+
+
+
+
+        <!-- PAGINATION -->
+
         <nav
             class="pagination"
             aria-label="Product pages"
         >
+
 
             <a
                 href="/shop"
@@ -753,12 +1603,14 @@
                 1
             </a>
 
+
             <a
                 href="/shop"
                 class="page-link"
             >
                 2
             </a>
+
 
             <a
                 href="/shop"
@@ -767,6 +1619,7 @@
                 3
             </a>
 
+
             <a
                 href="/shop"
                 class="page-link"
@@ -774,34 +1627,56 @@
                 Next ›
             </a>
 
+
         </nav>
 
+
     </section>
+
 
 </main>
 
 
-<!-- Footer -->
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer class="footer">
+
 
     <div class="footer__container">
 
+
         <div class="footer__col">
 
-            <h4>🎮 ConsoleHaven</h4>
+
+            <h4>
+                🎮 ConsoleHaven
+            </h4>
+
 
             <p>
                 Your ultimate destination for premium gaming hardware.
             </p>
 
+
         </div>
+
+
 
 
         <div class="footer__col">
 
-            <h4>Quick Links</h4>
+
+            <h4>
+                Quick Links
+            </h4>
+
 
             <ul>
+
 
                 <li>
                     <a href="/shop">
@@ -809,11 +1684,13 @@
                     </a>
                 </li>
 
+
                 <li>
                     <a href="/forum">
                         Gamer Forum
                     </a>
                 </li>
+
 
                 <li>
                     <a href="/reviews">
@@ -821,22 +1698,32 @@
                     </a>
                 </li>
 
+
                 <li>
                     <a href="/blog">
                         Blog
                     </a>
                 </li>
 
+
             </ul>
+
 
         </div>
 
 
+
+
         <div class="footer__col">
 
-            <h4>Support</h4>
+
+            <h4>
+                Support
+            </h4>
+
 
             <ul>
+
 
                 <li>
                     <a href="/sitemap">
@@ -844,11 +1731,13 @@
                     </a>
                 </li>
 
+
                 <li>
                     <a href="/admin">
                         Administration
                     </a>
                 </li>
+
 
                 <li>
                     <a href="/policy">
@@ -856,88 +1745,150 @@
                     </a>
                 </li>
 
+
             </ul>
+
 
         </div>
 
 
+
+
         <div class="footer__col">
 
-            <h4>Contact Us</h4>
+
+            <h4>
+                Contact Us
+            </h4>
+
 
             <ul>
+
 
                 <li>
                     📧 ConsoleHaven@rmitvnsgs.com
                 </li>
 
+
                 <li>
                     📞 +84 1234 68688
                 </li>
+
 
                 <li>
                     📍 Nguyen Van Linh blv
                 </li>
 
+
             </ul>
+
 
         </div>
 
+
     </div>
+
+
 
 
     <div class="footer__bottom">
 
+
         <p>
+
             &copy; 2026 ConsoleHaven Team.
             All rights reserved.
+
         </p>
 
+
     </div>
+
 
 </footer>
 
 
+
+
+<!-- =========================
+     BADGE SCRIPT
+========================= -->
+
 <script>
 
+
     const wishlistCount =
-        <%= typeof wishlistCount !== 'undefined' ? wishlistCount : 0 %>;
+        <%= typeof wishlistCount !== 'undefined'
+            ? wishlistCount
+            : 0 %>;
+
 
     const cartCount =
-        <%= typeof cartCount !== 'undefined' ? cartCount : 0 %>;
+        <%= typeof cartCount !== 'undefined'
+            ? cartCount
+            : 0 %>;
+
 
 
     const wishlistBadge =
-        document.getElementById('wishlist-badge');
+        document.getElementById(
+            'wishlist-badge'
+        );
+
 
     const cartBadge =
-        document.getElementById('cart-badge');
+        document.getElementById(
+            'cart-badge'
+        );
+
 
 
     if (wishlistCount > 0) {
 
-        wishlistBadge.textContent = wishlistCount;
-        wishlistBadge.style.display = 'flex';
+
+        wishlistBadge.textContent =
+            wishlistCount;
+
+
+        wishlistBadge.style.display =
+            'flex';
+
 
     } else {
 
-        wishlistBadge.style.display = 'none';
+
+        wishlistBadge.style.display =
+            'none';
+
 
     }
+
 
 
     if (cartCount > 0) {
 
-        cartBadge.textContent = cartCount;
-        cartBadge.style.display = 'flex';
+
+        cartBadge.textContent =
+            cartCount;
+
+
+        cartBadge.style.display =
+            'flex';
+
 
     } else {
 
-        cartBadge.style.display = 'none';
+
+        cartBadge.style.display =
+            'none';
+
 
     }
 
+
 </script>
 
+
 </body>
+
 </html>
