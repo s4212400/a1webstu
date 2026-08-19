@@ -1,1894 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Shop | ConsoleHaven</title>
 
     <link rel="stylesheet" href="/shared.css">
 
-    <style>
-
-        .nav__link-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .nav-badge {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            min-width: 18px;
-            height: 18px;
-            padding: 0 5px;
-            border-radius: 50%;
-            background: red;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            line-height: 18px;
-        }
-
-    </style>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 </head>
 
-
 <body>
-
 
 <a href="#main-content" class="skip-link">
     Skip to main content
 </a>
 
+<%- include('partials/header') %>
 
+<main id="main-content">
 
-<!-- =========================
-     HEADER
-========================= -->
+    <div class="shop-page">
 
-<header class="header">
+        <!-- FILTERS -->
+        <aside class="shop-sidebar" aria-label="Product filters">
 
-    <div class="header__container">
+            <h2 class="filter-heading">
+                Filter Products
+            </h2>
 
+            <form action="/shop" method="GET" class="filter-form">
 
-        <a href="/" class="logo">
-            🎮 ConsoleHaven
-        </a>
+                <!-- Search -->
+                <div class="form-group">
 
+                    <label for="search">
+                        Search
+                    </label>
 
-
-        <nav
-            class="nav"
-            aria-label="Main navigation"
-        >
-
-            <ul class="nav__list">
-
-
-                <li class="nav__item">
-
-                    <a
-                        href="/"
-                        class="nav__link"
-                    >
-                        Home
-                    </a>
-
-                </li>
-
-
-
-                <li class="nav__item">
-
-                    <a
-                        href="/shop"
-                        class="nav__link active"
-                        aria-current="page"
-                    >
-                        Shop
-                    </a>
-
-                </li>
-
-
-
-                <li class="nav__item">
-
-                    <a
-                        href="/forum"
-                        class="nav__link"
-                    >
-                        Forum
-                    </a>
-
-                </li>
-
-
-
-                <li class="nav__item">
-
-                    <a
-                        href="/reviews"
-                        class="nav__link"
-                    >
-                        Reviews
-                    </a>
-
-                </li>
-
-
-
-                <li class="nav__item">
-
-                    <a
-                        href="/blog"
-                        class="nav__link"
-                    >
-                        Blog
-                    </a>
-
-                </li>
-
-
-
-                <!-- Wishlist -->
-
-                <li class="nav__item">
-
-                    <a
-                        href="/wishlist"
-                        class="nav__link-wrapper"
+                    <input
+                        type="search"
+                        id="search"
+                        name="search"
+                        placeholder="Search products..."
+                        value="<%= query && query.search ? query.search : '' %>"
                     >
 
-                        <span class="nav__link">
-                            Wishlist
-                        </span>
+                </div>
 
-                        <span
-                            id="wishlist-badge"
-                            class="nav-badge"
+
+                <!-- Category -->
+                <h3 class="filter-heading">
+                    Category
+                </h3>
+
+                <div class="form-group filter-group">
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="category"
+                            value="console"
+                            <%= query && query.category &&
+                                (Array.isArray(query.category)
+                                    ? query.category.includes('console')
+                                    : query.category === 'console')
+                                ? 'checked'
+                                : '' %>
                         >
-                            0
-                        </span>
+                        Consoles
+                    </label>
 
-                    </a>
-
-                </li>
-
-
-
-                <!-- Cart -->
-
-                <li class="nav__item">
-
-                    <a
-                        href="/cart"
-                        class="nav__link-wrapper"
-                    >
-
-                        <span class="nav__link">
-                            🛒
-                        </span>
-
-                        <span
-                            id="cart-badge"
-                            class="nav-badge"
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="category"
+                            value="game"
+                            <%= query && query.category &&
+                                (Array.isArray(query.category)
+                                    ? query.category.includes('game')
+                                    : query.category === 'game')
+                                ? 'checked'
+                                : '' %>
                         >
-                            0
-                        </span>
-
-                    </a>
-
-                </li>
-
-
-
-                <!-- Profile -->
-
-                <li class="nav__item">
-
-                    <a
-                        href="/profile"
-                        class="nav__link"
-                    >
-                        👤
-                    </a>
-
-                </li>
-
-
-            </ul>
-
-        </nav>
-
-
-
-        <!-- Login / Register -->
-
-        <div class="header__actions">
-
-
-            <% if (user) { %>
-
-
-                <span class="btn btn--outline">
-                    <%= user.username %>
-                </span>
-
-
-                <a
-                    href="/logout"
-                    class="btn btn--outline"
-                >
-                    Logout
-                </a>
-
-
-            <% } else { %>
-
-
-                <a
-                    href="/login"
-                    class="btn btn--outline"
-                >
-                    Login
-                </a>
-
-
-                <a
-                    href="/register"
-                    class="btn btn--primary"
-                >
-                    Register
-                </a>
-
-
-            <% } %>
-
-
-        </div>
-
-
-    </div>
-
-</header>
-
-
-
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="wishlist-hero">
-
-    <h1>
-        Shop Catalog
-    </h1>
-
-    <p>
-        Browse consoles, accessories and games.
-        Add what you love to your cart.
-    </p>
-
-</section>
-
-
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main
-    id="main-content"
-    class="shop-page"
->
-
-
-
-    <!-- =========================
-         FILTER SIDEBAR
-    ========================= -->
-
-    <aside
-        class="shop-sidebar"
-        aria-label="Product filters"
-    >
-
-
-        <form
-            class="filter-form"
-            action="/shop"
-            method="GET"
-        >
-
-
-
-            <!-- SEARCH -->
-
-            <h2 class="filter-heading">
-                Search
-            </h2>
-
-
-            <div class="form-group">
-
-
-                <label for="search">
-                    Product title
-                </label>
-
-
-                <input
-                    type="search"
-                    id="search"
-                    name="search"
-                    placeholder="e.g. PlayStation 5"
-                    value="<%= typeof query !== 'undefined' && query.search ? query.search : '' %>"
-                >
-
-
-            </div>
-
-
-
-
-            <!-- CATEGORY -->
-
-            <h2 class="filter-heading">
-                Category
-            </h2>
-
-
-            <div class="filter-group">
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="category"
-                        value="console"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.category &&
-                                (
-                                    Array.isArray(query.category)
-                                        ? query.category.includes('console')
-                                        : query.category === 'console'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } else if (
-                            typeof query === 'undefined' ||
-                            !query.category
-                        ) { %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Consoles
-
-                </label>
-
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="category"
-                        value="game"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.category &&
-                                (
-                                    Array.isArray(query.category)
-                                        ? query.category.includes('game')
-                                        : query.category === 'game'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } else if (
-                            typeof query === 'undefined' ||
-                            !query.category
-                        ) { %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Games
-
-                </label>
-
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="category"
-                        value="accessory"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.category &&
-                                (
-                                    Array.isArray(query.category)
-                                        ? query.category.includes('accessory')
-                                        : query.category === 'accessory'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } else if (
-                            typeof query === 'undefined' ||
-                            !query.category
-                        ) { %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Accessories
-
-                </label>
-
-
-            </div>
-
-
-
-
-            <!-- PLATFORM -->
-
-            <h2 class="filter-heading">
-                Platform
-            </h2>
-
-
-            <div class="filter-group">
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="platform"
-                        value="ps5"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.platform &&
-                                (
-                                    Array.isArray(query.platform)
-                                        ? query.platform.includes('ps5')
-                                        : query.platform === 'ps5'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    PlayStation 5
-
-                </label>
-
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="platform"
-                        value="xbox"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.platform &&
-                                (
-                                    Array.isArray(query.platform)
-                                        ? query.platform.includes('xbox')
-                                        : query.platform === 'xbox'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Xbox Series X
-
-                </label>
-
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="platform"
-                        value="switch"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.platform &&
-                                (
-                                    Array.isArray(query.platform)
-                                        ? query.platform.includes('switch')
-                                        : query.platform === 'switch'
-                                )
-                            ) {
-                        %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Nintendo Switch
-
-                </label>
-
-
-            </div>
-
-
-
-
-            <!-- CONDITION -->
-
-            <h2 class="filter-heading">
-                Condition
-            </h2>
-
-
-            <div class="filter-group">
-
-
-                <label>
-
-                    <input
-                        type="radio"
+                        Games
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="category"
+                            value="accessory"
+                            <%= query && query.category &&
+                                (Array.isArray(query.category)
+                                    ? query.category.includes('accessory')
+                                    : query.category === 'accessory')
+                                ? 'checked'
+                                : '' %>
+                        >
+                        Accessories
+                    </label>
+
+                </div>
+
+
+                <!-- Platform -->
+                <h3 class="filter-heading">
+                    Platform
+                </h3>
+
+                <div class="form-group filter-group">
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="platform"
+                            value="ps5"
+                            <%= query && query.platform &&
+                                (Array.isArray(query.platform)
+                                    ? query.platform.includes('ps5')
+                                    : query.platform === 'ps5')
+                                ? 'checked'
+                                : '' %>
+                        >
+                        PlayStation 5
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="platform"
+                            value="xbox"
+                            <%= query && query.platform &&
+                                (Array.isArray(query.platform)
+                                    ? query.platform.includes('xbox')
+                                    : query.platform === 'xbox')
+                                ? 'checked'
+                                : '' %>
+                        >
+                        Xbox
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="platform"
+                            value="switch"
+                            <%= query && query.platform &&
+                                (Array.isArray(query.platform)
+                                    ? query.platform.includes('switch')
+                                    : query.platform === 'switch')
+                                ? 'checked'
+                                : '' %>
+                        >
+                        Nintendo Switch
+                    </label>
+
+                </div>
+
+
+                <!-- Condition -->
+                <h3 class="filter-heading">
+                    Condition
+                </h3>
+
+                <div class="form-group">
+
+                    <label for="condition">
+                        Condition
+                    </label>
+
+                    <select
+                        id="condition"
                         name="condition"
-                        value="all"
-
-                        <%
-                            if (
-                                typeof query === 'undefined' ||
-                                !query.condition ||
-                                query.condition === 'all'
-                            )
-                        {
-                        %>
-
-                            checked
-
-                        <% } %>
                     >
 
-                    All
+                        <option
+                            value="all"
+                            <%= !query || !query.condition || query.condition === 'all'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            All
+                        </option>
 
-                </label>
+                        <option
+                            value="new"
+                            <%= query && query.condition === 'new'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            New
+                        </option>
+
+                    </select>
+
+                </div>
 
 
+                <!-- Price -->
+                <h3 class="filter-heading">
+                    Price
+                </h3>
 
-                <label>
+                <div class="form-group">
+
+                    <label for="min-price">
+                        Minimum Price
+                    </label>
 
                     <input
-                        type="radio"
-                        name="condition"
-                        value="new"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.condition === 'new'
-                            )
-                            {
-                        %>
-
-                            checked
-
-                        <% } %>
+                        type="number"
+                        id="min-price"
+                        name="min-price"
+                        min="0"
+                        step="0.01"
+                        placeholder="0"
+                        value="<%= query && query['min-price'] ? query['min-price'] : '' %>"
                     >
 
-                    Brand New
+                </div>
 
-                </label>
+                <div class="form-group">
 
-
-
-                <label>
+                    <label for="max-price">
+                        Maximum Price
+                    </label>
 
                     <input
-                        type="radio"
-                        name="condition"
-                        value="refurb"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.condition === 'refurb'
-                            )
-                            {
-                        %>
-
-                            checked
-
-                        <% } %>
+                        type="number"
+                        id="max-price"
+                        name="max-price"
+                        min="0"
+                        step="0.01"
+                        placeholder="1000"
+                        value="<%= query && query['max-price'] ? query['max-price'] : '' %>"
                     >
 
-                    Refurbished
+                </div>
 
-                </label>
 
+                <!-- Stock -->
+                <h3 class="filter-heading">
+                    Availability
+                </h3>
 
-            </div>
+                <div class="form-group filter-group">
 
-
-
-
-            <!-- PRICE -->
-
-            <h2 class="filter-heading">
-                Price Range
-            </h2>
-
-
-
-            <div class="form-group">
-
-
-                <label for="min-price">
-                    Minimum ($)
-                </label>
-
-
-                <input
-                    type="number"
-                    id="min-price"
-                    name="min-price"
-                    min="0"
-                    max="1000"
-
-                    value="<%= typeof query !== 'undefined' && query['min-price'] ? query['min-price'] : '0' %>"
-                >
-
-
-            </div>
-
-
-
-            <div class="form-group">
-
-
-                <label for="max-price">
-                    Maximum ($)
-                </label>
-
-
-                <input
-                    type="number"
-                    id="max-price"
-                    name="max-price"
-                    min="0"
-                    max="1000"
-
-                    value="<%= typeof query !== 'undefined' && query['max-price'] ? query['max-price'] : '700' %>"
-                >
-
-
-            </div>
-
-
-
-
-            <!-- AVAILABILITY -->
-
-            <h2 class="filter-heading">
-                Availability
-            </h2>
-
-
-            <div class="filter-group">
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="stock"
-                        value="in"
-
-                        <%
-                            if (
-                                typeof query === 'undefined' ||
-                                !query.stock ||
-                                (
-                                    Array.isArray(query.stock)
-                                        ? query.stock.includes('in')
-                                        : query.stock === 'in'
-                                )
-                            )
-                            {
-                        %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    In Stock
-
-                </label>
-
-
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        name="stock"
-                        value="low"
-
-                        <%
-                            if (
-                                typeof query !== 'undefined' &&
-                                query.stock &&
-                                (
-                                    Array.isArray(query.stock)
-                                        ? query.stock.includes('low')
-                                        : query.stock === 'low'
-                                )
-                            )
-                            {
-                        %>
-
-                            checked
-
-                        <% } %>
-                    >
-
-                    Low Stock
-
-                </label>
-
-
-            </div>
-
-
-
-
-            <!-- BUTTONS -->
-
-            <button
-                type="submit"
-                class="btn btn--primary summary-btn"
-            >
-                Apply Filters
-            </button>
-
-
-
-            <a
-                href="/shop"
-                class="btn btn--outline summary-btn"
-            >
-                Reset
-            </a>
-
-
-        </form>
-
-
-    </aside>
-
-
-
-
-    <!-- =========================
-         PRODUCTS
-    ========================= -->
-
-    <section
-        class="shop-main"
-        aria-label="Product catalog"
-    >
-
-
-
-        <!-- TOOLBAR -->
-
-        <div class="shop-toolbar">
-
-
-            <p class="result-count">
-
-                Showing
-
-                <strong>
-                    <%= products.length %>
-                </strong>
-
-                products
-
-            </p>
-
-
-
-            <!-- SORT -->
-
-            <form
-                class="sort-form"
-                action="/shop"
-                method="GET"
-            >
-
-
-                <% if (typeof query !== 'undefined') { %>
-
-
-                    <% if (query.search) { %>
-
+                    <label>
                         <input
-                            type="hidden"
-                            name="search"
-                            value="<%= query.search %>"
+                            type="checkbox"
+                            name="stock"
+                            value="in"
+                            <%= query && query.stock &&
+                                (Array.isArray(query.stock)
+                                    ? query.stock.includes('in')
+                                    : query.stock === 'in')
+                                ? 'checked'
+                                : '' %>
                         >
+                        In Stock
+                    </label>
 
-                    <% } %>
-
-
-
-                    <% if (query.category) { %>
-
-                        <%
-                            const selectedCategories =
-                                Array.isArray(query.category)
-                                    ? query.category
-                                    : [query.category];
-                        %>
-
-
-                        <% selectedCategories.forEach(category => { %>
-
-                            <input
-                                type="hidden"
-                                name="category"
-                                value="<%= category %>"
-                            >
-
-                        <% }); %>
-
-                    <% } %>
-
-
-
-                    <% if (query.platform) { %>
-
-                        <%
-                            const selectedPlatforms =
-                                Array.isArray(query.platform)
-                                    ? query.platform
-                                    : [query.platform];
-                        %>
-
-
-                        <% selectedPlatforms.forEach(platform => { %>
-
-                            <input
-                                type="hidden"
-                                name="platform"
-                                value="<%= platform %>"
-                            >
-
-                        <% }); %>
-
-                    <% } %>
-
-
-
-                    <% if (query.condition) { %>
-
+                    <label>
                         <input
-                            type="hidden"
-                            name="condition"
-                            value="<%= query.condition %>"
+                            type="checkbox"
+                            name="stock"
+                            value="low"
+                            <%= query && query.stock &&
+                                (Array.isArray(query.stock)
+                                    ? query.stock.includes('low')
+                                    : query.stock === 'low')
+                                ? 'checked'
+                                : '' %>
                         >
+                        Low Stock
+                    </label>
 
-                    <% } %>
-
-
-
-                    <% if (query['min-price']) { %>
-
-                        <input
-                            type="hidden"
-                            name="min-price"
-                            value="<%= query['min-price'] %>"
-                        >
-
-                    <% } %>
-
-
-
-                    <% if (query['max-price']) { %>
-
-                        <input
-                            type="hidden"
-                            name="max-price"
-                            value="<%= query['max-price'] %>"
-                        >
-
-                    <% } %>
-
-
-
-                    <% if (query.stock) { %>
-
-                        <%
-                            const selectedStock =
-                                Array.isArray(query.stock)
-                                    ? query.stock
-                                    : [query.stock];
-                        %>
-
-
-                        <% selectedStock.forEach(stock => { %>
-
-                            <input
-                                type="hidden"
-                                name="stock"
-                                value="<%= stock %>"
-                            >
-
-                        <% }); %>
-
-                    <% } %>
-
-
-                <% } %>
-
-
-
-                <label for="sort">
-                    Sort by:
-                </label>
-
-
-                <select
-                    id="sort"
-                    name="sort"
-                >
-
-
-                    <option
-                        value="title-asc"
-                        <%= !query || !query.sort || query.sort === 'title-asc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Title (A–Z)
-                    </option>
-
-
-                    <option
-                        value="title-desc"
-                        <%= query && query.sort === 'title-desc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Title (Z–A)
-                    </option>
-
-
-                    <option
-                        value="price-asc"
-                        <%= query && query.sort === 'price-asc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Price (Low to High)
-                    </option>
-
-
-                    <option
-                        value="price-desc"
-                        <%= query && query.sort === 'price-desc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Price (High to Low)
-                    </option>
-
-
-                    <option
-                        value="qty-desc"
-                        <%= query && query.sort === 'qty-desc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Quantity (Most in stock)
-                    </option>
-
-
-                    <option
-                        value="qty-asc"
-                        <%= query && query.sort === 'qty-asc'
-                            ? 'selected'
-                            : '' %>
-                    >
-                        Quantity (Least in stock)
-                    </option>
-
-
-                </select>
-
+                </div>
 
 
                 <button
                     type="submit"
-                    class="btn btn--outline btn--small"
+                    class="btn btn--primary summary-btn"
                 >
-                    Sort
+                    Apply Filters
                 </button>
 
+                <a
+                    href="/shop"
+                    class="btn btn--outline summary-btn"
+                >
+                    Clear Filters
+                </a>
 
             </form>
 
-
-        </div>
-
+        </aside>
 
 
+        <!-- PRODUCTS -->
+        <section aria-label="Products">
 
-        <!-- PRODUCT GRID -->
+            <!-- Toolbar -->
+            <div class="shop-toolbar">
 
-        <div class="shop-grid">
+                <div class="result-count">
 
+                    Showing
+                    <strong><%= products.length %></strong>
+                    products
 
-            <% products.forEach(product => { %>
+                </div>
 
+                <form
+                    action="/shop"
+                    method="GET"
+                    class="sort-form"
+                >
 
-                <article class="shop-card">
+                    <% if (query) { %>
 
-
-                    <!-- IMAGE -->
-
-                    <div class="shop-card__image-wrap">
-
-
-                        <% if (product.discount) { %>
-
-                            <span class="sale-badge">
-
-                                -<%= product.discount %>%
-
-                            </span>
-
+                        <% if (query.search) { %>
+                            <input
+                                type="hidden"
+                                name="search"
+                                value="<%= query.search %>"
+                            >
                         <% } %>
 
+                        <% if (query.category) { %>
 
-                        <img
-                            class="shop-card__image"
-                            src="<%= product.image %>"
-                            alt="<%= product.name %>"
-                        >
+                            <% if (Array.isArray(query.category)) { %>
 
+                                <% query.category.forEach(category => { %>
 
-                    </div>
+                                    <input
+                                        type="hidden"
+                                        name="category"
+                                        value="<%= category %>"
+                                    >
 
-
-
-
-                    <!-- BODY -->
-
-                    <div class="shop-card__body">
-
-
-                        <h3 class="shop-card__title">
-
-                            <%= product.name %>
-
-                        </h3>
-
-
-
-
-                        <!-- SPECS -->
-
-                        <ul class="shop-card__specs">
-
-
-                            <li>
-
-                                <span>
-                                    Category:
-                                </span>
-
-
-                                <%= product.category.charAt(0).toUpperCase() +
-                                    product.category.slice(1) %>
-
-                            </li>
-
-
-
-                            <% if (product.category === 'console') { %>
-
-
-                                <% if (product.id === 1) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Glacier White
-                                    </li>
-
-                                    <li>
-                                        <span>Storage:</span>
-                                        1TB SSD
-                                    </li>
-
-
-                                <% } else if (product.id === 2) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Carbon Black
-                                    </li>
-
-                                    <li>
-                                        <span>Storage:</span>
-                                        1TB SSD
-                                    </li>
-
-
-                                <% } else if (product.id === 3) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Neon Red / Blue
-                                    </li>
-
-                                    <li>
-                                        <span>Screen:</span>
-                                        7" OLED
-                                    </li>
-
-
-                                <% } else if (product.id === 17) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Turquoise
-                                    </li>
-
-                                    <li>
-                                        <span>Storage:</span>
-                                        32GB
-                                    </li>
-
-                                <% } %>
-
-
-
-                            <% } else if (product.category === 'accessory') { %>
-
-
-                                <% if (product.id === 4) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Midnight Black
-                                    </li>
-
-
-                                <% } else if (product.id === 5) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        White
-                                    </li>
-
-
-                                <% } else if (product.id === 18) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        Black
-                                    </li>
-
-
-                                <% } else if (product.id === 19) { %>
-
-                                    <li>
-                                        <span>Colour:</span>
-                                        White
-                                    </li>
-
-                                <% } %>
-
-
-
-                                <li>
-
-                                    <span>
-                                        Platform:
-                                    </span>
-
-
-                                    <% if (product.platform === 'ps5') { %>
-
-                                        PlayStation 5
-
-                                    <% } else if (product.platform === 'switch') { %>
-
-                                        Nintendo Switch
-
-                                    <% } else if (product.platform === 'xbox') { %>
-
-                                        Xbox Series X
-
-                                    <% } %>
-
-                                </li>
-
-
+                                <% }) %>
 
                             <% } else { %>
 
-
-                                <li>
-
-                                    <span>
-                                        Platform:
-                                    </span>
-
-
-                                    <% if (product.platform === 'ps5') { %>
-
-                                        PlayStation 5
-
-                                    <% } else if (product.platform === 'switch') { %>
-
-                                        Nintendo Switch
-
-                                    <% } else if (product.platform === 'xbox') { %>
-
-                                        Xbox Series X
-
-                                    <% } %>
-
-                                </li>
-
-
-
-                                <li>
-
-                                    <span>
-                                        Edition:
-                                    </span>
-
-
-                                    <% if (product.id === 8) { %>
-
-                                        Deluxe
-
-                                    <% } else if (product.id === 13) { %>
-
-                                        Deluxe
-
-                                    <% } else if (product.id === 16) { %>
-
-                                        BMW Collector
-
-                                    <% } else if (product.id === 10) { %>
-
-                                        Ultimate
-
-                                    <% } else { %>
-
-                                        Standard
-
-                                    <% } %>
-
-                                </li>
-
+                                <input
+                                    type="hidden"
+                                    name="category"
+                                    value="<%= query.category %>"
+                                >
 
                             <% } %>
-
-
-
-                            <!-- CONDITION -->
-
-                            <li>
-
-                                <span>
-                                    Condition:
-                                </span>
-
-
-                                <%= product.condition === 'refurb'
-                                    ? 'Refurbished'
-                                    : 'Brand New' %>
-
-
-                            </li>
-
-
-                        </ul>
-
-
-
-
-                        <!-- RATING -->
-
-                        <div class="rating">
-
-
-                            <% if (product.rating === 5) { %>
-
-                                ⭐⭐⭐⭐⭐
-
-                            <% } else { %>
-
-                                ⭐⭐⭐⭐☆
-
-                            <% } %>
-
-
-                            <span class="rating-count">
-
-                                (<%= product.ratingCount.toLocaleString() %>)
-
-                            </span>
-
-
-                        </div>
-
-
-
-
-                        <!-- PRICE -->
-
-                        <div class="price">
-
-
-                            <% if (product.oldPrice) { %>
-
-                                <span class="old-price">
-
-                                    $<%= product.oldPrice.toFixed(2) %>
-
-                                </span>
-
-                            <% } %>
-
-
-                            <span class="new-price">
-
-                                $<%= product.price.toFixed(2) %>
-
-                            </span>
-
-
-                        </div>
-
-
-
-
-                        <!-- STOCK -->
-
-                        <% if (product.stock === 0) { %>
-
-
-                            <span class="stock out-stock">
-
-                                Out of Stock — restocking soon
-
-                            </span>
-
-
-                        <% } else if (product.stock <= 6) { %>
-
-
-                            <span class="stock low-stock">
-
-                                Low Stock —
-                                <%= product.stock %>
-                                units
-
-                            </span>
-
-
-                        <% } else { %>
-
-
-                            <span class="stock in-stock">
-
-                                In Stock —
-                                <%= product.stock %>
-                                units
-
-                            </span>
-
 
                         <% } %>
 
+                        <% if (query.platform) { %>
 
+                            <% if (Array.isArray(query.platform)) { %>
 
+                                <% query.platform.forEach(platform => { %>
 
-                        <!-- ADD TO CART -->
+                                    <input
+                                        type="hidden"
+                                        name="platform"
+                                        value="<%= platform %>"
+                                    >
 
-                        <form
-                            class="add-form cart-form"
-                            action="/cart/add"
-                            method="POST"
-                        >
+                                <% }) %>
 
+                            <% } else { %>
 
-                            <label
-                                for="qty-<%= product.id %>"
-                            >
-                                Qty
-                            </label>
+                                <input
+                                    type="hidden"
+                                    name="platform"
+                                    value="<%= query.platform %>"
+                                >
 
+                            <% } %>
 
-                            <input
-                                type="number"
-                                id="qty-<%= product.id %>"
-                                name="quantity"
-                                value="1"
-                                min="1"
-                                max="<%= product.stock > 0
-                                    ? product.stock
-                                    : 1 %>"
+                        <% } %>
 
-                                <%= product.stock === 0
-                                    ? 'disabled'
-                                    : '' %>
-                            >
-
+                        <% if (query.condition) { %>
 
                             <input
                                 type="hidden"
-                                name="productId"
-                                value="<%= product.id %>"
+                                name="condition"
+                                value="<%= query.condition %>"
                             >
 
+                        <% } %>
 
-                            <button
-                                type="submit"
-                                class="btn btn--primary"
-
-                                <%= product.stock === 0
-                                    ? 'disabled'
-                                    : '' %>
-                            >
-
-                                <%= product.stock === 0
-                                    ? 'Out of Stock'
-                                    : 'Add to Cart' %>
-
-                            </button>
-
-
-                        </form>
-
-
-
-
-                        <!-- ADD TO WISHLIST -->
-
-                        <form
-                            class="wishlist-form"
-                            action="/wishlist/add"
-                            method="POST"
-                        >
-
+                        <% if (query['min-price']) { %>
 
                             <input
                                 type="hidden"
-                                name="productId"
-                                value="<%= product.id %>"
+                                name="min-price"
+                                value="<%= query['min-price'] %>"
                             >
 
+                        <% } %>
 
-                            <button
-                                type="submit"
-                                class="btn btn--outline"
+                        <% if (query['max-price']) { %>
+
+                            <input
+                                type="hidden"
+                                name="max-price"
+                                value="<%= query['max-price'] %>"
                             >
 
-                                ♡ Add to Wishlist
+                        <% } %>
 
-                            </button>
+                        <% if (query.stock) { %>
 
+                            <% if (Array.isArray(query.stock)) { %>
 
-                        </form>
+                                <% query.stock.forEach(stock => { %>
 
+                                    <input
+                                        type="hidden"
+                                        name="stock"
+                                        value="<%= stock %>"
+                                    >
 
-                    </div>
+                                <% }) %>
 
+                            <% } else { %>
 
-                </article>
+                                <input
+                                    type="hidden"
+                                    name="stock"
+                                    value="<%= query.stock %>"
+                                >
 
+                            <% } %>
 
-            <% }); %>
+                        <% } %>
 
+                    <% } %>
 
-        </div>
+                    <label for="sort">
+                        Sort by
+                    </label>
 
+                    <select
+                        id="sort"
+                        name="sort"
+                        onchange="this.form.submit()"
+                    >
 
+                        <option
+                            value="title-asc"
+                            <%= !query || !query.sort || query.sort === 'title-asc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Title A-Z
+                        </option>
 
+                        <option
+                            value="title-desc"
+                            <%= query && query.sort === 'title-desc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Title Z-A
+                        </option>
 
-        <% if (products.length === 0) { %>
+                        <option
+                            value="price-asc"
+                            <%= query && query.sort === 'price-asc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Price Low-High
+                        </option>
 
+                        <option
+                            value="price-desc"
+                            <%= query && query.sort === 'price-desc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Price High-Low
+                        </option>
 
-            <div
-                style="
-                    width: 100%;
-                    text-align: center;
-                    padding: 40px 20px;
-                "
-            >
+                        <option
+                            value="qty-desc"
+                            <%= query && query.sort === 'qty-desc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Stock High-Low
+                        </option>
 
-                <h3>
-                    No products found
-                </h3>
+                        <option
+                            value="qty-asc"
+                            <%= query && query.sort === 'qty-asc'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Stock Low-High
+                        </option>
 
-                <p>
-                    Try changing your filters.
-                </p>
+                    </select>
+
+                </form>
 
             </div>
 
 
-        <% } %>
+            <!-- Product Grid -->
+            <div class="shop-grid">
+
+                <% products.forEach(product => { %>
+
+                    <article class="shop-card">
+
+                        <div class="shop-card__image-wrap">
+
+                            <img
+                                src="<%= product.image %>"
+                                alt="<%= product.name %>"
+                                class="shop-card__image"
+                            >
+
+                            <% if (product.discount) { %>
+
+                                <span class="save-tag">
+                                    -<%= product.discount %>%
+                                </span>
+
+                            <% } %>
+
+                        </div>
 
 
+                        <div class="shop-card__body">
+
+                            <h2 class="shop-card__title">
+                                <%= product.name %>
+                            </h2>
 
 
-        <!-- PAGINATION -->
+                            <ul class="shop-card__specs">
 
-        <nav
-            class="pagination"
-            aria-label="Product pages"
-        >
+                                <li>
+                                    <span>Category:</span>
+                                    <%= product.category %>
+                                </li>
 
+                                <li>
+                                    <span>Platform:</span>
+                                    <%= product.platform %>
+                                </li>
 
-            <a
-                href="/shop"
-                class="page-link active"
-                aria-current="page"
-            >
-                1
-            </a>
+                                <li>
+                                    <span>Condition:</span>
+                                    <%= product.condition %>
+                                </li>
 
-
-            <a
-                href="/shop"
-                class="page-link"
-            >
-                2
-            </a>
+                            </ul>
 
 
-            <a
-                href="/shop"
-                class="page-link"
-            >
-                3
-            </a>
+                            <div class="rating">
+
+                                <%= "⭐".repeat(product.rating || 0) %>
+
+                                <span class="rating-count">
+                                    (<%= product.ratingCount || 0 %>)
+                                </span>
+
+                            </div>
 
 
-            <a
-                href="/shop"
-                class="page-link"
-            >
-                Next ›
-            </a>
+                            <div class="price">
+
+                                <% if (product.oldPrice) { %>
+
+                                    <del>
+                                        $<%= Number(product.oldPrice).toFixed(2) %>
+                                    </del>
+
+                                <% } %>
+
+                                <strong>
+                                    $<%= Number(product.price).toFixed(2) %>
+                                </strong>
+
+                            </div>
 
 
-        </nav>
+                            <div class="stock">
+
+                                <% if (product.stock > 0) { %>
+
+                                    <% if (product.stock <= 6) { %>
+
+                                        <span>
+                                            Low Stock:
+                                            <%= product.stock %>
+                                        </span>
+
+                                    <% } else { %>
+
+                                        <span>
+                                            In Stock:
+                                            <%= product.stock %>
+                                        </span>
+
+                                    <% } %>
+
+                                <% } else { %>
+
+                                    <span>
+                                        Out of Stock
+                                    </span>
+
+                                <% } %>
+
+                            </div>
 
 
-    </section>
+                            <% if (product.stock > 0) { %>
 
+                                <form
+                                    action="/cart/add"
+                                    method="POST"
+                                    class="add-form"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="productId"
+                                        value="<%= product.id %>"
+                                    >
+
+                                    <label for="quantity-<%= product.id %>">
+                                        Qty
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="quantity-<%= product.id %>"
+                                        name="quantity"
+                                        value="1"
+                                        min="1"
+                                        max="<%= product.stock %>"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn--primary btn--small"
+                                    >
+                                        Add to Cart
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                    action="/wishlist/add"
+                                    method="POST"
+                                    class="add-form"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="productId"
+                                        value="<%= product.id %>"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn--outline btn--small"
+                                    >
+                                        Add to Wishlist
+                                    </button>
+
+                                </form>
+
+                            <% } else { %>
+
+                                <button
+                                    type="button"
+                                    class="btn btn--outline btn--small"
+                                    disabled
+                                >
+                                    Out of Stock
+                                </button>
+
+                            <% } %>
+
+                        </div>
+
+                    </article>
+
+                <% }) %>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </main>
 
-
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer class="footer">
-
-
-    <div class="footer__container">
-
-
-        <div class="footer__col">
-
-
-            <h4>
-                🎮 ConsoleHaven
-            </h4>
-
-
-            <p>
-                Your ultimate destination for premium gaming hardware.
-            </p>
-
-
-        </div>
-
-
-
-
-        <div class="footer__col">
-
-
-            <h4>
-                Quick Links
-            </h4>
-
-
-            <ul>
-
-
-                <li>
-                    <a href="/shop">
-                        Shop Consoles
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="/forum">
-                        Gamer Forum
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="/reviews">
-                        Reviews
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="/blog">
-                        Blog
-                    </a>
-                </li>
-
-
-            </ul>
-
-
-        </div>
-
-
-
-
-        <div class="footer__col">
-
-
-            <h4>
-                Support
-            </h4>
-
-
-            <ul>
-
-
-                <li>
-                    <a href="/sitemap">
-                        Sitemap
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="/admin">
-                        Administration
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="/policy">
-                        Policy &amp; Terms
-                    </a>
-                </li>
-
-
-            </ul>
-
-
-        </div>
-
-
-
-
-        <div class="footer__col">
-
-
-            <h4>
-                Contact Us
-            </h4>
-
-
-            <ul>
-
-
-                <li>
-                    📧 ConsoleHaven@rmitvnsgs.com
-                </li>
-
-
-                <li>
-                    📞 +84 1234 68688
-                </li>
-
-
-                <li>
-                    📍 Nguyen Van Linh blv
-                </li>
-
-
-            </ul>
-
-
-        </div>
-
-
-    </div>
-
-
-
-
-    <div class="footer__bottom">
-
-
-        <p>
-
-            &copy; 2026 ConsoleHaven Team.
-            All rights reserved.
-
-        </p>
-
-
-    </div>
-
-
-</footer>
-
-
-
-
-<!-- =========================
-     BADGE SCRIPT
-========================= -->
-
-<script>
-
-
-    const wishlistCount =
-        <%= typeof wishlistCount !== 'undefined'
-            ? wishlistCount
-            : 0 %>;
-
-
-    const cartCount =
-        <%= typeof cartCount !== 'undefined'
-            ? cartCount
-            : 0 %>;
-
-
-
-    const wishlistBadge =
-        document.getElementById(
-            'wishlist-badge'
-        );
-
-
-    const cartBadge =
-        document.getElementById(
-            'cart-badge'
-        );
-
-
-
-    if (wishlistCount > 0) {
-
-
-        wishlistBadge.textContent =
-            wishlistCount;
-
-
-        wishlistBadge.style.display =
-            'flex';
-
-
-    } else {
-
-
-        wishlistBadge.style.display =
-            'none';
-
-
-    }
-
-
-
-    if (cartCount > 0) {
-
-
-        cartBadge.textContent =
-            cartCount;
-
-
-        cartBadge.style.display =
-            'flex';
-
-
-    } else {
-
-
-        cartBadge.style.display =
-            'none';
-
-
-    }
-
-
-</script>
-
+<%- include('partials/footer') %>
 
 </body>
-
 </html>
