@@ -36,10 +36,17 @@
                 <article class="card">
                     <div class="card__image-container">
                         <img src="/images/ps_controller.jpg" alt="PS5 DualSense Controller" class="card__image">
-                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                        <form action="/wishlist/add" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="4">
+                            <% if (user) { %>
+                                <button type="submit" class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                            <% } else { %>
+                                <a href="/login" class="btn--wishlist" title="Log in to save">🤍</a>
+                            <% } %>
+                        </form>
                     </div>
                     <div class="card__content">
-                        <h3 class="card__title"><a href="/product-dualsense">PS5 DualSense Controller</a></h3>
+                        <h3 class="card__title"><a href="/product/4">PS5 DualSense Controller</a></h3>
                         <div class="card__meta">
                             <span>Haptic Feedback</span>
                             <span>Wireless</span>
@@ -47,7 +54,15 @@
                         <div class="card__rating">⭐⭐⭐⭐⭐ (3.2k)</div>
                         <div class="card__footer">
                             <span class="card__price">$69.99</span>
-                            <button class="btn btn--primary">Add to Cart</button>
+                           <form action="/cart/add" method="POST" style="display:inline;">
+                                <input type="hidden" name="productId" value="4">
+                                <input type="hidden" name="quantity" value="1">
+                                <% if (user) { %>
+                                    <button type="submit" class="btn btn--primary">Add to Cart</button>
+                                <% } else { %>
+                                    <a href="/login" class="btn btn--primary">Add to Cart</a>
+                                <% } %>
+                            </form>
                         </div>
                     </div>
                 </article>
@@ -56,10 +71,17 @@
                 <article class="card">
                     <div class="card__image-container">
                         <img src="/images/xbox.jpg" alt="Xbox Series X Console" class="card__image">
-                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                        <form action="/wishlist/add" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="4">
+                            <% if (user) { %>
+                                <button type="submit" class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                            <% } else { %>
+                                <a href="/login" class="btn--wishlist" title="Log in to save">🤍</a>
+                            <% } %>
+                        </form>
                     </div>
                     <div class="card__content">
-                        <h3 class="card__title"><a href="/product-xbox">Xbox Series X 1TB</a></h3>
+                        <h3 class="card__title"><a href="/product/2">Xbox Series X 1TB</a></h3>
                         <div class="card__meta">
                             <span>4K Gaming</span>
                             <span>120 FPS</span>
@@ -67,7 +89,15 @@
                         <div class="card__rating">⭐⭐⭐⭐⭐ (5.1k)</div>
                         <div class="card__footer">
                             <span class="card__price">$499.99</span>
-                            <button class="btn btn--primary">Add to Cart</button>
+                            <form action="/cart/add" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="4">
+                            <input type="hidden" name="quantity" value="1">
+                            <% if (user) { %>
+                                <button type="submit" class="btn btn--primary">Add to Cart</button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn--primary">Add to Cart</a>
+                            <% } %>
+                        </form>
                         </div>
                     </div>
                 </article>
@@ -76,10 +106,17 @@
                 <article class="card">
                     <div class="card__image-container">
                         <img src="/images/nintendo_oled.jpg" alt="Nintendo Switch OLED" class="card__image">
-                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                        <form action="/wishlist/add" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="4">
+                            <% if (user) { %>
+                                <button type="submit" class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                            <% } else { %>
+                                <a href="/login" class="btn--wishlist" title="Log in to save">🤍</a>
+                            <% } %>
+                        </form>
                     </div>
                     <div class="card__content">
-                        <h3 class="card__title"><a href="/product-switch-oled">Nintendo Switch OLED</a></h3>
+                        <h3 class="card__title"><a href="/product/3">Nintendo Switch OLED</a></h3>
                         <div class="card__meta">
                             <span>7-inch Screen</span>
                             <span>Handheld</span>
@@ -87,7 +124,15 @@
                         <div class="card__rating">⭐⭐⭐⭐ (2.8k)</div>
                         <div class="card__footer">
                             <span class="card__price">$349.99</span>
-                            <button class="btn btn--primary">Add to Cart</button>
+                            <form action="/cart/add" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="4">
+                            <input type="hidden" name="quantity" value="1">
+                            <% if (user) { %>
+                                <button type="submit" class="btn btn--primary">Add to Cart</button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn--primary">Add to Cart</a>
+                            <% } %>
+                        </form>
                         </div>
                     </div>
                 </article>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %> | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content" class="product-page">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/shop">← Back to Shop</a>
+        </nav>
+
+        <!-- Success banner after add to cart / wishlist -->
+        <% if (query && query.added) { %>
+            <p class="success-message">✓ Added to cart successfully!</p>
+        <% } else if (query && query.wishlisted) { %>
+            <p class="success-message">✓ Added to wishlist!</p>
+        <% } %>
+
+        <section class="product-overview">
+
+            <div class="product-gallery">
+                <img class="product-gallery__main" src="<%= product.image %>" alt="<%= product.name %>">
+            </div>
+
+            <div class="product-buy">
+
+                <h1 class="product-title"><%= product.name %></h1>
+
+                <p class="product-sub">
+                    <% if (product.platform === 'ps5') { %>PlayStation 5
+                    <% } else if (product.platform === 'xbox') { %>Xbox Series X
+                    <% } else if (product.platform === 'switch') { %>Nintendo Switch
+                    <% } %>
+                    &bull; <%= product.category.charAt(0).toUpperCase() + product.category.slice(1) %>
+                </p>
+
+                <div class="rating">
+                    <%= "⭐".repeat(product.rating) %>
+                    <span class="rating-count"><%= product.rating %>.0 / 5 — <%= product.ratingCount.toLocaleString() %> reviews</span>
+                </div>
+
+                <div class="price product-price">
+                    <% if (product.oldPrice) { %>
+                        <span class="old-price">$<%= product.oldPrice.toFixed(2) %></span>
+                    <% } %>
+                    <span class="new-price">$<%= product.price.toFixed(2) %></span>
+                    <% if (product.discount) { %>
+                        <span class="save-tag">Save <%= product.discount %>%</span>
+                    <% } %>
+                </div>
+
+                <% if (product.stock === 0) { %>
+                    <span class="stock out-stock">Out of Stock</span>
+                <% } else if (product.stock <= 6) { %>
+                    <span class="stock low-stock">Low Stock — <%= product.stock %> units left</span>
+                <% } else { %>
+                    <span class="stock in-stock">In Stock — <%= product.stock %> units available</span>
+                <% } %>
+
+                <!-- Add to Cart - posts to the cart route (login required) -->
+                <form class="product-form" action="/cart/add" method="POST">
+
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1"
+                               max="<%= product.stock > 0 ? product.stock : 1 %>"
+                               <%= product.stock === 0 ? 'disabled' : '' %>>
+                    </div>
+
+                    <% if (user) { %>
+                        <button type="submit" class="btn btn--primary btn--large"
+                                <%= product.stock === 0 ? 'disabled' : '' %>>
+                            <%= product.stock === 0 ? 'Out of Stock' : 'Add to Cart' %>
+                        </button>
+                    <% } else { %>
+                        <a href="/login" class="btn btn--primary btn--large">Log in to add to cart</a>
+                    <% } %>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

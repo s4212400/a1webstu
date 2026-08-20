@@ -36,7 +36,43 @@ global.users = [
         username: "admin123",
         email: "admin@gmail.com",
         password: "password123",
-        description: "I am the admin"
+        description: "I am the admin",
+        role: "admin",
+        status: "active",
+        joined: "Mar 15, 2026"
+    },
+    {
+        id: 2,
+        fullname: "Sarah Player",
+        username: "SarahPlayer",
+        email: "sarah@email.com",
+        password: "password123",
+        description: "",
+        role: "moderator",
+        status: "active",
+        joined: "Apr 02, 2026"
+    },
+    {
+        id: 3,
+        fullname: "Mike Console",
+        username: "MikeConsole",
+        email: "mike@email.com",
+        password: "password123",
+        description: "",
+        role: "standard",
+        status: "active",
+        joined: "May 10, 2026"
+    },
+    {
+        id: 4,
+        fullname: "Emma Games",
+        username: "EmmaGames",
+        email: "emma@email.com",
+        password: "password123",
+        description: "",
+        role: "standard",
+        status: "locked",
+        joined: "Jun 01, 2026"
     }
 ];
 
@@ -64,6 +100,14 @@ app.use('/forum', forumRouter);
 const shopRouter = require('./routes/shop');
 app.locals.products = shopRouter.products;
 app.use('/shop', shopRouter);
+
+// Product detail route (dynamic - uses shared product data)
+const productRouter = require('./routes/product');
+app.use('/product', productRouter);
+
+// Admin dashboard route (admin account only)
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 
 // Auth route 
 const authRouter = require('./routes/auth');

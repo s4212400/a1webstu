@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="admin-section">
+            <div class="admin-container">
+                <h1>ADMIN DASHBOARD</h1>
+                <p class="admin-subtitle">User Account Management</p>
+
+                <p class="admin-notice">🔒 Restricted area — visible to the admin account only. Locked users cannot perform any operation in the application.</p>
+
+                <div class="admin-controls">
+                    <!-- Search + filters combined into one GET form -->
+                    <form class="admin-filters" action="/admin" method="GET">
+                        <div class="search-bar">
+                            <input type="search" name="q" placeholder="SEARCH USERS..." class="search-input"
+                                   value="<%= query.q || '' %>" aria-label="Search users">
+                        </div>
+                        <div class="admin-filter">
+                            <label for="filter-role">Role</label>
+                            <select id="filter-role" name="role">
+                                <option value="all" <%= query.role === 'all' || !query.role ? 'selected' : '' %>>All roles</option>
+                                <option value="admin" <%= query.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                                <option value="moderator" <%= query.role === 'moderator' ? 'selected' : '' %>>Moderator</option>
+                                <option value="standard" <%= query.role === 'standard' ? 'selected' : '' %>>Standard user</option>
+                            </select>
+                        </div>
+                        <div class="admin-filter">
+                            <label for="filter-status">Status</label>
+                            <select id="filter-status" name="status">
+                                <option value="all" <%= query.status === 'all' || !query.status ? 'selected' : '' %>>All statuses</option>
+                                <option value="active" <%= query.status === 'active' ? 'selected' : '' %>>Active</option>
+                                <option value="locked" <%= query.status === 'locked' ? 'selected' : '' %>>Locked</option>
+                            </select>
+                        </div>
+                        <div class="admin-filter">
+                            <label for="filter-sort">Sort by</label>
+                            <select id="filter-sort" name="sort">
+                                <option value="joined-desc" <%= query.sort === 'joined-desc' || !query.sort ? 'selected' : '' %>>Newest first</option>
+                                <option value="joined-asc" <%= query.sort === 'joined-asc' ? 'selected' : '' %>>Oldest first</option>
+                                <option value="username-asc" <%= query.sort === 'username-asc' ? 'selected' : '' %>>Username (A–Z)</option>
+                            </select>
+                        </div>
+                        <a href="/admin" class="btn btn--outline btn--small">Reset</a>
+                    </form>
+                </div>
+
+                <div class="users-table-wrapper">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Joined Date</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(u => { %>
+                                <tr>
+                                    <td>#<%= String(u.id).padStart(3, '0') %></td>
+                                    <td><%= u.username %></td>
+                                    <td><%= u.email %></td>
+                                    <td><%= u.joined || '—' %></td>
+                                    <td><span class="role-badge role-<%= u.role %>"><%= u.role.charAt(0).toUpperCase() + u.role.slice(1) %></span></td>
+                                    <td class="status <%= u.status %>"><%= u.status.toUpperCase() %></td>
+                                    <td>
+                                        <!-- Lock / Unlock toggle -->
+                                        <form action="/admin/lock/<%= u.id %>" method="POST" style="display:inline;">
+                                            <% if (u.status === 'locked') { %>
+                                                <button type="submit" class="btn btn--small btn--primary">UNLOCK</button>
+                                            <% } else { %>
+                                                <button type="submit" class="btn btn--small btn--outline">LOCK</button>
+                                            <% } %>
+                                        </form>
+                                        <!-- Delete (not shown for the admin's own row) -->
+                                        <% if (u.id !== user.id) { %>
+                                            <form action="/admin/delete/<%= u.id %>" method="POST" style="display:inline;">
+                                                <button type="submit" class="btn btn--small btn--danger">DELETE</button>
+                                            </form>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-value"><%= stats.total %></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-value"><%= stats.active %></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Locked Accounts</div>
+                        <div class="stat-value"><%= stats.locked %></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Admins &amp; Mods</div>
+                        <div class="stat-value"><%= stats.staff %></div>
+                    </div>
+                </div>
+
+                <div class="admin-actions">
+                    <a href="/" class="btn btn--outline">BACK TO HOME</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('input[name="q"]');
+    const rows = document.querySelectorAll('tbody tr');
+
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.trim().toLowerCase();
+
+        rows.forEach(row => {
+            const username = row.cells[1].textContent.toLowerCase();
+            const email    = row.cells[2].textContent.toLowerCase();
+
+            if (username.includes(term) || email.includes(term)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

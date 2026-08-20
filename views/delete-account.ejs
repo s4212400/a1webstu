@@ -38,7 +38,8 @@
                     <p class="error-message"><%= error %></p>
                 <% } %>
                 
-                <form class="auth-form" action="/delete-account" method="POST">
+                <form class="auth-form" action="/delete-account" method="POST"
+                    onsubmit="return confirm('Are you sure? This permanently deletes your account and cannot be undone.');">
 
                     <div class="form-group">
                         <label for="delete-reason">Reason for leaving (optional):</label>
