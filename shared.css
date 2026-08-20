@@ -3938,7 +3938,7 @@ textarea:focus-visible{
 
 /* --- INDEX PAGE HELPERS --- */
 .hero-title--user {
-    color: #f39c12;
+    color: #f39c12 !important;
 }
 
 .section-spacing {
