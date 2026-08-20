@@ -4105,3 +4105,12 @@ textarea:focus-visible{
     border: 1px solid #444;
     font-family: inherit;
 }
+
+/* --- DEMO IN HOME --- */
+.blog-card-meta {
+    color: #f39c12;
+    font-family: inherit; 
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+}
