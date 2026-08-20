@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <ol class="checkout-steps">
+        <li class="step done">
+            <span>1</span> Cart
+        </li>
+
+        <li class="step done">
+            <span>2</span> Checkout
+        </li>
+
+        <li class="step current" aria-current="step">
+            <span>3</span> Confirmation
+        </li>
+    </ol>
+
+    <main id="main-content" class="confirm-page">
+
+        <section class="confirm-banner">
+
+            <p class="confirm-icon">✔</p>
+
+            <h1>Thank You For Your Order!</h1>
+
+            <p>
+                Your order has been placed successfully.
+                A confirmation email has been sent to
+                <strong><%= order.email %></strong>.
+            </p>
+
+        </section>
+
+        <div class="confirmation-email">
+
+            <span class="confirmation-email__icon">✓</span>
+
+            <div>
+                <strong>Confirmation email sent</strong>
+
+                <p>
+                    A confirmation email has been sent to your email address.
+                </p>
+            </div>
+
+        </div>
+
+        <section class="invoice">
+
+            <div class="invoice__header">
+
+                <div>
+
+                    <h2 class="section-title">
+                        Order Summary
+                    </h2>
+
+                    <p class="invoice__meta">
+                        Order Number:
+                        <strong>#<%= order.orderNumber %></strong>
+                    </p>
+
+                    <p class="invoice__meta">
+                        Order Date:
+                        <strong><%= order.orderDate %></strong>
+                    </p>
+
+                    <p class="invoice__meta">
+                        Payment Method:
+                        <strong>
+                            <%= order.paymentMethod %>
+                        </strong>
+                    </p>
+
+                    <p class="invoice__meta">
+                        Estimated Delivery:
+                        <strong>
+                            <%= order.deliveryDate %>
+                        </strong>
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Delivery Address
+                    </h2>
+
+                    <address class="invoice__address">
+
+                        <div>
+                            <strong>Full Name:</strong>
+                            <%= order.firstName %> <%= order.lastName %>
+                        </div>
+
+                        <div>
+                            <strong>Street Address:</strong>
+                            <%= order.address %>
+                        </div>
+
+                        <div>
+                            <strong>City:</strong>
+                            <%= order.city %>
+                        </div>
+
+                        <div>
+                            <strong>Postcode:</strong>
+                            <%= order.postcode %>
+                        </div>
+
+                        <div>
+                            <strong>Country:</strong>
+                            <%= order.country === 'vn'
+                                ? 'Vietnam'
+                                : order.country === 'au'
+                                    ? 'Australia'
+                                    : order.country === 'sg'
+                                        ? 'Singapore'
+                                        : order.country === 'jp'
+                                            ? 'Japan'
+                                            : order.country %>
+                        </div>
+
+                        <div>
+                            <strong>Phone:</strong>
+                            <%= order.phone %>
+                        </div>
+
+                    </address>
+
+                </div>
+
+            </div>
+
+            <table class="invoice-table">
+
+                <caption class="visually-hidden">
+                    Items in order #<%= order.orderNumber %>
+                </caption>
+
+                <thead>
+
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Subtotal</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <% order.items.forEach(item => { %>
+
+                        <tr>
+
+                            <td>
+
+                                <img
+                                    class="invoice-thumb"
+                                    src="<%= item.image %>"
+                                    alt="<%= item.name %>"
+                                >
+
+                            </td>
+
+                            <td>
+
+                                <strong>
+                                    <%= item.name %>
+                                </strong>
+
+                            </td>
+
+                            <td>
+                                $<%= item.price.toFixed(2) %>
+                            </td>
+
+                            <td>
+                                <%= item.quantity %>
+                            </td>
+
+                            <td>
+                                $<%= (item.price * item.quantity).toFixed(2) %>
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+                <tfoot>
+
+                    <tr>
+
+                        <td colspan="4">
+                            Subtotal
+                        </td>
+
+                        <td>
+                            $<%= order.subtotal.toFixed(2) %>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="4">
+                            Discount
+                        </td>
+
+                        <td>
+                            $0.00
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="4">
+                            Delivery
+                        </td>
+
+                        <td>
+                            <%= order.shipping === 0
+                                ? 'Free'
+                                : '$' + order.shipping.toFixed(2) %>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="4">
+                            GST (10%)
+                        </td>
+
+                        <td>
+                            $<%= order.tax.toFixed(2) %>
+                        </td>
+
+                    </tr>
+
+                    <tr class="invoice-total">
+
+                        <td colspan="4">
+                            Total Paid
+                        </td>
+
+                        <td>
+                            $<%= order.total.toFixed(2) %>
+                        </td>
+
+                    </tr>
+
+                </tfoot>
+
+            </table>
+
+            <div class="confirm-actions">
+
+                <a
+                    href="/shop"
+                    class="btn btn--primary"
+                >
+                    Continue Shopping
+                </a>
+
+                <a
+                    href="/profile"
+                    class="btn btn--outline"
+                >
+                    View My Orders
+                </a>
+
+                <a
+                    href="/"
+                    class="btn btn--outline"
+                >
+                    Back to Home
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+
+</html>
