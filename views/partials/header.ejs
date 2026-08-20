@@ -47,3 +47,35 @@
         });
     });
 </script>
+
+<!-- TOAST NOTIFICATION (REGISTER and LOGGIN)) -->
+<% if (successMessage) { %>
+    <div id="retro-toast" class="retro-toast">
+        <%= successMessage %>
+    </div>
+    <script>
+        setTimeout(() => {
+            const toast = document.getElementById('retro-toast');
+            if (toast) {
+                toast.style.animation = 'slideUpOut 0.5s forwards'; 
+                setTimeout(() => toast.remove(), 500); 
+            }
+        }, 3000);
+    </script>
+<% } %>
+
+<!-- TOAST NOTIFICATION (LOGOUT) -->
+<% if (errorMessage) { %>
+    <div id="retro-toast-error" class="retro-toast toast-error">
+        <%= errorMessage %>
+    </div>
+    <script>
+        setTimeout(() => {
+            const toastErr = document.getElementById('retro-toast-error');
+            if (toastErr) {
+                toastErr.style.animation = 'slideUpOut 0.5s forwards';
+                setTimeout(() => toastErr.remove(), 500);
+            }
+        }, 3000);
+    </script>
+<% } %>

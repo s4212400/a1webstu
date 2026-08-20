@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// Logout
+// Global variables for views
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
@@ -42,6 +42,13 @@ let users = [
 
 // Reviews route
 // ===== MODULE ROUTES =====
+app.use((req, res, next) => {
+    res.locals.successMessage = req.session.successMessage || null;
+    req.session.successMessage = null; 
+    res.locals.errorMessage = req.session.errorMessage || null;
+    req.session.errorMessage = null;
+    next();
+});
 const reviewsRouter = require('./routes/reviews');
 app.use('/reviews', reviewsRouter);
 
@@ -74,7 +81,7 @@ app.post('/login', (req, res) => {
         req.session.user = user;
         
         console.log("=> Successfully logged in:", user.username);
-        
+        req.session.successMessage = `LOGIN SUCCESSFUL! WELCOME BACK, ${req.session.user.username}.`;
         res.redirect('/'); 
     } else {
         res.render('login', { error: "Incorrect email or password.", user: null });
@@ -83,7 +90,8 @@ app.post('/login', (req, res) => {
 
 // Logout
 app.get('/logout', (req, res) => {
-    req.session.destroy();
+    req.session.user = null; 
+    req.session.errorMessage = "SYSTEM DISCONNECTED. SEE YOU AGAIN!"; 
     res.redirect('/login');
 });
 
@@ -103,6 +111,7 @@ app.post('/register', (req, res) => {
     }
     const newUser = { id: Date.now(), fullname, username, email, description, password };
     users.push(newUser);
+    req.session.successMessage = "ACCOUNT CREATED SUCCESSFULLY! PLEASE LOG IN.";
     res.redirect('/login');
 });
 
@@ -114,13 +123,8 @@ app.use('/wishlist', wishlistRouter);
 
 // ===== HOME =====
 app.get('/', (req, res) => {
-    const msg = req.session.successMessage;
-    req.session.successMessage = null; 
-
     res.render('index', {
-        blogs: blogRouter.blogs || [],
-        user: req.session.user || null,
-        successMessage: msg 
+        blogs: blogRouter.blogs || []
     });
 });
 
