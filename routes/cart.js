@@ -222,13 +222,14 @@ router.get('/checkout', (req, res) => {
     const tax = subtotal * 0.1;
     const total = subtotal + shipping + tax;
 
-    res.render('checkout', {
-        cart,
-        subtotal,
-        shipping,
-        tax,
-        total,
-        user: req.session.user
+res.render('checkout', {
+    cart,
+    subtotal,
+    shipping,
+    tax,
+    total,
+    user: req.session.user,
+    formData: {}
     });
 });
 
@@ -243,6 +244,179 @@ router.post('/checkout', (req, res) => {
         return res.redirect('/cart');
     }
 
+    const firstName = (req.body['first-name'] || '').trim();
+    const lastName = (req.body['last-name'] || '').trim();
+    const email = (req.body.email || '').trim();
+    const phone = (req.body.phone || '').trim();
+    const address = (req.body.address || '').trim();
+    const city = (req.body.city || '').trim();
+    const postcode = (req.body.postcode || '').trim();
+    const country = req.body.country;
+    const delivery = req.body.delivery;
+    const cardName = (req.body['card-name'] || '').trim();
+    const cardNumber = (req.body['card-number'] || '').replace(/\s/g, '');
+    const expiry = (req.body.expiry || '').trim();
+    const cvv = (req.body.cvv || '').trim();
+    const cardType = req.body['card-type'];
+    const terms = req.body.terms;
+
+    const nameRegex =
+        /^[\p{L}\p{M}]+(?:[ '\-][\p{L}\p{M}]+)*$/u;
+
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    // First Name
+    if (!nameRegex.test(firstName)) {
+        return renderCheckoutError(
+            res,
+            'First name must contain letters and spaces only.',
+            req.body
+        );
+    }
+
+
+    // Last Name
+    if (!nameRegex.test(lastName)) {
+        return renderCheckoutError(
+            res,
+            'Last name must contain letters and spaces only.',
+            req.body
+        );
+    }
+
+
+    // Email
+    if (!emailRegex.test(email)) {
+        return renderCheckoutError(
+            res,
+            'Please enter a valid email address.',
+            req.body
+        );
+    }
+
+
+    // Phone
+    if (!/^0\d{9}$/.test(phone)) {
+        return renderCheckoutError(
+            res,
+            'Phone number must contain exactly 10 digits and start with 0.',
+            req.body
+        );
+    }
+
+
+    // Address
+    if (address.length < 5) {
+        return renderCheckoutError(
+            res,
+            'Please enter a valid street address.',
+            req.body
+        );
+    }
+
+
+    // City
+    if (!nameRegex.test(city)) {
+        return renderCheckoutError(
+            res,
+            'City must contain letters and spaces only.',
+            req.body
+        );
+    }
+
+
+    // Postcode
+    if (!/^\d{4,7}$/.test(postcode)) {
+        return renderCheckoutError(
+            res,
+            'Postcode must contain 4 to 7 digits.',
+            req.body
+        );
+    }
+
+
+    // Delivery
+    if (!['standard', 'express', 'pickup'].includes(delivery)) {
+        return renderCheckoutError(
+            res,
+            'Please select a valid delivery method.',
+            req.body
+        );
+    }
+
+
+    // Card Name
+    if (!nameRegex.test(cardName)) {
+        return renderCheckoutError(
+            res,
+            'Name on card must contain letters and spaces only.',
+            req.body
+        );
+    }
+
+
+    // Card Number
+    if (!/^\d{16}$/.test(cardNumber)) {
+        return renderCheckoutError(
+            res,
+            'Card number must contain exactly 16 digits.',
+            req.body
+        );
+    }
+
+
+    // Expiry
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
+        return renderCheckoutError(
+            res,
+            'Expiry date must use MM/YY format.',
+            req.body
+        );
+    }
+
+
+    const [expiryMonth, expiryYear] =
+        expiry.split('/').map(Number);
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear() % 100;
+
+    if (
+        expiryYear < currentYear ||
+        (expiryYear === currentYear &&
+            expiryMonth < currentMonth)
+    ) {
+        return renderCheckoutError(
+            res,
+            'Card expiry date must be in the future.',
+            req.body
+        );
+    }
+
+
+    // CVV
+    if (!/^\d{3,4}$/.test(cvv)) {
+        return renderCheckoutError(
+            res,
+            'CVV must contain 3 or 4 digits.',
+            req.body
+        );
+    }
+
+
+    // Terms
+    if (!terms) {
+        return renderCheckoutError(
+            res,
+            'You must agree to the Terms and Conditions.',
+            req.body
+        );
+    }
+
+
     const subtotal = cart.reduce(
         (total, item) => total + item.price * item.quantity,
         0
@@ -252,42 +426,95 @@ router.post('/checkout', (req, res) => {
     const tax = subtotal * 0.1;
     const total = subtotal + shipping + tax;
 
+
     const order = {
         orderNumber: `CH-${Date.now()}`,
         orderDate: new Date().toLocaleDateString(),
 
-        firstName: req.body['first-name'],
-        lastName: req.body['last-name'],
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        city: req.body.city,
-        postcode: req.body.postcode,
-        country: req.body.country,
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        city,
+        postcode,
+        country,
 
-        delivery: req.body.delivery,
-        paymentMethod: req.body['card-type'],
-        deliveryDate: req.body.delivery === 'express'
-        ? '2-3 business days'
-        : req.body.delivery === 'pickup'
-            ? 'Ready in 24 hours'
-            : '5-7 business days',
+        delivery,
+
+        paymentMethod: cardType,
+
+        deliveryDate:
+            delivery === 'express'
+                ? '2-3 business days'
+                : delivery === 'pickup'
+                    ? 'Ready in 24 hours'
+                    : '5-7 business days',
 
         customer: req.session.user,
+
         items: [...cart],
+
         subtotal,
         shipping,
         tax,
         total
     };
 
+
     req.session.order = order;
 
     cart.length = 0;
+
     req.app.locals.cart = cart;
 
     res.redirect('/cart/order-confirmation');
 });
+
+
+// Show checkout error
+function renderCheckoutError(res, error, body) {
+
+    const subtotal = cart.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
+    const shipping = subtotal >= 100 ? 0 : 10;
+    const tax = subtotal * 0.1;
+    const total = subtotal + shipping + tax;
+
+    res.render('checkout', {
+        cart,
+        subtotal,
+        shipping,
+        tax,
+        total,
+
+        user: null,
+
+        error,
+
+        formData: {
+            firstName: body['first-name'] || '',
+            lastName: body['last-name'] || '',
+            email: body.email || '',
+            phone: body.phone || '',
+            address: body.address || '',
+            city: body.city || '',
+            postcode: body.postcode || '',
+            country: body.country || '',
+            notes: body.notes || '',
+            delivery: body.delivery || 'standard',
+            cardName: body['card-name'] || '',
+            cardNumber: body['card-number'] || '',
+            expiry: body.expiry || '',
+            cvv: body.cvv || '',
+            cardType: body['card-type'] || 'visa',
+            terms: body.terms || false
+        }
+    });
+}
 
 // Order Confirmation
 router.get('/order-confirmation', (req, res) => {

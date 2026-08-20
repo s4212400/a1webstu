@@ -3,6 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const cartRouter = require('./routes/cart');
 const wishlistRouter = require('./routes/wishlist');
+const profileRouter = require('./routes/profile');
 
 const app = express();
 const PORT = 3000;
@@ -118,6 +119,9 @@ app.use('/cart', cartRouter);
 
 // Wishlist route
 app.use('/wishlist', wishlistRouter);
+
+// Profile route
+app.use('/profile', profileRouter);
 
 // ===== HOME =====
 const indexRouter = require('./routes/index');

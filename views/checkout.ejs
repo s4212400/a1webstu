@@ -6,6 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | ConsoleHaven</title>
     <link rel="stylesheet" href="/shared.css">
+
+    <style>
+        .validation-error {
+            display: block;
+            margin-top: 6px;
+            color: #ff4d4d;
+            font-size: 0.9rem;
+        }
+
+        .checkout-form input.invalid,
+        .checkout-form select.invalid,
+        .checkout-form textarea.invalid {
+            border-color: #ff4d4d;
+        }
+
+        .checkout-server-error {
+            background: rgba(255, 77, 77, 0.1);
+            border: 2px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,135 +51,217 @@
 
     <main id="main-content" class="checkout-page">
 
-        <form class="checkout-form" action="/cart/checkout" method="POST">
+        <form
+            class="checkout-form"
+            action="/cart/checkout"
+            method="POST"
+            id="checkout-form"
+            novalidate
+        >
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="checkout-server-error">
+                    <%= error %>
+                </div>
+            <% } %>
 
             <fieldset class="checkout-block">
                 <legend>Delivery Information</legend>
 
                 <div class="field-row">
+
                     <div class="form-group">
                         <label for="first-name">First Name</label>
+
                         <input
                             type="text"
                             id="first-name"
                             name="first-name"
                             placeholder="John"
+                            value="<%= formData?.firstName || '' %>"
                             required
                         >
+
+                        <span class="validation-error" id="first-name-error"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
+
                         <input
                             type="text"
                             id="last-name"
                             name="last-name"
                             placeholder="Nguyen"
+                            value="<%= formData?.lastName || '' %>"
                             required
                         >
+
+                        <span class="validation-error" id="last-name-error"></span>
                     </div>
+
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email Address</label>
+
                     <input
                         type="email"
                         id="email"
                         name="email"
                         placeholder="john.gamer@email.com"
+                        value="<%= formData?.email || '' %>"
                         required
                     >
+
+                    <span class="validation-error" id="email-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
+
                     <input
                         type="tel"
                         id="phone"
                         name="phone"
-                        placeholder="0901 234 567"
+                        placeholder="0901234567"
+                        value="<%= formData?.phone || '' %>"
+                        maxlength="10"
+                        inputmode="numeric"
                         required
                     >
+
+                    <span class="validation-error" id="phone-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Street Address</label>
+
                     <input
                         type="text"
                         id="address"
                         name="address"
                         placeholder="702 Nguyen Van Linh"
+                        value="<%= formData?.address || '' %>"
                         required
                     >
+
+                    <span class="validation-error" id="address-error"></span>
                 </div>
 
                 <div class="field-row">
+
                     <div class="form-group">
                         <label for="city">City</label>
+
                         <input
                             type="text"
                             id="city"
                             name="city"
                             placeholder="Ho Chi Minh City"
+                            value="<%= formData?.city || '' %>"
                             required
                         >
+
+                        <span class="validation-error" id="city-error"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="postcode">Postcode</label>
+
                         <input
                             type="text"
                             id="postcode"
                             name="postcode"
                             placeholder="700000"
+                            value="<%= formData?.postcode || '' %>"
+                            maxlength="7"
+                            inputmode="numeric"
                             required
                         >
+
+                        <span class="validation-error" id="postcode-error"></span>
                     </div>
+
                 </div>
 
                 <div class="form-group">
                     <label for="country">Country</label>
+
                     <select id="country" name="country" required>
-                        <option value="vn">Vietnam</option>
-                        <option value="au">Australia</option>
-                        <option value="sg">Singapore</option>
-                        <option value="jp">Japan</option>
+                        <option value="vn" <%= formData?.country === 'vn' || !formData?.country ? 'selected' : '' %>>
+                            Vietnam
+                        </option>
+
+                        <option value="au" <%= formData?.country === 'au' ? 'selected' : '' %>>
+                            Australia
+                        </option>
+
+                        <option value="sg" <%= formData?.country === 'sg' ? 'selected' : '' %>>
+                            Singapore
+                        </option>
+
+                        <option value="jp" <%= formData?.country === 'jp' ? 'selected' : '' %>>
+                            Japan
+                        </option>
                     </select>
+
+                    <span class="validation-error" id="country-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="notes">Delivery Notes (optional)</label>
+
                     <textarea
                         id="notes"
                         name="notes"
                         rows="3"
                         placeholder="e.g. Leave at reception"
-                    ></textarea>
+                    ><%= formData?.notes || '' %></textarea>
                 </div>
 
             </fieldset>
+
 
             <fieldset class="checkout-block">
                 <legend>Delivery Method</legend>
 
                 <div class="radio-row">
+
                     <label>
-                        <input type="radio" name="delivery" value="standard" checked>
+                        <input
+                            type="radio"
+                            name="delivery"
+                            value="standard"
+                            <%= !formData?.delivery || formData?.delivery === 'standard' ? 'checked' : '' %>
+                        >
                         Standard &mdash; 5 to 7 business days (Free)
                     </label>
 
                     <label>
-                        <input type="radio" name="delivery" value="express">
+                        <input
+                            type="radio"
+                            name="delivery"
+                            value="express"
+                            <%= formData?.delivery === 'express' ? 'checked' : '' %>
+                        >
                         Express &mdash; 2 to 3 business days ($9.99)
                     </label>
 
                     <label>
-                        <input type="radio" name="delivery" value="pickup">
+                        <input
+                            type="radio"
+                            name="delivery"
+                            value="pickup"
+                            <%= formData?.delivery === 'pickup' ? 'checked' : '' %>
+                        >
                         Store Pickup &mdash; Ready in 24 hours (Free)
                     </label>
+
                 </div>
 
             </fieldset>
+
 
             <fieldset class="checkout-block">
                 <legend>Payment Details</legend>
@@ -166,76 +272,119 @@
 
                 <div class="form-group">
                     <label for="card-name">Name on Card</label>
+
                     <input
                         type="text"
                         id="card-name"
                         name="card-name"
                         placeholder="JOHN NGUYEN"
+                        value="<%= formData?.cardName || '' %>"
                         required
                     >
+
+                    <span class="validation-error" id="card-name-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="card-number">Card Number</label>
+
                     <input
                         type="text"
                         id="card-number"
                         name="card-number"
                         placeholder="4111 1111 1111 1111"
                         maxlength="19"
+                        inputmode="numeric"
+                        value="<%= formData?.cardNumber || '' %>"
                         required
                     >
+
+                    <span class="validation-error" id="card-number-error"></span>
                 </div>
 
                 <div class="field-row">
+
                     <div class="form-group">
                         <label for="expiry">Expiry Date</label>
+
                         <input
                             type="text"
                             id="expiry"
                             name="expiry"
                             placeholder="MM/YY"
                             maxlength="5"
+                            value="<%= formData?.expiry || '' %>"
                             required
                         >
+
+                        <span class="validation-error" id="expiry-error"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="cvv">CVV</label>
+
                         <input
                             type="text"
                             id="cvv"
                             name="cvv"
                             placeholder="123"
                             maxlength="4"
+                            inputmode="numeric"
+                            value="<%= formData?.cvv || '' %>"
                             required
                         >
+
+                        <span class="validation-error" id="cvv-error"></span>
                     </div>
+
                 </div>
 
                 <div class="form-group">
                     <label for="card-type">Card Type</label>
+
                     <select id="card-type" name="card-type" required>
-                        <option value="visa">Visa</option>
-                        <option value="mastercard">Mastercard</option>
-                        <option value="amex">American Express</option>
+                        <option value="visa" <%= formData?.cardType === 'visa' || !formData?.cardType ? 'selected' : '' %>>
+                            Visa
+                        </option>
+
+                        <option value="mastercard" <%= formData?.cardType === 'mastercard' ? 'selected' : '' %>>
+                            Mastercard
+                        </option>
+
+                        <option value="amex" <%= formData?.cardType === 'amex' ? 'selected' : '' %>>
+                            American Express
+                        </option>
                     </select>
                 </div>
 
                 <div class="checkbox-row">
+
                     <label>
-                        <input type="checkbox" name="same-address" checked>
+                        <input
+                            type="checkbox"
+                            name="same-address"
+                            <%= !formData?.sameAddress ? 'checked' : '' %>
+                        >
                         Billing address is the same as delivery address
                     </label>
 
                     <label>
-                        <input type="checkbox" name="terms" required>
+                        <input
+                            type="checkbox"
+                            name="terms"
+                            <%= formData?.terms ? 'checked' : '' %>
+                            required
+                        >
                         I agree to the
                         <a href="/policy">Terms and Conditions</a>
                     </label>
+
+                    <span class="validation-error" id="terms-error"></span>
+
                 </div>
 
             </fieldset>
+
 
             <button
                 type="submit"
@@ -250,13 +399,17 @@
 
         </form>
 
+
         <aside class="cart-summary" aria-label="Order summary">
 
             <h2>Your Order</h2>
 
             <ul class="mini-cart">
+
                 <% cart.forEach(item => { %>
+
                     <li>
+
                         <img
                             src="<%= item.image %>"
                             alt="<%= item.name %>"
@@ -269,8 +422,11 @@
                         <span class="mini-cart__price">
                             $<%= (item.price * item.quantity).toFixed(2) %>
                         </span>
+
                     </li>
+
                 <% }) %>
+
             </ul>
 
             <div class="summary-row">
@@ -305,6 +461,325 @@
     </main>
 
     <%- include('partials/footer') %>
+
+
+    <script>
+        const form = document.getElementById('checkout-form');
+
+        const nameRegex = /^[\p{L}\p{M}]+(?:[ '\-][\p{L}\p{M}]+)*$/u;
+        const cityRegex = /^[\p{L}\p{M}]+(?:[ '\-][\p{L}\p{M}]+)*$/u;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function showError(input, errorElement, message) {
+            input.classList.add('invalid');
+            errorElement.textContent = message;
+        }
+
+        function clearError(input, errorElement) {
+            input.classList.remove('invalid');
+            errorElement.textContent = '';
+        }
+
+        function validateName(input, errorElement, label) {
+            const value = input.value.trim();
+
+            if (!value) {
+                showError(input, errorElement, `${label} is required.`);
+                return false;
+            }
+
+            if (!nameRegex.test(value)) {
+                showError(
+                    input,
+                    errorElement,
+                    `${label} must contain letters and spaces only.`
+                );
+                return false;
+            }
+
+            clearError(input, errorElement);
+            return true;
+        }
+
+
+        function validateEmail() {
+            const input = document.getElementById('email');
+            const error = document.getElementById('email-error');
+            const value = input.value.trim();
+
+            if (!value) {
+                showError(input, error, 'Email address is required.');
+                return false;
+            }
+
+            if (!emailRegex.test(value)) {
+                showError(input, error, 'Please enter a valid email address.');
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validatePhone() {
+            const input = document.getElementById('phone');
+            const error = document.getElementById('phone-error');
+            const value = input.value.trim();
+
+            if (!/^0\d{9}$/.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'Phone number must contain exactly 10 digits and start with 0.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateAddress() {
+            const input = document.getElementById('address');
+            const error = document.getElementById('address-error');
+            const value = input.value.trim();
+
+            if (value.length < 5) {
+                showError(
+                    input,
+                    error,
+                    'Please enter a valid street address.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateCity() {
+            const input = document.getElementById('city');
+            const error = document.getElementById('city-error');
+            const value = input.value.trim();
+
+            if (!value) {
+                showError(input, error, 'City is required.');
+                return false;
+            }
+
+            if (!cityRegex.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'City must contain letters and spaces only.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validatePostcode() {
+            const input = document.getElementById('postcode');
+            const error = document.getElementById('postcode-error');
+            const value = input.value.trim();
+
+            if (!/^\d{4,7}$/.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'Postcode must contain 4 to 7 digits.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateCardName() {
+            const input = document.getElementById('card-name');
+            const error = document.getElementById('card-name-error');
+            const value = input.value.trim();
+
+            if (!value) {
+                showError(input, error, 'Name on card is required.');
+                return false;
+            }
+
+            if (!nameRegex.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'Name on card must contain letters and spaces only.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateCardNumber() {
+            const input = document.getElementById('card-number');
+            const error = document.getElementById('card-number-error');
+            const value = input.value.replace(/\s/g, '');
+
+            if (!/^\d{16}$/.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'Card number must contain exactly 16 digits.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateExpiry() {
+            const input = document.getElementById('expiry');
+            const error = document.getElementById('expiry-error');
+            const value = input.value.trim();
+
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'Expiry date must use MM/YY format.'
+                );
+                return false;
+            }
+
+            const [month, year] = value.split('/').map(Number);
+
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYear = currentDate.getFullYear() % 100;
+
+            if (
+                year < currentYear ||
+                (year === currentYear && month < currentMonth)
+            ) {
+                showError(
+                    input,
+                    error,
+                    'Card expiry date must be in the future.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateCVV() {
+            const input = document.getElementById('cvv');
+            const error = document.getElementById('cvv-error');
+            const value = input.value.trim();
+
+            if (!/^\d{3,4}$/.test(value)) {
+                showError(
+                    input,
+                    error,
+                    'CVV must contain 3 or 4 digits.'
+                );
+                return false;
+            }
+
+            clearError(input, error);
+            return true;
+        }
+
+
+        function validateTerms() {
+            const input = document.querySelector('input[name="terms"]');
+            const error = document.getElementById('terms-error');
+
+            if (!input.checked) {
+                error.textContent =
+                    'You must agree to the Terms and Conditions.';
+                return false;
+            }
+
+            error.textContent = '';
+            return true;
+        }
+
+
+        document.getElementById('phone').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
+
+        document.getElementById('postcode').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 7);
+        });
+
+
+        document.getElementById('cvv').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+
+
+        document.getElementById('card-number').addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '').slice(0, 16);
+
+            this.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        });
+
+
+        document.getElementById('expiry').addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '').slice(0, 4);
+
+            if (value.length >= 3) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+
+            this.value = value;
+        });
+
+
+        form.addEventListener('submit', function (event) {
+
+            const valid =
+                validateName(
+                    document.getElementById('first-name'),
+                    document.getElementById('first-name-error'),
+                    'First name'
+                ) &&
+                validateName(
+                    document.getElementById('last-name'),
+                    document.getElementById('last-name-error'),
+                    'Last name'
+                ) &&
+                validateEmail() &&
+                validatePhone() &&
+                validateAddress() &&
+                validateCity() &&
+                validatePostcode() &&
+                validateCardName() &&
+                validateCardNumber() &&
+                validateExpiry() &&
+                validateCVV() &&
+                validateTerms();
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+    </script>
 
 </body>
 </html>
