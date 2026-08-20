@@ -4114,3 +4114,27 @@ textarea:focus-visible{
     display: flex;
     justify-content: space-between;
 }
+
+/* --- Checkout Page --- */
+
+.validation-error {
+    display: block;
+    margin-top: 6px;
+    color: #ff4d4d;
+    font-size: 0.9rem;
+}
+
+.checkout-form input.invalid,
+.checkout-form select.invalid,
+.checkout-form textarea.invalid {
+    border-color: #ff4d4d;
+}
+
+.checkout-server-error {
+    background: rgba(255, 77, 77, 0.1);
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}

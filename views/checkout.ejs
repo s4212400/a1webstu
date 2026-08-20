@@ -7,31 +7,7 @@
     <title>Checkout | ConsoleHaven</title>
     <link rel="stylesheet" href="/shared.css">
 
-    <style>
-        .validation-error {
-            display: block;
-            margin-top: 6px;
-            color: #ff4d4d;
-            font-size: 0.9rem;
-        }
-
-        .checkout-form input.invalid,
-        .checkout-form select.invalid,
-        .checkout-form textarea.invalid {
-            border-color: #ff4d4d;
-        }
-
-        .checkout-server-error {
-            background: rgba(255, 77, 77, 0.1);
-            border: 2px solid #ff4d4d;
-            color: #ff4d4d;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-    </style>
 </head>
-
 <body>
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -45,7 +21,7 @@
 
     <ol class="checkout-steps">
         <li class="step done"><span>1</span> Cart</li>
-        <li class="step current" aria-current="step"><span>2</span> Checkout</li>
+        <li class="step done" aria-done="step"><span>2</span> Checkout</li>
         <li class="step"><span>3</span> Confirmation</li>
     </ol>
 
@@ -780,6 +756,8 @@
         });
 
     </script>
+
+<%- include('partials/footer') %>
 
 </body>
 </html>
