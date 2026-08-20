@@ -203,6 +203,32 @@ app.post('/delete-account', (req, res) => {
     res.redirect('/register');
 });
 
+// ===== PASSWORD RESET (simulated - no real email in this prototype) =====
+app.get('/forgot-password', (req, res) => {
+    res.render('forgot-password', { user: req.session.user || null, error: null });
+});
+ 
+app.post('/forgot-password', (req, res) => {
+    const { resetEmail } = req.body;
+ 
+    // Basic validation - email must be provided
+    if (!resetEmail || resetEmail.trim() === "") {
+        return res.render('forgot-password', {
+            user: req.session.user || null,
+            error: "Please enter your email address."
+        });
+    }
+ 
+    // For security, we always show the same confirmation page whether or not
+    // the email exists (prevents attackers probing which emails are registered).
+    // A real system would email a reset token here; this prototype simulates it.
+    res.redirect('/reset-sent');
+});
+ 
+app.get('/reset-sent', (req, res) => {
+    res.render('reset-sent', { user: req.session.user || null });
+});
+
 // ===== STATIC PAGES =====
 app.get('/sitemap', (req, res) => {
     res.render('sitemap', { user: req.session.user || null });

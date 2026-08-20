@@ -168,7 +168,7 @@ router.post('/delete/:id', requireLogin, (req, res) => {
     res.redirect('/reviews');
 });
 
-// GET /reviews/:id - show one review detail (MUST be last - :id catches everything)
+// GET /reviews/:id - show one review detail 
 router.get('/:id', (req, res) => {
     const reviewId = parseInt(req.params.id);
     const review = reviews.find(r => r.id === reviewId);

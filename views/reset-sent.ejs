@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Your Email | ConsoleHaven</title>
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <section class="auth-section">
+            <div class="auth-box">
+                <p class="confirm-icon">&#9993;</p>
+                <h1>CHECK YOUR EMAIL</h1>
+
+                <p class="auth-intro">If an account exists for that address, we have sent a password reset link to it. The link will expire in 30 minutes.</p>
+
+                <div class="auth-note">
+                    <p><strong>Next steps:</strong></p>
+                    <ul>
+                        <li>Open the email and click the reset link</li>
+                        <li>Choose a new password of at least 8 characters</li>
+                        <li>Sign in with your new credentials</li>
+                    </ul>
+                </div>
+
+                <a href="/login" class="btn btn--primary btn--large auth-full-btn">BACK TO LOGIN</a>
+                <p class="auth-link"><a href="/forgot-password">Send the email again</a></p>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

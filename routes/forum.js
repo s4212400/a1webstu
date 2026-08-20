@@ -188,7 +188,7 @@ router.post('/:id/reply/:replyId/delete', requireLogin, (req, res) => {
     res.redirect('/forum/' + threadId);
 });
 
-// GET /forum/:id - show one thread detail (MUST be last - :id catches everything)
+// GET /forum/:id - show one thread detail 
 router.get('/:id', (req, res) => {
     const threadId = parseInt(req.params.id);
     const thread = threads.find(t => t.id === threadId);
