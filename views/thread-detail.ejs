@@ -38,7 +38,8 @@
                     </div>
                     <div class="post-block__actions">
                         <a href="/forum/edit/<%= thread.id %>" class="btn btn--outline btn--small">Edit</a>
-                        <form action="/forum/delete/<%= thread.id %>" method="POST" style="display:inline;">
+                        <form action="/forum/delete/<%= thread.id %>" method="POST" style="display:inline;"
+                            onsubmit="return confirm('Are you sure you want to delete this thread?');">
                             <button type="submit" class="btn btn--danger btn--small">Delete</button>
                         </form>
                     </div>
@@ -70,7 +71,8 @@
                             </div>
                             <% if (!reply.deleted) { %>
                                 <div class="post-block__actions">
-                                    <form action="/forum/<%= thread.id %>/reply/<%= reply.id %>/delete" method="POST" style="display:inline;">
+                                    <form action="/forum/<%= thread.id %>/reply/<%= reply.id %>/delete" method="POST" style="display:inline;"
+                                        onsubmit="return confirm('Remove this reply?');">
                                         <button type="submit" class="btn btn--danger btn--small">Delete</button>
                                     </form>
                                 </div>

@@ -89,7 +89,8 @@
                                         </form>
                                         <!-- Delete (not shown for the admin's own row) -->
                                         <% if (u.id !== user.id) { %>
-                                            <form action="/admin/delete/<%= u.id %>" method="POST" style="display:inline;">
+                                            <form action="/admin/delete/<%= u.id %>" method="POST" style="display:inline;"
+                                                onsubmit="return confirm('Delete this user account?');">
                                                 <button type="submit" class="btn btn--small btn--danger">DELETE</button>
                                             </form>
                                         <% } %>
