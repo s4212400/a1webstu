@@ -77,7 +77,6 @@ global.users = [
     }
 ];
 
-// Reviews route
 // ===== MODULE ROUTES =====
 app.use((req, res, next) => {
     res.locals.successMessage = req.session.successMessage || null;
@@ -86,6 +85,8 @@ app.use((req, res, next) => {
     req.session.errorMessage = null;
     next();
 });
+
+// Review route
 const reviewsRouter = require('./routes/reviews');
 app.use('/reviews', reviewsRouter);
 
@@ -200,6 +201,15 @@ app.post('/delete-account', (req, res) => {
 
     req.session.destroy();
     res.redirect('/register');
+});
+
+// ===== STATIC PAGES =====
+app.get('/sitemap', (req, res) => {
+    res.render('sitemap', { user: req.session.user || null });
+});
+ 
+app.get('/policy', (req, res) => {
+    res.render('policy', { user: req.session.user || null });
 });
 
 // ===== RUN SERVER =====
