@@ -12,32 +12,32 @@
     <%- include('partials/header') %>
 
     <main id="main-content">
-        <section class="blog-detail-section" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <section class="blog-detail-section">
             
-            <a href="/blog" class="btn btn--outline" style="margin-bottom: 30px; display: inline-block;">&larr; BACK TO DATABANKS</a>
+            <a href="/blog" class="btn btn--outline btn-back-databanks">&larr; BACK TO DATABANKS</a>
             
-            <h1 class="section-title" style="margin-bottom: 10px; font-size: 2.5rem; text-transform: uppercase;"><%= post.title %></h1>
-            <div class="blog-meta" style="color: #888; margin-bottom: 30px; font-family: monospace; border-bottom: 1px dashed #444; padding-bottom: 15px;">
+            <h1 class="section-title blog-detail-title"><%= post.title %></h1>
+            <div class="blog-meta blog-meta-box">
                 <span>AUTHOR: <%= post.author || 'UNKNOWN' %></span> | 
                 <span>DATE: [ <%= post.date %> ]</span> | 
                 <span>CATEGORY: <%= post.category || 'GENERAL' %></span>
             </div>
 
             <% if (user && (user.username === post.author || user.username === 'admin123')) { %>
-                <div class="blog-actions" style="margin-bottom: 25px; display: flex; gap: 15px;">
-                    <a href="/blog/<%= post.id %>/edit" class="btn btn--outline" style="border-color: #f39c12; color: #f39c12;">EDIT RECORD</a>
+                <div class="blog-actions">
+                    <a href="/blog/<%= post.id %>/edit" class="btn btn--outline btn-edit-record">EDIT RECORD</a>
                     
-                    <form action="/blog/<%= post.id %>/delete" method="POST" style="margin: 0;" onsubmit="return confirm('WARNING: DATABANK RECORD WILL BE PURGED. ARE YOU SURE?');">
-                        <button type="submit" class="btn btn--primary" style="background-color: #ff4444; border-color: #ff4444;">DELETE RECORD</button>
+                    <form action="/blog/<%= post.id %>/delete" method="POST" class="inline-form" onsubmit="return confirm('WARNING: DATABANK RECORD WILL BE PURGED. ARE YOU SURE?');">
+                        <button type="submit" class="btn btn--primary btn-delete-record">DELETE RECORD</button>
                     </form>
                 </div>
             <% } %>
 
-            <div style="text-align: center; margin-bottom: 40px;">
-                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" style="max-width: 100%; border: 2px solid #ff4444; box-shadow: 4px 4px 0px #ff4444;">
+            <div class="blog-image-container">
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="blog-detail-img">
             </div>
             
-            <div class="blog-content" style="font-size: 1.1rem; line-height: 1.8; color: #ddd;">
+            <div class="blog-content blog-content-body">
                 <%- post.content %> 
             </div>
             

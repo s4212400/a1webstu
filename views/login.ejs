@@ -16,10 +16,9 @@
         <section class="auth-section">
             <div class="auth-box">
                 <h1>SIGN IN TO CONSOLEHAVEN</h1>
-                
                 <% if (typeof error !== 'undefined' && error) { %>
-                    <div class="warning-panel" style="margin-bottom: 20px; border: 2px solid #ff4444; padding: 10px; border-radius: 4px; background-color: #fff0f0;">
-                        <p style="color: #ff4444; margin: 0; text-align: center; font-weight: bold;"><%= error %></p>
+                    <div class="auth-warning-panel">
+                        <p class="auth-warning-text"><%= error %></p>
                     </div>
                 <% } %>
 
@@ -28,12 +27,13 @@
                         <label class="form-label" for="login-email">Email or Username</label>
                         <input id="login-email" type="text" name="emailUsername" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="password">PASSWORD</label>
-                        <div style="position: relative; display: flex; align-items: center;">
-                            <input type="password" id="password" name="password" required style="width: 100%; padding-right: 70px;">
-                            <span id="togglePassword" style="position: absolute; right: 15px; cursor: pointer; color: #f39c12; font-family: monospace; font-size: 0.9rem; font-weight: bold;">
-                            [SHOW]
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" required class="password-input-field">
+                            <span id="togglePassword" class="password-toggle-btn">
+                                [SHOW]
                             </span>
                         </div>
                     </div>
@@ -47,6 +47,7 @@
             </div>
         </section>
 
+        <!-- JS: Show/Hide Password -->
         <script>
             const toggleBtn = document.getElementById('togglePassword');
             const passInput = document.getElementById('password');
@@ -56,11 +57,11 @@
                     if (passInput.type === 'password') {
                         passInput.type = 'text';
                         toggleBtn.textContent = '[HIDE]';
-                        toggleBtn.style.color = '#ff4444';
+                        toggleBtn.classList.add('active-hide');
                     } else {
                         passInput.type = 'password';   
                         toggleBtn.textContent = '[SHOW]';  
-                        toggleBtn.style.color = '#f39c12'; 
+                        toggleBtn.classList.remove('active-hide'); 
                     }
                 });
             }

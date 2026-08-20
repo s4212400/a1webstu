@@ -3909,3 +3909,199 @@ textarea:focus-visible{
     width: 100%; 
     padding-right: 70px;
 }
+
+/* --- AUTH WARNING PANEL --- */
+.auth-warning-panel {
+    margin-bottom: 20px;
+    border: 2px solid #ff4444;
+    padding: 10px;
+    background: rgba(255, 68, 68, 0.05);
+}
+
+.auth-warning-text {
+    color: #ff4444;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+/* --- FORM HELPER ERROR STATE --- */
+.form-helper-text.error {
+    color: #ff4444;
+}
+
+/* --- PASSWORD TOGGLE HIDE STATE --- */
+.password-toggle-btn.active-hide {
+    color: #ff4444;
+}
+
+/* --- INDEX PAGE HELPERS --- */
+.hero-title--user {
+    color: #f39c12;
+}
+
+.section-spacing {
+    margin-top: 40px;
+}
+
+.blog-card-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-card-meta {
+    color: #f39c12;
+    font-family: monospace;
+}
+
+.blog-card-footer {
+    margin-top: 15px;
+}
+
+.btn--block {
+    width: 100%;
+    text-align: center;
+}
+
+.empty-blog-message {
+    text-align: center;
+    width: 100%;
+    grid-column: 1 / -1;
+    color: #888;
+    font-family: monospace;
+}
+
+/* --- BLOG PAGE HELPERS --- */
+.blog-search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.blog-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.blog-empty-text {
+    color: #888;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* --- BLOG EDIT PAGE HELPERS --- */
+.blog-edit-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.auth-box-full {
+    width: 100%;
+}
+
+.blog-edit-title {
+    color: #f39c12;
+    margin-bottom: 30px;
+}
+
+.retro-textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #444;
+    font-family: inherit;
+}
+
+.btn--override {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: #000;
+}
+
+.btn--spacing-center {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* --- BLOG DETAIL PAGE HELPERS --- */
+.blog-detail-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.btn-back-databanks {
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.blog-detail-title {
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}
+
+.blog-meta-box {
+    color: #888;
+    margin-bottom: 30px;
+    font-family: inherit;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 15px;
+}
+
+.blog-actions {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-edit-record {
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+.inline-form {
+    margin: 0;
+}
+
+.btn-delete-record {
+    background-color: #ff4444;
+    border-color: #ff4444;
+}
+
+.blog-image-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.blog-detail-img {
+    max-width: 100%;
+    border: 2px solid #ff4444;
+    box-shadow: 4px 4px 0px #ff4444;
+}
+
+.blog-content-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ddd;
+}
+
+/* --- BLOG CREATE PAGE HELPERS --- */
+.input-readonly {
+    background-color: #222;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* --- SELECT DROPDOWN --- */
+.retro-select {
+    width: 100%;
+    padding: 10px;
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #444;
+    font-family: inherit;
+}

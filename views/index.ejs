@@ -12,11 +12,12 @@
 
     <%- include('partials/header') %>
 
-        <!-- Hero -->
+    <main id="main-content">
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero__content">
                 <% if (user) { %>
-                    <h1 id="hero-title" style="color: #f39c12;">WELCOME BACK, <%= user.username.toUpperCase() %>!</h1>
+                    <h1 id="hero-title" class="hero-title--user">WELCOME BACK, <%= user.username.toUpperCase() %>!</h1>
                 <% } else { %>
                     <h1 id="hero-title">LEVEL UP YOUR SETUP</h1>
                 <% } %>
@@ -26,7 +27,7 @@
             </div>
         </section>
 
-        <!-- Grid Layout -->
+        <!-- Product Grid Layout -->
         <section class="featured">
             <h2 class="section-title">Trending Gear</h2>
             <div class="product-grid">
@@ -71,8 +72,8 @@
                     </div>
                 </article>
 
-                 <!-- Product Card 3 -->
-                 <article class="card">
+                <!-- Product Card 3 -->
+                <article class="card">
                     <div class="card__image-container">
                         <img src="/images/nintendo_oled.jpg" alt="Nintendo Switch OLED" class="card__image">
                         <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
@@ -94,30 +95,31 @@
             </div>
         </section>
         
-        <section class="featured" style="margin-top: 40px;">
+        <!-- Tech News -->
+        <section class="featured section-spacing">
             <h2 class="section-title">Latest Tech News</h2>
             <div class="product-grid" id="dynamic-blog-container">
                 
                 <% if (typeof blogs !== 'undefined' && blogs.length > 0) { %>
                     <% blogs.slice(0, 3).forEach(post => { %>
-                        <article class="card" style="border: 1px solid #333;">
+                        <article class="card">
                             <div class="card__image-container">
-                                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="card__image" style="height: 200px; object-fit: cover;">
+                                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="card__image blog-card-img">
                             </div>
                             <div class="card__content">
                                 <h3 class="card__title"><a href="/blog/<%= post.id %>"><%= post.title %></a></h3>
-                                <div class="card__meta" style="color: #f39c12; font-family: monospace;">
+                                <div class="card__meta blog-card-meta">
                                     <span>[ <%= post.category %> ]</span>
                                     <span><%= post.date %></span>
                                 </div>
-                                <div class="card__footer" style="margin-top: 15px;">
-                                    <a href="/blog/<%= post.id %>" class="btn btn--outline" style="width: 100%; text-align: center;">READ MORE</a>
+                                <div class="card__footer blog-card-footer">
+                                    <a href="/blog/<%= post.id %>" class="btn btn--outline btn--block">READ MORE</a>
                                 </div>
                             </div>
                         </article>
                     <% }) %>
                 <% } else { %>
-                    <p style="text-align: center; width: 100%; grid-column: 1 / -1; color: #888; font-family: monospace;">
+                    <p class="empty-blog-message">
                         > Scanning databanks for latest news...
                     </p>
                 <% } %>
