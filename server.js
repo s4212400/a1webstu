@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 // In-memory users
-let users = [
+global.users = [
     {
         id: 1,
         fullname: "Admin Test",
@@ -65,55 +65,9 @@ const shopRouter = require('./routes/shop');
 app.locals.products = shopRouter.products;
 app.use('/shop', shopRouter);
 
-// Login
-app.get('/login', (req, res) => {
-    res.render('login', { error: null, user: null });
-});
-
-app.post('/login', (req, res) => {
-    const { emailUsername, password } = req.body;
-    const user = users.find(u =>
-        (u.username === emailUsername || u.email === emailUsername) &&
-        u.password === password
-    );
-    
-    if (user) {
-        req.session.user = user;
-        
-        console.log("=> Successfully logged in:", user.username);
-        req.session.successMessage = `LOGIN SUCCESSFUL! WELCOME BACK, ${req.session.user.username}.`;
-        res.redirect('/'); 
-    } else {
-        res.render('login', { error: "Incorrect email or password.", user: null });
-    }
-});
-
-// Logout
-app.get('/logout', (req, res) => {
-    req.session.user = null; 
-    req.session.errorMessage = "SYSTEM DISCONNECTED. SEE YOU AGAIN!"; 
-    res.redirect('/login');
-});
-
-// Register
-app.get('/register', (req, res) => {
-    res.render('register', { error: null, user: null });
-});
-
-app.post('/register', (req, res) => {
-    const { fullname, username, email, description, password } = req.body;
-    if (!username || !email || !password) {
-        return res.render('register', { error: "Missing required fields.", user: null });
-    }
-    const exists = users.find(u => u.username === username || u.email === email);
-    if (exists) {
-        return res.render('register', { error: "Username or email already taken.", user: null });
-    }
-    const newUser = { id: Date.now(), fullname, username, email, description, password };
-    users.push(newUser);
-    req.session.successMessage = "ACCOUNT CREATED SUCCESSFULLY! PLEASE LOG IN.";
-    res.redirect('/login');
-});
+// Auth route 
+const authRouter = require('./routes/auth');
+app.use('/', authRouter);
 
 // Cart route
 app.use('/cart', cartRouter);
@@ -122,11 +76,8 @@ app.use('/cart', cartRouter);
 app.use('/wishlist', wishlistRouter);
 
 // ===== HOME =====
-app.get('/', (req, res) => {
-    res.render('index', {
-        blogs: blogRouter.blogs || []
-    });
-});
+const indexRouter = require('./routes/index');
+app.use('/', indexRouter);
 
 // ===== DEACTIVATE ACCOUNT =====
 app.get('/deactivate-account', (req, res) => {
