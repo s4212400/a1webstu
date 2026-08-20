@@ -63,8 +63,13 @@ router.get('/blog', (req, res) => {
             return matchTitle || matchContent;
         });
     }
-
-    res.render('blog', { blogs: displayBlogs, user: req.session.user || null, currentCategory: categoryQuery || 'ALL' });
+    
+    res.render('blog', { 
+        blogs: displayBlogs, 
+        user: req.session.user || null, 
+        currentCategory: categoryQuery || 'ALL',
+        currentSearch: searchQuery || '' 
+    });
 });
 
 router.get('/blog/:id', (req, res) => {

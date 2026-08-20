@@ -21,9 +21,15 @@
     
         <!-- Blog Controls -->
         <div class="blog-controls">
-            <form class="search-bar" action="/blog" method="GET">
-                <input type="text" name="search" placeholder="SEARCH DATABANKS..." class="search-input">
-                <button type="submit" class="btn btn--primary">SEARCH</button> 
+            <form action="/blog" method="GET" style="display: flex; gap: 10px;">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="SEARCH DATABANKS..." 
+                    value="<%= currentSearch %>" 
+                    class="retro-search-input"
+                >
+                <button type="submit" class="btn btn--primary">SEARCH</button>
             </form>
             
             <div class="blog-categories">

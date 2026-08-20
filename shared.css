@@ -600,24 +600,24 @@ ul {
     border: 2px dashed var(--border-color);
 }
 
-.search-bar {
-    display: flex;
-    gap: 10px;
+.retro-search-input {
+    width: 350px; 
+    padding: 12px 15px; 
+    background: #111; 
+    border: 2px solid #555; 
+    color: #fff; 
+    outline: none !important;
+    font-family: inherit; 
+    font-size: 1.2rem;
 }
-
-.search-input {
-    flex-grow: 1;
-    padding: 12px 15px;
-    background-color: #000000;
-    border: 2px solid var(--border-color);
-    color: var(--text-main);
+.retro-search-input::placeholder {
     font-family: inherit;
-    font-size: 1rem;
+    color: #777;
+    font-size: 1.2rem;
 }
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary-color); 
+.retro-search-input:focus {
+    border: 2px solid #f39c12;
+    outline: none !important;
 }
 
 .blog-categories {
