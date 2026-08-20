@@ -1,7 +1,38 @@
 const express = require('express');
 const router = express.Router();
 
-let blogs = [];
+let blogs = [
+    {
+        id: 1724127600001,
+        title: "THE RESURGENCE OF RETRO ARCADE",
+        author: "admin123",
+        date: "2026-08-20",
+        category: "RETRO",
+        tags: "arcade, nostalgia, pacman",
+        imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+        content: "Arcade cabinets are making a massive comeback this year. From neon-lit bars to home setups, the pixelated glory of the 80s is alive and well. In this databank entry, we explore the best ways to emulate these classic systems."
+    },
+    {
+        id: 1724127600002,
+        title: "NEXT-GEN HARDWARE LEAKS",
+        author: "lgminnn",
+        date: "2026-08-18",
+        category: "HARDWARE",
+        tags: "ps6, xbox, rumors",
+        imageUrl: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80",
+        content: "System scans indicate new hardware specifications have been leaked onto the net. Teraflops are doubling, and haptic feedback is evolving. Are we ready for the next tier of virtual immersion?"
+    },
+    {
+        id: 1724127600003,
+        title: "ESPORTS: THE NEW OLYMPICS?",
+        author: "Tien Nguyen",
+        date: "2026-08-15",
+        category: "ESPORTS",
+        tags: "tournament, competitive",
+        imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
+        content: "With prize pools surpassing traditional sports, competitive gaming is no longer a niche. We analyze the latest tournament stats and what it means for the future of digital athletes."
+    }
+];
 
 // MIDDLEWARE
 const requireAuth = (req, res, next) => {
