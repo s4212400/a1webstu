@@ -145,7 +145,9 @@ router.post('/delete/:id', requireLogin, (req, res) => {
     if (!thread) {
         return res.redirect('/forum');
     }
-    if (thread.author !== req.session.user.fullname) {
+    const isOwner = thread.author === req.session.user.fullname;
+    const isAdmin = req.session.user.username === "admin123";
+    if (!isOwner && !isAdmin) {
         return res.redirect('/forum');
     }
     threads = threads.filter(t => t.id !== threadId);

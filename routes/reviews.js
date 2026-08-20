@@ -106,9 +106,9 @@ router.get('/edit/:id', requireLogin, (req, res) => {
     }
 
     // Only the author can edit their own review
-    if (review.reviewer !== req.session.user.fullname) {
-        return res.redirect('/reviews');
-    }
+        if (review.reviewer !== req.session.user.fullname) {
+            return res.redirect('/reviews');
+        }
 
     res.render('review-edit', { review: review, user: req.session.user });
 });
@@ -157,8 +157,10 @@ router.post('/delete/:id', requireLogin, (req, res) => {
         return res.redirect('/reviews');
     }
 
-    // Only the author can delete their own review
-    if (review.reviewer !== req.session.user.fullname) {
+    //Admin can delete all except user
+    const isOwner = review.reviewer === req.session.user.fullname;
+    const isAdmin = req.session.user.username === "admin123";
+    if (!isOwner && !isAdmin) {
         return res.redirect('/reviews');
     }
 
