@@ -1,10 +1,20 @@
 const express = require('express');
-
 const router = express.Router();
+
+// Login required
+const requireLogin = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+    next();
+};
 
 
 // Wishlist data
 let wishlist = [];
+
+router.use(requireLogin);
 
 
 // Make wishlist available to server.js and other routes
