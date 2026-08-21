@@ -15,6 +15,11 @@ router.post('/login', (req, res) => {
     );
     
     if (user) {
+        // Block locked accounts - they cannot log in or perform any operations
+        if (user.status === "locked") {
+            return res.render('login', { error: "Your account has been locked. Please contact an administrator." });
+        }
+
         req.session.user = user;
         console.log("=> Successfully logged in:", user.username);
         req.session.successMessage = `LOGIN SUCCESSFUL! WELCOME BACK, ${user.username}.`;
@@ -41,7 +46,13 @@ router.post('/register', (req, res) => {
         return res.render('register', { error: "Username or email already taken." });
     }
     
-    const newUser = { id: Date.now(), fullname, username, email, description, password };
+    const newUser = {
+        id: Date.now(),
+        fullname, username, email, description, password,
+        role: "standard",
+        status: "active",
+        joined: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    };
     global.users.push(newUser);
     
     req.session.successMessage = "ACCOUNT CREATED SUCCESSFULLY! PLEASE LOG IN.";
