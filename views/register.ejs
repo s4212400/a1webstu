@@ -14,8 +14,6 @@
         <section class="auth-section">
             <div class="auth-box auth-box--wide">
                 <h1>CREATE NEW ACCOUNT</h1>
-
-                <!-- Display error from Server -->
                 <% if (typeof error !== 'undefined' && error) { %>
                     <div class="auth-warning-panel">
                         <p class="auth-warning-text"><%= error %></p>
@@ -25,38 +23,46 @@
                 <form class="auth-form" action="/register" method="POST" novalidate>
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" name="fullname" required>
-                        <small class="form-helper-text">Enter your real name or gaming alias.</small>
+                        <input type="text" id="fullname" name="fullname" required>
+                        <small id="fullname-helper" class="form-helper-text">Enter your real name or gaming alias.</small>
                     </div>
                     
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" required>
-                        <small class="form-helper-text">Must be unique. No spaces allowed.</small>
+                        <input type="text" id="username" name="username" required>
+                        <small id="username-helper" class="form-helper-text">Must be unique. No spaces allowed.</small>
                     </div>
                     
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" name="email" required>
-                        <small class="form-helper-text">Enter a valid email address. It will be kept private.</small>
+                        <input type="email" id="email" name="email" required>
+                        <small id="email-helper" class="form-helper-text">Enter a valid email address. It will be kept private.</small>
                     </div>
                     
                     <div class="form-group">
                         <label>Short Description (Bio)</label>
-                        <textarea name="description" rows="3"></textarea>
+                        <textarea id="description" name="description" rows="3"></textarea>
                         <small class="form-helper-text">Tell us about your favorite games or consoles.</small>
                     </div>
                     
                     <div class="form-group">
                         <label for="password">PASSWORD</label>
-
                         <div class="password-wrapper">
                             <input type="password" id="password" name="password" required class="password-input-field">
                             <span id="togglePassword" class="password-toggle-btn">[SHOW]</span>
                         </div>
-
                         <small id="password-helper" class="form-helper-text">
                             Min 8 chars. Must include 4 numbers & 1 special char (!@#$%).
+                        </small>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreePolicy" name="agreePolicy">
+                            <span>I agree to the <a href="/policy" target="_blank" class="policy-link">Policy & Terms</a></span>
+                        </label>
+                        <small id="policy-helper" class="form-helper-text policy-helper-spacing text-error hidden">
+                            You must agree to the Policy & Terms to register.
                         </small>
                     </div>
 
@@ -89,26 +95,238 @@
             }
         </script>
 
-        <!-- JS: Validate Client Side -->
+        <!-- JS: LIVE Validation, Submit Validation and Web Storage -->
         <script>
             const registerForm = document.querySelector('.auth-form');
+            
+            const fullnameInput = document.getElementById('fullname');
+            const fullnameHelper = document.getElementById('fullname-helper');
+
+            const usernameInput = document.getElementById('username');
+            const usernameHelper = document.getElementById('username-helper');
+            
+            const emailInput = document.getElementById('email');
+            const emailHelper = document.getElementById('email-helper');
+            
+            const descriptionInput = document.getElementById('description');
+            
             const passwordInput = document.getElementById('password');
             const passwordHelper = document.getElementById('password-helper');
+            
+            const policyCheckbox = document.getElementById('agreePolicy');
+            const policyHelper = document.getElementById('policy-helper');
 
-            if (registerForm) {
-                registerForm.addEventListener('submit', function(event) {
+            // --- WEB STORAGE ---
+            document.addEventListener('DOMContentLoaded', () => {
+                if (fullnameInput && localStorage.getItem('reg_fullname')) {
+                    fullnameInput.value = localStorage.getItem('reg_fullname');
+                    fullnameInput.dispatchEvent(new Event('input'));
+                }
+                
+                if (usernameInput && localStorage.getItem('reg_username')) {
+                    usernameInput.value = localStorage.getItem('reg_username');
+                    usernameInput.dispatchEvent(new Event('input')); 
+                }
+                
+                if (emailInput && localStorage.getItem('reg_email')) {
+                    emailInput.value = localStorage.getItem('reg_email');
+                    emailInput.dispatchEvent(new Event('input')); 
+                }
+                
+                if (descriptionInput && localStorage.getItem('reg_description')) {
+                    descriptionInput.value = localStorage.getItem('reg_description');
+                }
+            });
+
+            // 1. Live Validation and save Storage for Fullname
+            if (fullnameInput) {
+                fullnameInput.addEventListener('input', function() {
+                    localStorage.setItem('reg_fullname', fullnameInput.value);
+
+                    if (fullnameInput.value.trim().length === 0) { 
+                        if (fullnameInput.value.length > 0) { 
+                            fullnameHelper.textContent = 'ERROR: Name cannot be just spaces!';
+                            fullnameHelper.classList.add('text-error');
+                            fullnameHelper.classList.remove('text-success');
+                        } else { 
+                            fullnameHelper.textContent = 'Enter your real name or gaming alias.';
+                            fullnameHelper.classList.remove('text-success', 'text-error');
+                        }
+                    } else { 
+                        fullnameHelper.textContent = 'Looking good!';
+                        fullnameHelper.classList.add('text-success');
+                        fullnameHelper.classList.remove('text-error');
+                    }
+                });
+            }
+
+            // 2. Live Validation and save Storage for Bio
+            if (descriptionInput) {
+                descriptionInput.addEventListener('input', function() {
+                    localStorage.setItem('reg_description', descriptionInput.value);
+                });
+            }
+
+            // 3. Live Validation and save Storage for Username
+            if (usernameInput) {
+                usernameInput.addEventListener('input', function() {
+                    localStorage.setItem('reg_username', usernameInput.value); 
+                    
+                    if (/\s/.test(usernameInput.value)) {
+                        usernameHelper.textContent = 'ERROR: Username cannot contain spaces!';
+                        usernameHelper.classList.add('text-error');
+                        usernameHelper.classList.remove('text-success');
+                    } else if (usernameInput.value.length > 0) {
+                        usernameHelper.textContent = 'Valid format.';
+                        usernameHelper.classList.add('text-success');
+                        usernameHelper.classList.remove('text-error');
+                    } else {
+                        usernameHelper.textContent = 'Must be unique. No spaces allowed.';
+                        usernameHelper.classList.remove('text-success', 'text-error');
+                    }
+                });
+            }
+
+            // 4. Live Validation and save Storage for Email
+            if (emailInput) {
+                emailInput.addEventListener('input', function() {
+                    localStorage.setItem('reg_email', emailInput.value); 
+
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+                    
+                    if (emailInput.value.length === 0) {
+                        emailHelper.textContent = 'Enter a valid email address. It will be kept private.';
+                        emailHelper.classList.remove('text-success', 'text-error');
+                    } else if (!emailRegex.test(emailInput.value)) {
+                        emailHelper.textContent = 'ERROR: Invalid email format!';
+                        emailHelper.classList.add('text-error');
+                        emailHelper.classList.remove('text-success');
+                    } else {
+                        emailHelper.textContent = 'Valid email address.';
+                        emailHelper.classList.add('text-success');
+                        emailHelper.classList.remove('text-error');
+                    }
+                });
+            }
+
+            // 5. Live Validation for Password 
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
                     const pwd = passwordInput.value;
-
                     const isLengthValid = pwd.length >= 8;
                     const numCount = (pwd.match(/\d/g) || []).length;
                     const isNumberValid = numCount >= 4;
                     const isSpecialValid = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
 
-                    if (!isLengthValid || !isNumberValid || !isSpecialValid) {
-                        event.preventDefault(); 
-                        passwordHelper.classList.add('error');
+                    if (pwd.length === 0) {
+                        passwordHelper.textContent = 'Min 8 chars. Must include 4 numbers & 1 special char (!@#$%).';
+                        passwordHelper.classList.remove('text-success', 'text-error');
+                    } else if (!isLengthValid || !isNumberValid || !isSpecialValid) {
+                        passwordHelper.textContent = 'WEAK: Need min 8 chars, 4 numbers, 1 special char.';
+                        passwordHelper.classList.add('text-error');
+                        passwordHelper.classList.remove('text-success');
+                    } else {
+                        passwordHelper.textContent = 'STRONG: Password meets all criteria!';
+                        passwordHelper.classList.add('text-success');
+                        passwordHelper.classList.remove('text-error');
+                    }
+                });
+            }
+
+            // 6. Live Validation for Checkbox Policy
+            if (policyCheckbox) {
+                policyCheckbox.addEventListener('change', function() {
+                    if (policyCheckbox.checked) {
+                        policyHelper.classList.add('hidden');
+                    } else {
+                        policyHelper.classList.remove('hidden');
+                    }
+                });
+            }
+
+            // 7. Submit Validation 
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(event) {
+                    let isValid = true;
+                    let firstInvalidInput = null; 
+
+                    // Check Full Name 
+                    if (fullnameInput.value.trim().length === 0) {
+                        isValid = false;
+                        fullnameHelper.textContent = 'ERROR: Full Name is required!';
+                        fullnameHelper.classList.add('text-error');
+                        fullnameHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = fullnameInput;
+                    }
+
+                    // Check Username 
+                    if (usernameInput.value.trim().length === 0) {
+                        isValid = false;
+                        usernameHelper.textContent = 'ERROR: Username is required!';
+                        usernameHelper.classList.add('text-error');
+                        usernameHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = usernameInput;
+                    } else if (/\s/.test(usernameInput.value)) {
+                        isValid = false;
+                        usernameHelper.textContent = 'ERROR: Username cannot contain spaces!';
+                        usernameHelper.classList.add('text-error');
+                        usernameHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = usernameInput;
+                    }
+
+                    // Check Email 
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (emailInput.value.trim().length === 0) {
+                        isValid = false;
+                        emailHelper.textContent = 'ERROR: Email address is required!';
+                        emailHelper.classList.add('text-error');
+                        emailHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = emailInput;
+                    } else if (!emailRegex.test(emailInput.value)) {
+                        isValid = false;
+                        emailHelper.textContent = 'ERROR: Invalid email format!';
+                        emailHelper.classList.add('text-error');
+                        emailHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = emailInput;
+                    }
+
+                    // Check Password 
+                    const pwd = passwordInput.value;
+                    const isLengthValid = pwd.length >= 8;
+                    const numCount = (pwd.match(/\d/g) || []).length;
+                    const isNumberValid = numCount >= 4;
+                    const isSpecialValid = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+
+                    if (pwd.length === 0) {
+                        isValid = false;
+                        passwordHelper.textContent = 'ERROR: Password is required!';
+                        passwordHelper.classList.add('text-error');
+                        passwordHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = passwordInput;
+                    } else if (!isLengthValid || !isNumberValid || !isSpecialValid) {
+                        isValid = false;
                         passwordHelper.textContent = 'INVALID PASSWORD! Need: Min 8 chars, 4 numbers, 1 special char (!@#$%).';
-                        passwordInput.focus();
+                        passwordHelper.classList.add('text-error');
+                        passwordHelper.classList.remove('text-success');
+                        if (!firstInvalidInput) firstInvalidInput = passwordInput;
+                    }
+
+                    // Check Policy
+                    if (policyCheckbox && !policyCheckbox.checked) {
+                        isValid = false;
+                        policyHelper.classList.remove('hidden');
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault(); 
+                        if (firstInvalidInput) {
+                            firstInvalidInput.focus(); 
+                        }
+                    } else {
+                        localStorage.removeItem('reg_fullname');
+                        localStorage.removeItem('reg_username');
+                        localStorage.removeItem('reg_email');
+                        localStorage.removeItem('reg_description');
                     }
                 });
             }

@@ -16,11 +16,12 @@
             <div class="auth-box auth-box-full">
                 <h1 class="blog-edit-title">[ SYSTEM UPDATE: EDIT RECORD ]</h1>
                 
-                <form class="auth-form" action="/blog/<%= post.id %>/edit" method="POST">
+                <form class="auth-form" id="edit-form" action="/blog/<%= post.id %>/edit" method="POST" novalidate>
                     
                     <div class="form-group">
                         <label class="form-label" for="edit-title">Title</label>
                         <input id="edit-title" type="text" name="title" value="<%= post.title %>" required>
+                        <small id="edit-title-helper" class="form-helper-text text-error hidden" style="margin-top: 5px; display: block;">ERROR: Title cannot be empty!</small>
                     </div>
 
                     <div class="form-group">
@@ -40,6 +41,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label" for="edit-tags">Tags</label>
+                        <input id="edit-tags" type="text" name="tags" value="<%= post.tags || '' %>" placeholder="e.g., nintendo, review">
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label" for="edit-image">Image URL</label>
                         <input id="edit-image" type="text" name="image" value="<%= post.imageUrl %>">
                     </div>
@@ -47,6 +53,7 @@
                     <div class="form-group">
                         <label class="form-label" for="edit-content">Content</label>
                         <textarea id="edit-content" name="content" rows="10" required class="retro-textarea"><%= post.content %></textarea>
+                        <small id="edit-content-helper" class="form-helper-text text-error hidden" style="margin-top: 5px; display: block;">ERROR: Content cannot be empty!</small>
                     </div>
                     
                     <button type="submit" class="btn btn--primary btn--large auth-full-btn btn--override">SAVE OVERRIDE</button>
@@ -55,6 +62,67 @@
             </div>
         </section>
     </main>
+
+    <!-- JS: Live Validation and Submit Validation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const editForm = document.getElementById('edit-form');
+            
+            const titleInput = document.getElementById('edit-title');
+            const titleHelper = document.getElementById('edit-title-helper');
+            
+            const contentInput = document.getElementById('edit-content');
+            const contentHelper = document.getElementById('edit-content-helper');
+
+            // 1. Live Validation
+            if (titleInput) {
+                titleInput.addEventListener('input', () => {
+                    if (titleInput.value.trim().length === 0) {
+                        titleHelper.classList.remove('hidden');
+                    } else {
+                        titleHelper.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (contentInput) {
+                contentInput.addEventListener('input', () => {
+                    if (contentInput.value.trim().length === 0) {
+                        contentHelper.classList.remove('hidden');
+                    } else {
+                        contentHelper.classList.add('hidden');
+                    }
+                });
+            }
+
+            // 2. Submit Validation
+            if (editForm) {
+                editForm.addEventListener('submit', (event) => {
+                    let isValid = true;
+                    let firstInvalidInput = null;
+
+                    if (titleInput.value.trim().length === 0) {
+                        isValid = false;
+                        titleHelper.classList.remove('hidden');
+                        if (!firstInvalidInput) firstInvalidInput = titleInput;
+                    }
+
+                    if (contentInput.value.trim().length === 0) {
+                        isValid = false;
+                        contentHelper.classList.remove('hidden');
+                        if (!firstInvalidInput) firstInvalidInput = contentInput;
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                        if (firstInvalidInput) {
+                            firstInvalidInput.focus();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 
     <%- include('partials/footer') %>
 </body>

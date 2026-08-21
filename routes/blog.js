@@ -60,7 +60,9 @@ router.get('/blog', (req, res) => {
         displayBlogs = displayBlogs.filter(post => {
             const matchTitle = (post.title || '').toLowerCase().includes(lowerCaseQuery);
             const matchContent = (post.content || '').toLowerCase().includes(lowerCaseQuery);
-            return matchTitle || matchContent;
+            const matchTags = (post.tags || '').toLowerCase().includes(lowerCaseQuery); 
+            
+            return matchTitle || matchContent || matchTags;
         });
     }
     
@@ -113,7 +115,7 @@ router.get('/blog/:id/edit', requireAuth, (req, res) => {
 
 router.post('/blog/:id/edit', requireAuth, (req, res) => {
     const blogId = Number(req.params.id);
-    const { title, category, image, content } = req.body;
+    const { title, category, image, content, tags } = req.body; 
     const postIndex = blogs.findIndex(b => b.id === blogId);
     
     if (postIndex !== -1) {
@@ -121,6 +123,7 @@ router.post('/blog/:id/edit', requireAuth, (req, res) => {
         blogs[postIndex].category = category;
         blogs[postIndex].imageUrl = image || blogs[postIndex].imageUrl;
         blogs[postIndex].content = content;
+        blogs[postIndex].tags = tags; 
     }
     res.redirect('/blog/' + blogId);
 });
