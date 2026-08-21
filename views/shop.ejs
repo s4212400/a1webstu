@@ -521,11 +521,13 @@
 
                         <div class="shop-card__image-wrap">
 
-                            <img
-                                src="<%= product.image %>"
-                                alt="<%= product.name %>"
-                                class="shop-card__image"
-                            >
+                            <a href="/product/<%= product.id %>">
+                                <img
+                                    src="<%= product.image %>"
+                                    alt="<%= product.name %>"
+                                    class="shop-card__image"
+                                >
+                            </a>
 
                             <% if (product.discount) { %>
 
@@ -541,7 +543,7 @@
                         <div class="shop-card__body">
 
                             <h2 class="shop-card__title">
-                                <%= product.name %>
+                                <a href="/product/<%= product.id %>"><%= product.name %></a>
                             </h2>
 
 
