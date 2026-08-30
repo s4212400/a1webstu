@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { dbconnect } = require('./config/db');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -7,6 +9,8 @@ const profileRouter = require('./routes/profile');
 
 const app = express();
 const PORT = 3000;
+
+dbconnect(process.env.MONGO_URI);
 
 // View engine EJS
 app.set('view engine', 'ejs');
