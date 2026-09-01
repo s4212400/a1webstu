@@ -54,19 +54,19 @@
                                     <%= "⭐".repeat(review.rating) %> <span><%= review.rating %>.0 / 5</span>
                                 </div>
                                 <h2 class="review-card__title">
-                                    <a href="/reviews/<%= review.id %>"><%= review.title %></a>
+                                    <a href="/reviews/<%= review._id %>"><%= review.title %></a>
                                 </h2>
-                                <p class="review-card__excerpt"><%= review.excerpt %></p>
+                                <p class="review-card__excerpt"><%= review.description %></p>
                                 <div class="review-card__meta">
-                                    <span class="reviewer-name"><%= review.reviewer %></span>
-                                    <span><%= review.date %></span>
+                                    <span class="reviewer-name"><%= review.author ? review.author.fullname : "Unknown" %></span>
+                                    <span><%= new Date(review.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) %></span>
                                 </div>
 
                                 <!-- Edit/Delete only shown on the logged-in user's own reviews -->
-                                <% if (user && review.reviewer === user.fullname) { %>
+                                <% if (user && user._id && review.author && (review.author._id.toString() === user._id.toString() || user.username === "admin123")) { %>
                                     <div class="review-card__actions">
-                                        <a href="/reviews/edit/<%= review.id %>" class="btn btn--outline btn--small">Edit</a>
-                                       <form action="/reviews/delete/<%= review.id %>" method="POST" style="display:inline;"
+                                        <a href="/reviews/edit/<%= review._id %>" class="btn btn--outline btn--small">Edit</a>
+                                       <form action="/reviews/delete/<%= review._id %>" method="POST" style="display:inline;"
                                             onsubmit="return confirm('Delete this review? This cannot be undone.');">
                                             <button type="submit" class="btn btn--danger btn--small">Delete</button>
                                         </form>

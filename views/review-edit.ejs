@@ -21,7 +21,7 @@
         <section class="form-section">
             <div class="form-card">
 
-                <form action="/reviews/edit/<%= review.id %>" method="POST" novalidate>
+                <form action="/reviews/edit/<%= review._id %>" method="POST" novalidate>
 
                     <div class="form-group">
                         <label class="form-label" for="review-title">Review Title</label>
@@ -31,7 +31,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="review-description">Description</label>
-                        <textarea id="review-description" name="description" class="form-textarea"><%= review.excerpt %></textarea>
+                        <textarea id="review-description" name="description" class="form-textarea"><%= review.description %></textarea>
                         <span class="error-message" id="description-error"></span>
                     </div>
 
