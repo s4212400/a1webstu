@@ -152,13 +152,13 @@
                                 <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="card__image blog-card-img">
                             </div>
                             <div class="card__content">
-                                <h3 class="card__title"><a href="/blog/<%= post.id %>"><%= post.title %></a></h3>
+                                <h3 class="card__title"><a href="/blog/<%= post._id %>"><%= post.title %></a></h3>
                                 <div class="card__meta blog-card-meta">
                                     <span>[ <%= post.category %> ]</span>
                                     <span><%= post.date %></span>
                                 </div>
                                 <div class="card__footer blog-card-footer">
-                                    <a href="/blog/<%= post.id %>" class="btn btn--outline btn--block">READ MORE</a>
+                                    <a href="/blog/<%= post._id %>" class="btn btn--outline btn--block">READ MORE</a>
                                 </div>
                             </div>
                         </article>
@@ -169,7 +169,7 @@
                     </p>
                 <% } %>
 
-        </div>
+            </div>
         </section>
     </main>
 

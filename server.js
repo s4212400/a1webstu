@@ -16,6 +16,9 @@ const profileRouter = require('./routes/profile');
 const app = express();
 const PORT = 3000;
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 
 // View engine EJS
 app.set('view engine', 'ejs');

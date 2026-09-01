@@ -1,40 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const Blog = require('../models/blog'); 
 
-let blogs = [
-    {
-        id: 1724127600001,
-        title: "THE RESURGENCE OF RETRO ARCADE",
-        author: "admin123",
-        date: "2026-08-20",
-        category: "RETRO",
-        tags: "arcade, nostalgia, pacman",
-        imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
-        content: "Arcade cabinets are making a massive comeback this year. From neon-lit bars to home setups, the pixelated glory of the 80s is alive and well. In this databank entry, we explore the best ways to emulate these classic systems."
-    },
-    {
-        id: 1724127600002,
-        title: "NEXT-GEN HARDWARE LEAKS",
-        author: "lgminnn",
-        date: "2026-08-18",
-        category: "HARDWARE",
-        tags: "ps6, xbox, rumors",
-        imageUrl: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80",
-        content: "System scans indicate new hardware specifications have been leaked onto the net. Teraflops are doubling, and haptic feedback is evolving. Are we ready for the next tier of virtual immersion?"
-    },
-    {
-        id: 1724127600003,
-        title: "ESPORTS: THE NEW OLYMPICS?",
-        author: "Tien Nguyen",
-        date: "2026-08-15",
-        category: "ESPORTS",
-        tags: "tournament, competitive",
-        imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
-        content: "With prize pools surpassing traditional sports, competitive gaming is no longer a niche. We analyze the latest tournament stats and what it means for the future of digital athletes."
-    }
-];
-
-// MIDDLEWARE
+// MIDDLEWARE 
 const requireAuth = (req, res, next) => {
     if (req.session.user) {
         next(); 
@@ -44,98 +12,132 @@ const requireAuth = (req, res, next) => {
     }
 };
 
-router.get('/blog', (req, res) => {
-    const searchQuery = req.query.search; 
-    const categoryQuery = req.query.category;
-    let displayBlogs = blogs; 
+// 1. FILTER CATEGORY 
+router.get('/blog', async (req, res) => {
+    try {
+        const searchQuery = req.query.search; 
+        const categoryQuery = req.query.category;
+        
+        let filter = {};
 
-    if (categoryQuery && categoryQuery !== 'ALL') {
-        displayBlogs = displayBlogs.filter(post => 
-            post.category && post.category.toLowerCase() === categoryQuery.toLowerCase()
-        );
-    }
+        if (categoryQuery && categoryQuery !== 'ALL') {
+            filter.category = new RegExp('^' + categoryQuery + '$', 'i');
+        }
 
-    if (searchQuery) {
-        const lowerCaseQuery = searchQuery.toLowerCase();
-        displayBlogs = displayBlogs.filter(post => {
-            const matchTitle = (post.title || '').toLowerCase().includes(lowerCaseQuery);
-            const matchContent = (post.content || '').toLowerCase().includes(lowerCaseQuery);
-            const matchTags = (post.tags || '').toLowerCase().includes(lowerCaseQuery); 
-            
-            return matchTitle || matchContent || matchTags;
+        if (searchQuery) {
+            const regex = new RegExp(searchQuery, 'i');
+            filter.$or = [
+                { title: regex },
+                { content: regex },
+                { tags: regex }
+            ];
+        }
+
+        // Truy vấn dữ liệu từ MongoDB Atlas, sắp xếp bài mới nhất lên đầu
+        const displayBlogs = await Blog.find(filter).sort({ createdAt: -1 });
+        
+        res.render('blog', { 
+            blogs: displayBlogs, 
+            user: req.session.user || null, 
+            currentCategory: categoryQuery || 'ALL',
+            currentSearch: searchQuery || '' 
         });
+    } catch (err) {
+        console.error("Error fetching blogs from DB:", err);
+        res.status(500).send("<h1>Server Error</h1>");
     }
-    
-    res.render('blog', { 
-        blogs: displayBlogs, 
-        user: req.session.user || null, 
-        currentCategory: categoryQuery || 'ALL',
-        currentSearch: searchQuery || '' 
-    });
 });
 
-router.get('/blog/:id', (req, res) => {
-    const blogId = Number(req.params.id); 
-    const post = blogs.find(b => b.id === blogId);
-
-    if (!post) {
-        return res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
+// 2. VIEW A SINGLE BLOG POST
+router.get('/blog/:id', async (req, res) => {
+    try {
+        const post = await Blog.findById(req.params.id);
+        if (!post) {
+            return res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
+        }
+        res.render('blog-detail', { post: post, user: req.session.user || null });
+    } catch (err) {
+        console.error("Error finding blog by ID:", err);
+        res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
     }
-    res.render('blog-detail', { post: post, user: req.session.user || null });
 });
 
-
-// ROUTES Security 
+// ROUTES SECURITY
 
 router.get('/blog-create', requireAuth, (req, res) => {
     res.render('blog-create', { user: req.session.user });
 });
 
-router.post('/blog-create', requireAuth, (req, res) => {
-    const { title, date, category, tags, image, content } = req.body;
-    const currentAuthor = req.session.user.username;
-    const newPost = {
-        id: Date.now(),
-        title,
-        author: currentAuthor,
-        date, category, tags, content,
-        imageUrl: image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'
-    };
-    blogs.unshift(newPost);
-    console.log("=> Successfully created new blog:", title);
-    res.redirect('/blog');
-});
+// 3. CREATE A NEW BLOG POST (Insert into Database)
+router.post('/blog-create', requireAuth, async (req, res) => {
+    try {
+        const { title, date, category, tags, image, content } = req.body;
+        const currentAuthor = req.session.user.username;
+        
+        await Blog.create({
+            title,
+            author: currentAuthor,
+            date: date || Date.now(),
+            category,
+            tags,
+            content,
+            imageUrl: image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'
+        });
 
-router.get('/blog/:id/edit', requireAuth, (req, res) => {
-    const blogId = Number(req.params.id);
-    const post = blogs.find(b => b.id === blogId);
-    if (!post) return res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
-    res.render('blog-edit', { post: post, user: req.session.user });
-});
-
-router.post('/blog/:id/edit', requireAuth, (req, res) => {
-    const blogId = Number(req.params.id);
-    const { title, category, image, content, tags } = req.body; 
-    const postIndex = blogs.findIndex(b => b.id === blogId);
-    
-    if (postIndex !== -1) {
-        blogs[postIndex].title = title;
-        blogs[postIndex].category = category;
-        blogs[postIndex].imageUrl = image || blogs[postIndex].imageUrl;
-        blogs[postIndex].content = content;
-        blogs[postIndex].tags = tags; 
+        console.log("=> Successfully created new blog in MongoDB:", title);
+        res.redirect('/blog');
+    } catch (err) {
+        console.error("Error creating blog:", err);
+        res.status(500).send("<h1>Error creating blog</h1>");
     }
-    res.redirect('/blog/' + blogId);
 });
 
-router.post('/blog/:id/delete', requireAuth, (req, res) => {
-    const blogId = Number(req.params.id);
-    const postIndex = blogs.findIndex(b => b.id === blogId);
-    if (postIndex !== -1) {
-        blogs.splice(postIndex, 1); 
+// 4. EDIT A BLOG POST (Load edit page)
+router.get('/blog/:id/edit', requireAuth, async (req, res) => {
+    try {
+        const post = await Blog.findById(req.params.id);
+        if (!post) return res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
+        res.render('blog-edit', { post: post, user: req.session.user });
+    } catch (err) {
+        console.error("Error loading edit page:", err);
+        res.status(404).send("<h1>ERROR 404: RECORD NOT FOUND</h1>");
     }
-    res.redirect('/blog');
 });
 
-router.blogs = blogs;
+// 5. UPDATE A BLOG POST (Save changes to Database)
+router.post('/blog/:id/edit', requireAuth, async (req, res) => {
+    try {
+        const { title, category, image, content, tags } = req.body; 
+        
+        const updateData = {
+            title,
+            category,
+            content,
+            tags
+        };
+        if (image) {
+            updateData.imageUrl = image;
+        }
+
+        await Blog.findByIdAndUpdate(req.params.id, updateData);
+        console.log("=> Successfully updated blog ID:", req.params.id);
+        res.redirect('/blog/' + req.params.id);
+    } catch (err) {
+        console.error("Error updating blog:", err);
+        res.status(500).send("<h1>Error updating blog</h1>");
+    }
+});
+
+// 6. DELETE A BLOG POST
+router.post('/blog/:id/delete', requireAuth, async (req, res) => {
+    try {
+        await Blog.findByIdAndDelete(req.params.id);
+        console.log("=> Successfully deleted blog ID:", req.params.id);
+        res.redirect('/blog');
+    } catch (err) {
+        console.error("Error deleting blog:", err);
+        res.status(500).send("<h1>Error deleting blog</h1>");
+    }
+});
+
 module.exports = router;
