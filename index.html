@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConsoleHaven - Premium Gaming Gear</title>
+    <!-- Thêm dấu / trước shared.css để không bị lỗi khi chuyển trang -->
+    <link rel="stylesheet" href="/shared.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Gọi Header dùng chung -->
+    <%- include('partials/header') %>
+
+    <main id="main-content">
+        <!-- KHỐI THÔNG BÁO FLASH MESSAGE (Sẽ chớp sáng khi đăng nhập thành công) -->
+        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+            <div style="background-color: rgba(40, 167, 69, 0.2); color: #2ecc71; padding: 15px; text-align: center; font-family: monospace; font-size: 1.2rem; border: 1px dashed #2ecc71; margin: 20px auto; max-width: 800px;">
+                [ <%= successMessage %> ]
+            </div>
+        <% } %>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero__content">
+                <h1 id="hero-title">Level Up Your Setup</h1>
+                <p>Discover the latest consoles, elite controllers and ultimate gaming gear.</p>
+                <a href="/shop" class="btn btn--primary btn--large">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- Grid Layout -->
+        <section class="featured">
+            <h2 class="section-title">Trending Gear</h2>
+            <div class="product-grid">
+                
+                <!-- Product Card 1 -->
+                <article class="card">
+                    <div class="card__image-container">
+                        <!-- Thêm dấu / trước thư mục images -->
+                        <img src="/images/ps_controller.jpg" alt="PS5 DualSense Controller" class="card__image">
+                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                    </div>
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="/product-dualsense">PS5 DualSense Controller</a></h3>
+                        <div class="card__meta">
+                            <span>Haptic Feedback</span>
+                            <span>Wireless</span>
+                        </div>
+                        <div class="card__rating">⭐⭐⭐⭐⭐ (3.2k)</div>
+                        <div class="card__footer">
+                            <span class="card__price">$69.99</span>
+                            <button class="btn btn--primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 2 -->
+                <article class="card">
+                    <div class="card__image-container">
+                        <img src="/images/xbox.jpg" alt="Xbox Series X Console" class="card__image">
+                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                    </div>
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="/product-xbox">Xbox Series X 1TB</a></h3>
+                        <div class="card__meta">
+                            <span>4K Gaming</span>
+                            <span>120 FPS</span>
+                        </div>
+                        <div class="card__rating">⭐⭐⭐⭐⭐ (5.1k)</div>
+                        <div class="card__footer">
+                            <span class="card__price">$499.99</span>
+                            <button class="btn btn--primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </article>
+
+                 <!-- Product Card 3 -->
+                 <article class="card">
+                    <div class="card__image-container">
+                        <img src="/images/nintendo_oled.jpg" alt="Nintendo Switch OLED" class="card__image">
+                        <button class="btn--wishlist" title="Add to Wishlist">🤍</button>
+                    </div>
+                    <div class="card__content">
+                        <h3 class="card__title"><a href="/product-switch-oled">Nintendo Switch OLED</a></h3>
+                        <div class="card__meta">
+                            <span>7-inch Screen</span>
+                            <span>Handheld</span>
+                        </div>
+                        <div class="card__rating">⭐⭐⭐⭐ (2.8k)</div>
+                        <div class="card__footer">
+                            <span class="card__price">$349.99</span>
+                            <button class="btn btn--primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+        
+        <!-- Dynamic blog review (Đã được nâng cấp để kết nối với Backend) -->
+        <section class="featured" style="margin-top: 40px;">
+            <h2 class="section-title">Latest Tech News</h2>
+            <div class="product-grid" id="dynamic-blog-container">
+                
+                <% if (typeof blogs !== 'undefined' && blogs.length > 0) { %>
+                    <!-- Lấy tối đa 3 bài viết mới nhất để hiển thị ra trang chủ -->
+                    <% blogs.slice(0, 3).forEach(post => { %>
+                        <article class="card" style="border: 1px solid #333;">
+                            <div class="card__image-container">
+                                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="card__image" style="height: 200px; object-fit: cover;">
+                            </div>
+                            <div class="card__content">
+                                <h3 class="card__title"><a href="/blog/<%= post.id %>"><%= post.title %></a></h3>
+                                <div class="card__meta" style="color: #f39c12; font-family: monospace;">
+                                    <span>[ <%= post.category %> ]</span>
+                                    <span><%= post.date %></span>
+                                </div>
+                                <div class="card__footer" style="margin-top: 15px;">
+                                    <a href="/blog/<%= post.id %>" class="btn btn--outline" style="width: 100%; text-align: center;">READ MORE</a>
+                                </div>
+                            </div>
+                        </article>
+                    <% }) %>
+                <% } else { %>
+                    <p style="text-align: center; width: 100%; grid-column: 1 / -1; color: #888; font-family: monospace;">
+                        > Scanning databanks for latest news...
+                    </p>
+                <% } %>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Gọi Footer dùng chung -->
+    <%- include('partials/footer') %>
+
+    <!-- Thêm dấu / để file script luôn trỏ về đúng thư mục gốc -->
+    <script src="/group.js"></script>
+    <script src="/index.js"></script>
+
+</body>
+</html>
