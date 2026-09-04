@@ -1,11 +1,11 @@
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-
 const mongoose = require('mongoose');
 
 const dbconnect = async (connstr) => {
     try {
-        await mongoose.connect(connstr);
+        console.log('Connecting to MongoDB...');
+        await mongoose.connect(connstr, {
+            serverSelectionTimeoutMS: 5000
+        });
         console.log('Connected to MongoDB Atlas');
         return mongoose;
     } catch (err) {

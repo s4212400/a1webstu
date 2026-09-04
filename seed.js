@@ -1,13 +1,4 @@
-// ============================================
-// Seed script - inserts sample data into MongoDB
-// Run ONCE with: node seed.js
-// Creates sample users + reviews + blogs
-// Teammates can add their own collections below.
-// ============================================
 require('dotenv').config();
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const Review = require('./models/reviews');

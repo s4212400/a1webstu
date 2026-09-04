@@ -1,11 +1,6 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('=> BINGO! Connected to MongoDB Atlas successfully!'))
-    .catch(err => console.error('=> MongoDB Connection ERROR:', err));
-
-
+const { dbconnect } = require('./config/db');
+dbconnect(process.env.MONGODB_URI);
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
