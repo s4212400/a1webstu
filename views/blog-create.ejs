@@ -67,6 +67,12 @@
                 <input type="url" id="post-image" name="image" placeholder="https://images.unsplash.com/...">
                 <small class="field-hint">Shown as the thumbnail on the blog list page.</small>
             </div>
+            
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div style="background-color: #ffe6e6; color: #d9534f; padding: 8px; border: 1px solid #d9534f; border-radius: 3px; margin-bottom: 20px; font-weight: bold;">
+                     <%= error %>
+                </div>
+            <% } %>
 
             <div class="form-group">
                 <label for="post-content">Post Content</label>

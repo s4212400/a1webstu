@@ -12,7 +12,7 @@ const requireAuth = (req, res, next) => {
     }
 };
 
-// 1. FILTER CATEGORY 
+// 1. FILTER CATEGORY & SEARCH 
 router.get('/blog', async (req, res) => {
     try {
         const searchQuery = req.query.search; 
@@ -33,7 +33,6 @@ router.get('/blog', async (req, res) => {
             ];
         }
 
-        // Truy vấn dữ liệu từ MongoDB Atlas, sắp xếp bài mới nhất lên đầu
         const displayBlogs = await Blog.find(filter).sort({ createdAt: -1 });
         
         res.render('blog', { 
@@ -48,7 +47,7 @@ router.get('/blog', async (req, res) => {
     }
 });
 
-// 2. VIEW A SINGLE BLOG POST
+// 2. VIEW A SINGLE BLOG POST 
 router.get('/blog/:id', async (req, res) => {
     try {
         const post = await Blog.findById(req.params.id);
@@ -63,20 +62,20 @@ router.get('/blog/:id', async (req, res) => {
 });
 
 // ROUTES SECURITY
-
 router.get('/blog-create', requireAuth, (req, res) => {
     res.render('blog-create', { user: req.session.user });
 });
 
-// 3. CREATE A NEW BLOG POST (Insert into Database)
+// 3. CREATE A NEW BLOG POST 
 router.post('/blog-create', requireAuth, async (req, res) => {
     try {
         const { title, date, category, tags, image, content } = req.body;
-        const currentAuthor = req.session.user.username;
+        
+        const authorName = req.session.user.username;
         
         await Blog.create({
             title,
-            author: currentAuthor,
+            author: authorName, 
             date: date || Date.now(),
             category,
             tags,
@@ -88,7 +87,17 @@ router.post('/blog-create', requireAuth, async (req, res) => {
         res.redirect('/blog');
     } catch (err) {
         console.error("Error creating blog:", err);
-        res.status(500).send("<h1>Error creating blog</h1>");
+        
+        let cleanMessage = err.message;
+        if (err.errors) {
+            const firstField = Object.keys(err.errors)[0];
+            cleanMessage = err.errors[firstField].message;
+        }
+
+        res.status(400).render('blog-create', { 
+            user: req.session.user, 
+            error: cleanMessage 
+        });
     }
 });
 
