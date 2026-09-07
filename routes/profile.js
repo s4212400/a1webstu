@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -14,136 +15,194 @@ const requireLogin = (req, res, next) => {
 
 
 // Profile page
-router.get('/', (req, res) => {
-    const currentUser = global.users.find(
-        user => user.id === req.session.user.id
-    );
+router.get('/', requireLogin, async (req, res) => {
+    try {
 
-    if (!currentUser) {
-        req.session.destroy();
-        return res.redirect('/login');
+        const currentUser = await User.findById(
+            req.session.user._id
+        );
+
+        if (!currentUser) {
+            req.session.destroy();
+            return res.redirect('/login');
+        }
+
+        res.render('profile', {
+            user: currentUser,
+            error: null,
+            editMode: false
+        });
+
+    } catch (error) {
+
+        console.error(
+            'Error loading profile:',
+            error.message
+        );
+
+        res.status(500).send(
+            'Unable to load profile.'
+        );
     }
-
-    res.render('profile', {
-        user: currentUser,
-        error: null,
-        editMode: false
-    });
 });
 
 
 // Edit profile page
-router.get('/edit', requireLogin, (req, res) => {
-    const currentUser = global.users.find(
-        user => user.id === req.session.user.id
-    );
+router.get('/edit', requireLogin, async (req, res) => {
+    try {
 
-    if (!currentUser) {
-        req.session.destroy();
-        return res.redirect('/login');
+        const currentUser = await User.findById(
+            req.session.user._id
+        );
+
+        if (!currentUser) {
+            req.session.destroy();
+            return res.redirect('/login');
+        }
+
+        res.render('profile', {
+            user: currentUser,
+            error: null,
+            editMode: true
+        });
+
+    } catch (error) {
+
+        console.error(
+            'Error loading edit profile:',
+            error.message
+        );
+
+        res.status(500).send(
+            'Unable to load profile.'
+        );
     }
-
-    res.render('profile', {
-        user: currentUser,
-        error: null,
-        editMode: true
-    });
 });
 
 
 // Save profile changes
-router.post('/edit', requireLogin, (req, res) => {
-    const currentUser = global.users.find(
-        user => user.id === req.session.user.id
-    );
+router.post('/edit', requireLogin, async (req, res) => {
+    try {
 
-    if (!currentUser) {
-        req.session.destroy();
-        return res.redirect('/login');
-    }
+        const currentUser = await User.findById(
+            req.session.user._id
+        );
 
-    const {
-        fullname,
-        username,
-        email,
-        description
-    } = req.body;
+        if (!currentUser) {
+            req.session.destroy();
+            return res.redirect('/login');
+        }
+
+        const {
+            fullname,
+            username,
+            email,
+            description
+        } = req.body;
 
 
-    // Required fields
-    if (!fullname || !username || !email) {
-        return res.render('profile', {
-            user: {
-                ...currentUser,
-                fullname,
-                username,
-                email,
-                description
+        // Required fields
+        if (!fullname || !username || !email) {
+
+            return res.render('profile', {
+                user: {
+                    ...currentUser.toObject(),
+                    fullname,
+                    username,
+                    email,
+                    description
+                },
+                error: 'Full name, username and email are required.',
+                editMode: true
+            });
+        }
+
+
+        // Check username already used by another account
+        const usernameExists = await User.findOne({
+            username: {
+                $regex: `^${username}$`,
+                $options: 'i'
             },
-            error: 'Full name, username and email are required.',
-            editMode: true
+            _id: {
+                $ne: currentUser._id
+            }
         });
-    }
+
+        if (usernameExists) {
+
+            return res.render('profile', {
+                user: {
+                    ...currentUser.toObject(),
+                    fullname,
+                    username,
+                    email,
+                    description
+                },
+                error: 'Username is already taken.',
+                editMode: true
+            });
+        }
 
 
-    // Check username already used by another account
-    const usernameExists = global.users.find(
-        user =>
-            user.id !== currentUser.id &&
-            user.username.toLowerCase() === username.toLowerCase()
-    );
-
-    if (usernameExists) {
-        return res.render('profile', {
-            user: {
-                ...currentUser,
-                fullname,
-                username,
-                email,
-                description
+        // Check email already used by another account
+        const emailExists = await User.findOne({
+            email: {
+                $regex: `^${email}$`,
+                $options: 'i'
             },
-            error: 'Username is already taken.',
-            editMode: true
+            _id: {
+                $ne: currentUser._id
+            }
         });
+
+        if (emailExists) {
+
+            return res.render('profile', {
+                user: {
+                    ...currentUser.toObject(),
+                    fullname,
+                    username,
+                    email,
+                    description
+                },
+                error: 'Email is already registered to another account.',
+                editMode: true
+            });
+        }
+
+
+        // Update user
+        currentUser.fullname = fullname;
+        currentUser.username = username;
+        currentUser.email = email;
+        currentUser.description = description || '';
+
+
+        // Save changes to MongoDB
+        await currentUser.save();
+
+
+        // Update session
+        req.session.user = currentUser;
+
+
+        req.session.successMessage =
+            'PROFILE UPDATED SUCCESSFULLY!';
+
+        res.redirect('/profile');
+
+    } catch (error) {
+
+        console.error(
+            'Error updating profile:',
+            error.message
+        );
+
+        res.status(500).send(
+            'Unable to update profile.'
+        );
     }
-
-
-    // Check email already used by another account
-    const emailExists = global.users.find(
-        user =>
-            user.id !== currentUser.id &&
-            user.email.toLowerCase() === email.toLowerCase()
-    );
-
-    if (emailExists) {
-        return res.render('profile', {
-            user: {
-                ...currentUser,
-                fullname,
-                username,
-                email,
-                description
-            },
-            error: 'Email is already registered to another account.',
-            editMode: true
-        });
-    }
-
-
-    // Update user
-    currentUser.fullname = fullname;
-    currentUser.username = username;
-    currentUser.email = email;
-    currentUser.description = description || '';
-
-
-    // Update session
-    req.session.user = currentUser;
-
-
-    req.session.successMessage = 'PROFILE UPDATED SUCCESSFULLY!';
-
-    res.redirect('/profile');
 });
 
 
