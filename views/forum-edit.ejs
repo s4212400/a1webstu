@@ -21,7 +21,13 @@
         <section class="form-section">
             <div class="form-card">
 
-                <form action="/forum/edit/<%= thread.id %>" method="POST" novalidate>
+                <% if (errors && errors.length > 0) { %>
+                    <ul class="error-message">
+                        <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+                    </ul>
+                <% } %>
+
+                <form action="/forum/edit/<%= thread._id %>" method="POST" novalidate>
 
                     <div class="form-group">
                         <label class="form-label" for="thread-title">Thread Title</label>
@@ -31,8 +37,13 @@
 
                     <div class="form-group">
                         <label class="form-label" for="thread-content">Content</label>
-                        <textarea id="thread-content" name="snippet" class="form-textarea"><%= thread.snippet %></textarea>
+                        <textarea id="thread-content" name="content" class="form-textarea"><%= thread.content %></textarea>
                         <span class="error-message" id="content-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="thread-image">Image URL (optional)</label>
+                        <input type="text" id="thread-image" name="imageUrl" class="form-input" value="<%= thread.imageUrl %>">
                     </div>
 
                     <div class="form-actions">
