@@ -8,5 +8,8 @@
     "express-session": "^1.19.0",
     "mongodb": "^7.6.0",
     "mongoose": "^9.9.4"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }

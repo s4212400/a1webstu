@@ -10,11 +10,7 @@ const profileRouter = require('./routes/profile');
 const User = require('./models/user');
 
 const app = express();
-const PORT = 3000;
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+const PORT = process.env.PORT || 3000;
 
 // View engine EJS
 app.set('view engine', 'ejs');
@@ -23,7 +19,18 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Block direct URL access to sensitive files (.env, config, etc.)
+app.use((req, res, next) => {
+    const blocked = ['.env', 'package.json', 'package-lock.json'];
+    if (blocked.some(f => req.path.includes(f)) || req.path.startsWith('/config') || req.path.startsWith('/models')) {
+        return res.status(403).send('Forbidden');
+    }
+    next();
+});
+
 app.use(express.static(__dirname));
+
 // Session to remember logged-in user
 app.use(session({
     secret: 'consolehaven-secret',
@@ -36,54 +43,6 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
-
-// In-memory users
-global.users = [
-    {
-        id: 1,
-        fullname: "Admin Test",
-        username: "admin123",
-        email: "admin@gmail.com",
-        password: "password123",
-        description: "I am the admin",
-        role: "admin",
-        status: "active",
-        joined: "Mar 15, 2026"
-    },
-    {
-        id: 2,
-        fullname: "Sarah Player",
-        username: "SarahPlayer",
-        email: "sarah@email.com",
-        password: "password123",
-        description: "",
-        role: "moderator",
-        status: "active",
-        joined: "Apr 02, 2026"
-    },
-    {
-        id: 3,
-        fullname: "Mike Console",
-        username: "MikeConsole",
-        email: "mike@email.com",
-        password: "password123",
-        description: "",
-        role: "standard",
-        status: "active",
-        joined: "May 10, 2026"
-    },
-    {
-        id: 4,
-        fullname: "Emma Games",
-        username: "EmmaGames",
-        email: "emma@email.com",
-        password: "password123",
-        description: "",
-        role: "standard",
-        status: "locked",
-        joined: "Jun 01, 2026"
-    }
-];
 
 // ===== MODULE ROUTES =====
 app.use((req, res, next) => {
