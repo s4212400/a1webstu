@@ -38,46 +38,96 @@
 
                 <div class="rating">
                     <%= "⭐".repeat(product.rating) %>
-                    <span class="rating-count"><%= product.rating %>.0 / 5 — <%= product.ratingCount.toLocaleString() %> reviews</span>
+                    <span class="rating-count">
+                        <%= product.rating %>.0 / 5 —
+                        <%= product.ratingCount.toLocaleString() %> reviews
+                    </span>
                 </div>
 
                 <div class="price product-price">
                     <% if (product.oldPrice) { %>
-                        <span class="old-price">$<%= product.oldPrice.toFixed(2) %></span>
+                        <span class="old-price">
+                            $<%= product.oldPrice.toFixed(2) %>
+                        </span>
                     <% } %>
-                    <span class="new-price">$<%= product.price.toFixed(2) %></span>
+
+                    <span class="new-price">
+                        $<%= product.price.toFixed(2) %>
+                    </span>
+
                     <% if (product.discount) { %>
-                        <span class="save-tag">Save <%= product.discount %>%</span>
+                        <span class="save-tag">
+                            Save <%= product.discount %>%
+                        </span>
                     <% } %>
                 </div>
 
                 <% if (product.stock === 0) { %>
-                    <span class="stock out-stock">Out of Stock</span>
+
+                    <span class="stock out-stock">
+                        Out of Stock
+                    </span>
+
                 <% } else if (product.stock <= 6) { %>
-                    <span class="stock low-stock">Low Stock — <%= product.stock %> units left</span>
+
+                    <span class="stock low-stock">
+                        Low Stock — <%= product.stock %> units left
+                    </span>
+
                 <% } else { %>
-                    <span class="stock in-stock">In Stock — <%= product.stock %> units available</span>
+
+                    <span class="stock in-stock">
+                        In Stock — <%= product.stock %> units available
+                    </span>
+
                 <% } %>
 
-                <!-- Add to Cart - posts to the cart route (login required) -->
+
+                <!-- Add to Cart -->
                 <form class="product-form" action="/cart/add" method="POST">
 
-                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <!-- Use product.productId from MongoDB -->
+                    <input
+                        type="hidden"
+                        name="productId"
+                        value="<%= product.productId %>"
+                    >
 
                     <div class="form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1"
-                               max="<%= product.stock > 0 ? product.stock : 1 %>"
-                               <%= product.stock === 0 ? 'disabled' : '' %>>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            max="<%= product.stock > 0 ? product.stock : 1 %>"
+                            <%= product.stock === 0 ? 'disabled' : '' %>
+                        >
                     </div>
 
                     <% if (user) { %>
-                        <button type="submit" class="btn btn--primary btn--large"
-                                <%= product.stock === 0 ? 'disabled' : '' %>>
-                            <%= product.stock === 0 ? 'Out of Stock' : 'Add to Cart' %>
+
+                        <button
+                            type="submit"
+                            class="btn btn--primary btn--large"
+                            <%= product.stock === 0 ? 'disabled' : '' %>
+                        >
+                            <%= product.stock === 0
+                                ? 'Out of Stock'
+                                : 'Add to Cart' %>
                         </button>
+
                     <% } else { %>
-                        <a href="/login" class="btn btn--primary btn--large">Log in to add to cart</a>
+
+                        <a
+                            href="/login"
+                            class="btn btn--primary btn--large"
+                        >
+                            Log in to add to cart
+                        </a>
+
                     <% } %>
 
                 </form>
