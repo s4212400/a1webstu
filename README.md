@@ -20,3 +20,5 @@ This project was developed collaboratively by a team of 4 members. Below is the 
 *   **Member 4: Luong Quoc Viet(SID: S4154250 )**
     *   Module: Shop + Product Review and Rating
     *   Shared pages & CSS Custom: Admin, Delete account, Deactivate account, Product Page. 
+
+.
