@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     description: { type: String, default: '' },
-    profilePicture: { type: String, default: '' },
     role: { type: String, default: 'standard' },      // standard | moderator | admin
     status: { type: String, default: 'active' },       // active | locked
     joined: { type: Date, default: Date.now }

@@ -7,13 +7,10 @@ const path = require('path');
 const cartRouter = require('./routes/cart');
 const wishlistRouter = require('./routes/wishlist');
 const profileRouter = require('./routes/profile');
+const User = require('./models/user');
 
 const app = express();
-const PORT = 3000;
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+const PORT = process.env.PORT || 3000;
 
 // View engine EJS
 app.set('view engine', 'ejs');
@@ -22,7 +19,18 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Block direct URL access to sensitive files (.env, config, etc.)
+app.use((req, res, next) => {
+    const blocked = ['.env', 'package.json', 'package-lock.json'];
+    if (blocked.some(f => req.path.includes(f)) || req.path.startsWith('/config') || req.path.startsWith('/models')) {
+        return res.status(403).send('Forbidden');
+    }
+    next();
+});
+
 app.use(express.static(__dirname));
+
 // Session to remember logged-in user
 app.use(session({
     secret: 'consolehaven-secret',
@@ -35,54 +43,6 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
-
-// In-memory users
-global.users = [
-    {
-        id: 1,
-        fullname: "Admin Test",
-        username: "admin123",
-        email: "admin@gmail.com",
-        password: "password123",
-        description: "I am the admin",
-        role: "admin",
-        status: "active",
-        joined: "Mar 15, 2026"
-    },
-    {
-        id: 2,
-        fullname: "Sarah Player",
-        username: "SarahPlayer",
-        email: "sarah@email.com",
-        password: "password123",
-        description: "",
-        role: "moderator",
-        status: "active",
-        joined: "Apr 02, 2026"
-    },
-    {
-        id: 3,
-        fullname: "Mike Console",
-        username: "MikeConsole",
-        email: "mike@email.com",
-        password: "password123",
-        description: "",
-        role: "standard",
-        status: "active",
-        joined: "May 10, 2026"
-    },
-    {
-        id: 4,
-        fullname: "Emma Games",
-        username: "EmmaGames",
-        email: "emma@email.com",
-        password: "password123",
-        description: "",
-        role: "standard",
-        status: "locked",
-        joined: "Jun 01, 2026"
-    }
-];
 
 // ===== MODULE ROUTES =====
 app.use((req, res, next) => {
@@ -143,6 +103,36 @@ app.get('/deactivate-account', (req, res) => {
     res.render('deactivate-account', { user: req.session.user, error: null });
 });
 
+app.post('/deactivate-account', async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    const { deactivatePassword } = req.body;
+    try {
+        // Find the current user in MongoDB
+        const currentUser = await User.findById(req.session.user._id);
+ 
+        // Verify password using bcrypt (comparePassword)
+        const match = currentUser ? await currentUser.comparePassword(deactivatePassword) : false;
+        if (!match) {
+            return res.render('deactivate-account', {
+                user: req.session.user,
+                error: "Incorrect password. Please try again."
+            });
+        }
+ // Mark account inactive (kept in DB, not deleted)
+        currentUser.status = "inactive";
+        await currentUser.save();
+        console.log("=> Account deactivated:", currentUser.username);
+ 
+        req.session.destroy();
+        res.redirect('/login');
+    } catch (err) {
+        console.error(err.message);
+        res.render('deactivate-account', { user: req.session.user, error: "Something went wrong." });
+    }
+});
+
 // ===== DELETE ACCOUNT =====
 app.get('/delete-account', (req, res) => {
     if (!req.session.user) {
@@ -150,64 +140,43 @@ app.get('/delete-account', (req, res) => {
     }
     res.render('delete-account', { user: req.session.user, error: null });
 });
-
-app.post('/deactivate-account', (req, res) => {
+ 
+app.post('/delete-account', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     }
-
-    const { deactivatePassword } = req.body;
-
-    // Verify password before deactivating
-    const currentUser = users.find(u => u.id === req.session.user.id);
-    if (!currentUser || currentUser.password !== deactivatePassword) {
-        return res.render('deactivate-account', {
-            user: req.session.user,
-            error: "Incorrect password. Please try again."
-        });
-    }
-
-    // Mark account inactive (kept in data, not deleted)
-    currentUser.status = "inactive";
-    console.log("=> Account deactivated:", currentUser.username);
-
-    // Log out after deactivating
-    req.session.destroy();
-    res.redirect('/login');
-});
-
-app.post('/delete-account', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    }
-
     const deletePassword = req.body.deletePassword;
     const deleteConfirm = req.body["delete-confirm"];
-
-    const currentUser = users.find(u => u.id === req.session.user.id);
-
-    // Check password
-    if (!currentUser || currentUser.password !== deletePassword) {
-        return res.render('delete-account', {
-            user: req.session.user,
-            error: "Incorrect password. Please try again."
-        });
+    try {
+        const currentUser = await User.findById(req.session.user._id);
+ 
+        // Verify password
+        const match = currentUser ? await currentUser.comparePassword(deletePassword) : false;
+        if (!match) {
+            return res.render('delete-account', {
+                user: req.session.user,
+                error: "Incorrect password. Please try again."
+            });
+        }
+ 
+        // Require typing DELETE to confirm
+        if (deleteConfirm !== "DELETE") {
+            return res.render('delete-account', {
+                user: req.session.user,
+                error: "Please type DELETE to confirm."
+            });
+        }
+ 
+        // Permanently remove the user from MongoDB
+        await User.deleteOne({ _id: req.session.user._id });
+        console.log("=> Account deleted:", currentUser.username);
+ 
+        req.session.destroy();
+        res.redirect('/register');
+    } catch (err) {
+        console.error(err.message);
+        res.render('delete-account', { user: req.session.user, error: "Something went wrong." });
     }
-
-    // Check the user typed DELETE to confirm
-    if (deleteConfirm !== "DELETE") {
-        return res.render('delete-account', {
-            user: req.session.user,
-            error: "Please type DELETE to confirm."
-        });
-    }
-
-    // Passed all checks - permanently remove the user
-    users = users.filter(u => u.id !== req.session.user.id);
-    console.log("=> Account deleted:", currentUser.username);
-
-    req.session.destroy();
-    res.redirect('/register');
 });
 
 // ===== PASSWORD RESET (simulated - no real email in this prototype) =====

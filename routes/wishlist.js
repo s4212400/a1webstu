@@ -1,8 +1,16 @@
 const express = require('express');
+
 const router = express.Router();
 
-// Login required
+const wishlistService = require('../services/wishlistService');
+
+
+// ============================================================
+// LOGIN REQUIRED
+// ============================================================
+
 const requireLogin = (req, res, next) => {
+
     if (!req.session.user) {
         return res.redirect('/login');
     }
@@ -10,273 +18,403 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
-
-// Wishlist data
-let wishlist = [];
-
 router.use(requireLogin);
 
 
-// Make wishlist available to server.js and other routes
-router.use((req, res, next) => {
-    req.app.locals.wishlist = wishlist;
-    next();
-});
+// ============================================================
+// GET USER ID
+// ============================================================
 
+const getUserId = (req) => {
 
-// Show Wishlist
-router.get('/', (req, res) => {
+    return req.session.user._id ||
+           req.session.user.id;
 
-    const wishlistCount = wishlist.reduce(
-        (total, item) => total + (item.wishlistClicks || 1),
-        0
-    );
+};
 
-    const cart = req.app.locals.cart || [];
 
-    const cartCount = cart.reduce(
-        (total, item) => total + (item.quantity || 0),
-        0
-    );
+// ============================================================
+// SHOW WISHLIST
+// ============================================================
 
-    res.render('wishlist', {
-        wishlist: wishlist,
-        wishlistCount: wishlistCount,
-        cartCount: cartCount,
-        user: req.session.user || null
-    });
+router.get('/', async (req, res) => {
 
-});
+    try {
 
+        const userId = getUserId(req);
 
-// Add product to Wishlist
-router.post('/add', (req, res) => {
+        const wishlistData =
+            await wishlistService.getWishlist(userId);
 
-    const productId = Number(req.body.productId);
 
-    const products = req.app.locals.products;
+        const wishlist =
+            wishlistData.items.map(item => ({
 
-    const product = products.find(
-        product => product.id === productId
-    );
+                id: item._id,
 
-    if (!product) {
-        return res.redirect('/shop');
-    }
+                productId: item.productNumber,
 
+                name: item.name,
 
-    // Prevent duplicate wishlist entries
-    const existingItem = wishlist.find(
-        item => item.productId === product.id
-    );
+                productPage:
+                    `/product-${item.productNumber}.html`,
 
+                image: item.image,
 
-    if (existingItem) {
+                platform: item.platform,
 
-        existingItem.wishlistClicks =
-            (existingItem.wishlistClicks || 1) + 1;
+                genre: item.category,
 
-        return res.redirect('/shop');
-    }
+                rating:
+                    item.rating === 5
+                        ? "⭐⭐⭐⭐⭐"
+                        : "⭐⭐⭐⭐☆",
 
+                ratingCount:
+                    item.ratingCount
+                        ? `${item.ratingCount.toLocaleString()} reviews`
+                        : "",
 
-    // Add product to wishlist
-    wishlist.push({
+                oldPrice:
+                    item.oldPrice,
 
-        id: Date.now(),
+                newPrice:
+                    item.price,
 
-        productId: product.id,
+                discount:
+                    item.discount || 0,
 
-        name: product.name,
+                stock:
+                    item.stock === 0
+                        ? "Out of Stock"
+                        : item.stock <= 6
+                            ? "Low Stock"
+                            : "In Stock",
 
-        productPage: `/product-${product.id}.html`,
+                stockClass:
+                    item.stock === 0
+                        ? "out-stock"
+                        : item.stock <= 6
+                            ? "low-stock"
+                            : "in-stock",
 
-        image: product.image,
+                usersWishlisted: 0,
 
-        platform: product.platform,
+                wishlistClicks:
+                    item.wishlistClicks || 1,
 
-        genre: product.category,
+                addedToCart:
+                    item.addedToCart || 0,
 
-        rating: product.rating === 5
-            ? "⭐⭐⭐⭐⭐"
-            : "⭐⭐⭐⭐☆",
+                purchasedCount:
+                    item.purchasedCount || 0,
 
-        ratingCount: product.ratingCount
-            ? `${product.ratingCount.toLocaleString()} reviews`
-            : "",
+                addedDate:
+                    new Date(item.addedDate)
+                        .toLocaleDateString(
+                            'en-GB',
+                            {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            }
+                        ),
 
-        oldPrice: product.oldPrice,
+                isPurchased:
+                    item.isPurchased || false
 
-        newPrice: product.price,
+            }));
 
-        discount: product.discount || 0,
 
-        stock: product.stock === 0
-            ? "Out of Stock"
-            : product.stock <= 6
-                ? "Low Stock"
-                : "In Stock",
+        // ========================================================
+        // COUNTS
+        // ========================================================
 
-        stockClass: product.stock === 0
-            ? "out-stock"
-            : product.stock <= 6
-                ? "low-stock"
-                : "in-stock",
+        const wishlistCount =
+            wishlist.reduce(
+                (total, item) =>
+                    total +
+                    (item.wishlistClicks || 1),
+                0
+            );
 
-        usersWishlisted: 0,
 
-        wishlistClicks: 1,
+        const cart =
+            req.app.locals.cart || [];
 
-        addedToCart: 0,
 
-        purchasedCount: 0,
+        const cartCount =
+            cart.reduce(
+                (total, item) =>
+                    total +
+                    (item.quantity || 0),
+                0
+            );
 
-        addedDate: new Date().toLocaleDateString(
-            'en-GB',
-            {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }
-        ),
 
-        isPurchased: false
-
-    });
-
-
-    res.redirect('/shop');
-
-});
-
-
-// Move to Cart
-router.get('/move/:id', (req, res) => {
-
-    const id = Number(req.params.id);
-
-    const item = wishlist.find(
-        item => item.id === id
-    );
-
-
-    if (!item) {
-        return res.redirect('/wishlist');
-    }
-
-
-    if (item.isPurchased) {
-        return res.redirect('/wishlist');
-    }
-
-
-    if (item.stock === 'Out of Stock') {
-        return res.redirect('/wishlist');
-    }
-
-
-    const cart = req.app.locals.cart;
-
-
-    const existingItem = cart.find(
-        cartItem => cartItem.id === item.productId
-    );
-
-
-    if (existingItem) {
-
-        existingItem.quantity += 1;
-
-    } else {
-
-        cart.push({
-
-            id: item.productId,
-
-            name: item.name,
-
-            image: item.image,
-
-            price: item.newPrice,
-
-            quantity: 1
-
+        // ========================================================
+        // RENDER
+        // ========================================================
+        
+        res.render('wishlist',{
+            wishlist,
+            wishlistCount,
+            cartCount,
+            user:req.session.user||null
         });
 
+
+    } catch (error) {
+
+        console.error(
+            'Error loading wishlist:',
+            error
+        );
+
+        req.session.errorMessage =
+            'Unable to load your wishlist.';
+
+        res.redirect('/shop');
+
     }
-
-
-    item.addedToCart =
-        (item.addedToCart || 0) + 1;
-
-
-    res.redirect('/wishlist');
 
 });
 
 
-// Mark Purchased
-router.get('/purchase/:id', (req, res) => {
+// ============================================================
+// ADD PRODUCT TO WISHLIST
+// ============================================================
 
-    const id = Number(req.params.id);
+router.post('/add', async (req, res) => {
 
-    const item = wishlist.find(
-        item => item.id === id
-    );
+    try {
+
+        const userId = getUserId(req);
+
+        const productId =
+            Number(req.body.productId);
 
 
-    if (!item) {
-        return res.redirect('/wishlist');
+        await wishlistService.addToWishlist(
+            userId,
+            productId
+        );
+
+
+        res.redirect('/shop');
+
+
+    } catch (error) {
+
+        console.error(
+            'Error adding product to wishlist:',
+            error
+        );
+
+        req.session.errorMessage =
+            error.message;
+
+        res.redirect('/shop');
+
     }
-
-
-    item.isPurchased = true;
-
-    res.redirect('/wishlist');
 
 });
 
 
-// Mark Unpurchased
-router.get('/unpurchase/:id', (req, res) => {
+// ============================================================
+// MOVE TO CART
+// ============================================================
 
-    const id = Number(req.params.id);
+router.get('/move/:id', async (req, res) => {
 
-    const item = wishlist.find(
-        item => item.id === id
-    );
+    try {
+
+        const userId = getUserId(req);
+
+        const itemId =
+            req.params.id;
 
 
-    if (!item) {
-        return res.redirect('/wishlist');
+        const wishlistData =
+            await wishlistService.getWishlist(
+                userId
+            );
+
+
+        const item =
+            wishlistData.items.id(itemId);
+
+
+        if (!item) {
+            return res.redirect('/wishlist');
+        }
+
+
+        if (item.isPurchased) {
+            return res.redirect('/wishlist');
+        }
+
+
+        if (item.stock === 0) {
+            return res.redirect('/wishlist');
+        }
+
+
+        // Add product to MongoDB cart
+        const cartService =
+            require('../services/cartService');
+
+
+        await cartService.addToCart(
+            userId,
+            item.productNumber,
+            1
+        );
+
+
+        // Increase wishlist cart count
+        await wishlistService.incrementAddedToCart(
+            userId,
+            itemId
+        );
+
+
+        res.redirect('/wishlist');
+
+
+    } catch (error) {
+
+        console.error(
+            'Error moving wishlist item to cart:',
+            error
+        );
+
+        req.session.errorMessage =
+            error.message;
+
+        res.redirect('/wishlist');
+
     }
-
-
-    item.isPurchased = false;
-
-    res.redirect('/wishlist');
 
 });
 
 
-// Remove from Wishlist
-router.get('/remove/:id', (req, res) => {
+// ============================================================
+// MARK PURCHASED
+// ============================================================
 
-    const id = Number(req.params.id);
+router.get('/purchase/:id', async (req, res) => {
 
-    const index = wishlist.findIndex(
-        item => item.id === id
-    );
+    try {
+
+        const userId = getUserId(req);
+
+        const itemId =
+            req.params.id;
 
 
-    if (index === -1) {
-        return res.redirect('/wishlist');
+        await wishlistService.markPurchased(
+            userId,
+            itemId
+        );
+
+
+        res.redirect('/wishlist');
+
+
+    } catch (error) {
+
+        console.error(
+            'Error marking wishlist item as purchased:',
+            error
+        );
+
+        req.session.errorMessage =
+            error.message;
+
+        res.redirect('/wishlist');
+
     }
 
+});
 
-    wishlist.splice(index, 1);
 
-    res.redirect('/wishlist');
+// ============================================================
+// MARK UNPURCHASED
+// ============================================================
+
+router.get('/unpurchase/:id', async (req, res) => {
+
+    try {
+
+        const userId = getUserId(req);
+
+        const itemId =
+            req.params.id;
+
+
+        await wishlistService.markUnpurchased(
+            userId,
+            itemId
+        );
+
+
+        res.redirect('/wishlist');
+
+
+    } catch (error) {
+
+        console.error(
+            'Error marking wishlist item as unpurchased:',
+            error
+        );
+
+        req.session.errorMessage =
+            error.message;
+
+        res.redirect('/wishlist');
+
+    }
+
+});
+
+
+// ============================================================
+// REMOVE FROM WISHLIST
+// ============================================================
+
+router.get('/remove/:id', async (req, res) => {
+
+    try {
+
+        const userId = getUserId(req);
+
+        const itemId =
+            req.params.id;
+
+
+        await wishlistService.removeFromWishlist(
+            userId,
+            itemId
+        );
+
+
+        res.redirect('/wishlist');
+
+
+    } catch (error) {
+
+        console.error(
+            'Error removing wishlist item:',
+            error
+        );
+
+        req.session.errorMessage =
+            error.message;
+
+        res.redirect('/wishlist');
+
+    }
 
 });
 

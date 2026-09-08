@@ -75,7 +75,7 @@
 
                     <p class="invoice__meta">
                         Order Date:
-                        <strong><%= order.orderDate %></strong>
+                        <strong><%= new Date(order.orderDate).toLocaleDateString('en-GB') %></strong>
                     </p>
 
                     <p class="invoice__meta">
@@ -287,7 +287,7 @@
                     href="/profile"
                     class="btn btn--outline"
                 >
-                    View My Orders
+                    Back to Profile
                 </a>
 
                 <a

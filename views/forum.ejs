@@ -25,23 +25,25 @@
             </div>
         </section>
 
-        <!-- Filter toolbar (client-side JS handles live search/sort) -->
+        <!-- Filter toolbar - submits as a real GET request, filtered/sorted server-side in MongoDB -->
         <section class="filter-toolbar">
-            <div class="search-bar u-grow">
-                <input type="text" name="q" placeholder="FILTER BY TITLE OR POST CONTENT..." class="search-input">
-            </div>
+            <form class="filter-toolbar__row" method="GET" action="/forum" style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; width:100%;">
+                <div class="search-bar u-grow">
+                    <input type="text" name="search" value="<%= currentSearch %>" placeholder="FILTER BY TITLE OR POST CONTENT..." class="search-input">
+                </div>
 
-            <div class="filter-toolbar__row">
                 <div class="select-group">
                     <label for="sort-by">Sort by:</label>
                     <select id="sort-by" name="sort" class="select-input">
-                        <option value="title-asc">Thread Title (A-Z)</option>
-                        <option value="title-desc">Thread Title (Z-A)</option>
-                        <option value="newest-reply" selected>Most Recent Post</option>
-                        <option value="oldest-reply">Oldest Post</option>
+                        <option value="title-asc" <%= currentSort === 'title-asc' ? 'selected' : '' %>>Thread Title (A-Z)</option>
+                        <option value="title-desc" <%= currentSort === 'title-desc' ? 'selected' : '' %>>Thread Title (Z-A)</option>
+                        <option value="newest-reply" <%= currentSort === 'newest-reply' ? 'selected' : '' %>>Most Recent Post</option>
+                        <option value="oldest-reply" <%= currentSort === 'oldest-reply' ? 'selected' : '' %>>Oldest Post</option>
                     </select>
                 </div>
-            </div>
+
+                <button type="submit" class="btn btn--outline">Apply</button>
+            </form>
         </section>
 
         <!-- Thread list generated from server data -->
@@ -53,20 +55,25 @@
                         <div class="thread-card__icon">💬</div>
                         <div class="thread-card__body">
                             <h2 class="thread-card__title">
-                                <a href="/forum/<%= thread.id %>"><%= thread.title %></a>
+                                <a href="/forum/<%= thread._id %>"><%= thread.title %></a>
                             </h2>
-                            <p class="thread-card__snippet"><%= thread.snippet %></p>
+                            <p class="thread-card__snippet"><%= thread.content %></p>
                             <div class="thread-card__meta">
-                                <span>👤 <%= thread.author %></span>
-                                <span class="thread-date">🗓️ <%= thread.date %></span>
+                                <span>👤 <%= thread.author ? thread.author.fullname : "Unknown" %></span>
+                                <span class="thread-date">🗓️ <%= new Date(thread.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) %></span>
                             </div>
-                            
+                        </div>
+
                         <div class="thread-card__stats">
-                            <strong><%= thread.repliesList ? thread.repliesList.filter(r => !r.deleted).length : 0 %></strong>
+                            <strong><%= thread.replyCount %></strong>
                             <span>REPLIES</span>
                         </div>
                     </article>
                 <% }) %>
+
+                <% if (threads.length === 0) { %>
+                    <p>No threads match your search.</p>
+                <% } %>
 
             </div>
         </section>
@@ -74,6 +81,5 @@
 
     <%- include('partials/footer') %>
 
-    <script src="/forum.js"></script>
 </body>
 </html>

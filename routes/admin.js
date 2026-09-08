@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');   
 
 // Middleware - only the admin account may access this area
 const requireAdmin = (req, res, next) => {
@@ -7,84 +8,95 @@ const requireAdmin = (req, res, next) => {
         return res.redirect('/login');
     }
     if (req.session.user.username !== 'admin123') {
-        return res.redirect('/');  // non-admin users are turned away
+        return res.redirect('/');
     }
     next();
 };
 
-// GET /admin - user management dashboard (with search, filter, sort)
-router.get('/', requireAdmin, (req, res) => {
-    let displayUsers = global.users;
+// GET /admin - user management dashboard (search, filter, sort from MongoDB)
+router.get('/', requireAdmin, async (req, res) => {
+    try {
+        // Build a MongoDB query object from the filters
+        const query = {};
 
-    // Search by username or email
-    const search = (req.query.q || '').trim().toLowerCase();
-    if (search) {
-        displayUsers = displayUsers.filter(u =>
-            u.username.toLowerCase().includes(search) ||
-            u.email.toLowerCase().includes(search)
-        );
-    }
-
-    // Filter by role
-    const role = req.query.role || 'all';
-    if (role !== 'all') {
-        displayUsers = displayUsers.filter(u => u.role === role);
-    }
-
-    // Filter by status
-    const status = req.query.status || 'all';
-    if (status !== 'all') {
-        displayUsers = displayUsers.filter(u => u.status === status);
-    }
-
-    // Sort
-    const sort = req.query.sort || 'joined-desc';
-    displayUsers = [...displayUsers].sort((a, b) => {
-        if (sort === 'username-asc') {
-            return a.username.localeCompare(b.username);
+        // Search by username OR email (case-insensitive regex)
+        const search = (req.query.q || '').trim();
+        if (search) {
+            query.$or = [
+                { username: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } }
+            ];
         }
-        if (sort === 'joined-asc') {
-            return new Date(a.joined) - new Date(b.joined);
+
+        // Filter by role
+        const role = req.query.role || 'all';
+        if (role !== 'all') {
+            query.role = role;
         }
-        // joined-desc (default)
-        return new Date(b.joined) - new Date(a.joined);
-    });
 
-    // Stats (from the full list, not filtered)
-    const stats = {
-        total: global.users.length,
-        active: global.users.filter(u => u.status === 'active').length,
-        locked: global.users.filter(u => u.status === 'locked').length,
-        staff: global.users.filter(u => u.role === 'admin' || u.role === 'moderator').length
-    };
+        // Filter by status
+        const status = req.query.status || 'all';
+        if (status !== 'all') {
+            query.status = status;
+        }
 
-    res.render('admin', {
-        users: displayUsers,
-        stats: stats,
-        query: req.query,
-        user: req.session.user
-    });
+        // Sort option
+        let sortObj = { joined: -1 };  // newest first (default)
+        const sort = req.query.sort || 'joined-desc';
+        if (sort === 'username-asc') sortObj = { username: 1 };
+        else if (sort === 'joined-asc') sortObj = { joined: 1 };
+
+        // Query users with filters + sort
+        const displayUsers = await User.find(query).sort(sortObj);
+
+        // Stats from the FULL collection (not filtered)
+        const allUsers = await User.find();
+        const stats = {
+            total: allUsers.length,
+            active: allUsers.filter(u => u.status === 'active').length,
+            locked: allUsers.filter(u => u.status === 'locked').length,
+            staff: allUsers.filter(u => u.role === 'admin' || u.role === 'moderator').length
+        };
+
+        res.render('admin', {
+            users: displayUsers,
+            stats: stats,
+            query: req.query,
+            user: req.session.user
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.redirect('/');
+    }
 });
 
 // POST /admin/lock/:id - lock or unlock a user account
-router.post('/lock/:id', requireAdmin, (req, res) => {
-    const userId = parseInt(req.params.id);
-    const target = global.users.find(u => u.id === userId);
-    if (target) {
-        // Toggle status
-        target.status = target.status === 'locked' ? 'active' : 'locked';
+router.post('/lock/:id', requireAdmin, async (req, res) => {
+    try {
+        const target = await User.findById(req.params.id);
+        if (target) {
+            target.status = target.status === 'locked' ? 'active' : 'locked';
+            await target.save();
+        }
+        res.redirect('/admin');
+    } catch (err) {
+        console.error(err.message);
+        res.redirect('/admin');
     }
-    res.redirect('/admin');
 });
 
 // POST /admin/delete/:id - remove a user account
-router.post('/delete/:id', requireAdmin, (req, res) => {
-    const userId = parseInt(req.params.id);
-    // Don't allow deleting the admin's own account here
-    if (userId !== req.session.user.id) {
-        global.users = global.users.filter(u => u.id !== userId);
+router.post('/delete/:id', requireAdmin, async (req, res) => {
+    try {
+        // Don't allow the admin to delete their own account here
+        if (req.params.id !== req.session.user._id.toString()) {
+            await User.deleteOne({ _id: req.params.id });
+        }
+        res.redirect('/admin');
+    } catch (err) {
+        console.error(err.message);
+        res.redirect('/admin');
     }
-    res.redirect('/admin');
 });
 
 module.exports = router;
