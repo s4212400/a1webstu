@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Review = require('../models/reviews');
-const User = require('../models/user')   // import Review model
+const User = require('../models/user');
+const Product = require('../models/product');
 
 // Middleware - only logged-in users may create/edit/delete
 const requireLogin = (req, res, next) => {
@@ -14,9 +15,7 @@ const requireLogin = (req, res, next) => {
 // GET /reviews - show all reviews (list view)
 router.get('/', async (req, res) => {
     try {
-        // .find() gets all reviews; .populate('author') pulls in the user's info
-        // .sort({date: -1}) shows newest first
-        const reviews = await Review.find().populate('author').sort({ date: -1 });
+        const reviews = await Review.find().populate('author').populate('product').sort({ date: -1 });
         res.render('reviews', { reviews: reviews, user: req.session.user || null });
     } catch (err) {
         console.error(err.message);
@@ -25,15 +24,26 @@ router.get('/', async (req, res) => {
 });
 
 // GET /reviews/create - show create form (login required)
-router.get('/create', requireLogin, (req, res) => {
-    res.render('review-create', { user: req.session.user });
+// If coming from a product page (?productId=5), pre-select that product
+router.get('/create', requireLogin, async (req, res) => {
+    try {
+        const products = await Product.find().sort({ name: 1 });
+        const selectedProductId = req.query.productId || '';
+        res.render('review-create', {
+            user: req.session.user,
+            products: products,
+            selectedProductId: selectedProductId
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.render('review-create', { user: req.session.user, products: [], selectedProductId: '' });
+    }
 });
 
 // POST /reviews/create - handle new review (login required)
 router.post('/create', requireLogin, async (req, res) => {
     const { product, rating, title, description } = req.body;
 
-    // Server-side validation (same as A2)
     let errors = [];
     if (!title || title.trim() === "") {
         errors.push("Review title is required.");
@@ -44,25 +54,49 @@ router.post('/create', requireLogin, async (req, res) => {
     if (!rating) {
         errors.push("Please select a rating.");
     }
+    if (!product || product === "") {
+        errors.push("Please select a product.");
+    }
 
     if (errors.length > 0) {
-        return res.render('review-create', { user: req.session.user, errors: errors });
+        const products = await Product.find().sort({ name: 1 });
+        return res.render('review-create', {
+            user: req.session.user,
+            errors: errors,
+            products: products,
+            selectedProductId: product || ''
+        });
     }
 
     try {
-        // Create a new Review document and save it to MongoDB
+        // Find the selected product to get its _id and image
+        const selectedProduct = await Product.findOne({ productId: parseInt(product) });
+
         const newReview = new Review({
             title: title,
             description: description,
             rating: parseInt(rating),
-            image: "/images/ps_controller.jpg",
-            author: req.session.user._id   // link to the logged-in user (ObjectId)
+            image: selectedProduct ? selectedProduct.image : "/images/ps_controller.jpg",
+            author: req.session.user._id,
+            product: selectedProduct ? selectedProduct._id : null
         });
         await newReview.save();
-        res.redirect('/reviews');
+
+        // Redirect back to the product page if came from there, else reviews list
+        if (selectedProduct) {
+            res.redirect('/product/' + selectedProduct.productId);
+        } else {
+            res.redirect('/reviews');
+        }
     } catch (err) {
         console.error(err.message);
-        res.render('review-create', { user: req.session.user, errors: ["Could not save review."] });
+        const products = await Product.find().sort({ name: 1 });
+        res.render('review-create', {
+            user: req.session.user,
+            errors: ["Could not save review."],
+            products: products,
+            selectedProductId: product || ''
+        });
     }
 });
 
@@ -73,8 +107,6 @@ router.get('/edit/:id', requireLogin, async (req, res) => {
         if (!review) {
             return res.redirect('/reviews');
         }
-        // Only the author can edit their own review
-        // Compare the review's author id with the logged-in user's id
         if (review.author._id.toString() !== req.session.user._id.toString()) {
             return res.redirect('/reviews');
         }
@@ -93,12 +125,10 @@ router.post('/edit/:id', requireLogin, async (req, res) => {
         if (!review) {
             return res.redirect('/reviews');
         }
-        // Owner check
         if (review.author.toString() !== req.session.user._id.toString()) {
             return res.redirect('/reviews');
         }
 
-        // Server-side validation
         let errors = [];
         if (!title || title.trim() === "") {
             errors.push("Review title is required.");
@@ -110,7 +140,6 @@ router.post('/edit/:id', requireLogin, async (req, res) => {
             return res.render('review-edit', { review: review, user: req.session.user, errors: errors });
         }
 
-        // Update fields and save
         review.title = title;
         review.description = description;
         review.rating = parseInt(rating);
@@ -129,7 +158,6 @@ router.post('/delete/:id', requireLogin, async (req, res) => {
         if (!review) {
             return res.redirect('/reviews');
         }
-        // Admin can delete any review; a standard user only their own
         const isOwner = review.author.toString() === req.session.user._id.toString();
         const isAdmin = req.session.user.username === "admin123";
         if (!isOwner && !isAdmin) {
@@ -146,7 +174,7 @@ router.post('/delete/:id', requireLogin, async (req, res) => {
 // GET /reviews/:id - show one review detail (MUST be last)
 router.get('/:id', async (req, res) => {
     try {
-        const review = await Review.findById(req.params.id).populate('author');
+        const review = await Review.findById(req.params.id).populate('author').populate('product');
         if (!review) {
             return res.redirect('/reviews');
         }
