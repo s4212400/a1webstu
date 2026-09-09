@@ -12,54 +12,6 @@
 
     <%- include('partials/header') %>
 
-    <section class="product-reviews">
- 
-            <div class="reviews-header">
-                <h2>Customer Reviews</h2>
-                <% if (user) { %>
-                    <a href="/reviews/create?productId=<%= product.productId %>" class="btn btn--primary btn--small">
-                        Write a Review
-                    </a>
-                <% } else { %>
-                    <a href="/login" class="btn btn--outline btn--small">Log in to review</a>
-                <% } %>
-            </div>
- 
-            <% if (reviews && reviews.length > 0) { %>
-                <div class="reviews-list">
-                    <% reviews.forEach(function(review) { %>
-                        <div class="review-card">
-                            <div class="review-card__header">
-                                <span class="review-card__stars"><%= "⭐".repeat(review.rating) %></span>
-                                <span class="review-card__author">
-                                    by <%= review.author ? review.author.fullname : 'Unknown' %>
-                                </span>
-                                <span class="review-card__date">
-                                    <%= new Date(review.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
-                                </span>
-                            </div>
-                            <h3 class="review-card__title">
-                                <a href="/reviews/<%= review._id %>"><%= review.title %></a>
-                            </h3>
-                            <p class="review-card__text"><%= review.description %></p>
- 
-                            <% if (user && user._id && review.author && review.author._id && (review.author._id.toString() === user._id.toString() || user.username === "admin123")) { %>
-                                <div class="review-card__actions">
-                                    <a href="/reviews/edit/<%= review._id %>" class="btn btn--outline btn--small">Edit</a>
-                                    <form action="/reviews/delete/<%= review._id %>" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn--danger btn--small" onclick="return confirm('Delete this review?')">Delete</button>
-                                    </form>
-                                </div>
-                            <% } %>
-                        </div>
-                    <% }); %>
-                </div>
-            <% } else { %>
-                <p class="no-reviews">No reviews yet — be the first to review this product!</p>
-            <% } %>
- 
-        </section>
-        
     <main id="main-content" class="product-page">
 
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -182,6 +134,54 @@
 
             </div>
 
+        </section>
+
+         <section class="product-reviews">
+ 
+            <div class="reviews-header">
+                <h2>Customer Reviews</h2>
+                <% if (user) { %>
+                    <a href="/reviews/create?productId=<%= product.productId %>" class="btn btn--primary btn--small">
+                        Write a Review
+                    </a>
+                <% } else { %>
+                    <a href="/login" class="btn btn--outline btn--small">Log in to review</a>
+                <% } %>
+            </div>
+ 
+            <% if (reviews && reviews.length > 0) { %>
+                <div class="reviews-list">
+                    <% reviews.forEach(function(review) { %>
+                        <div class="review-card">
+                            <div class="review-card__header">
+                                <span class="review-card__stars"><%= "⭐".repeat(review.rating) %></span>
+                                <span class="review-card__author">
+                                    by <%= review.author ? review.author.fullname : 'Unknown' %>
+                                </span>
+                                <span class="review-card__date">
+                                    <%= new Date(review.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                                </span>
+                            </div>
+                            <h3 class="review-card__title">
+                                <a href="/reviews/<%= review._id %>"><%= review.title %></a>
+                            </h3>
+                            <p class="review-card__text"><%= review.description %></p>
+ 
+                            <% if (user && user._id && review.author && review.author._id && (review.author._id.toString() === user._id.toString() || user.username === "admin123")) { %>
+                                <div class="review-card__actions">
+                                    <a href="/reviews/edit/<%= review._id %>" class="btn btn--outline btn--small">Edit</a>
+                                    <form action="/reviews/delete/<%= review._id %>" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn--danger btn--small" onclick="return confirm('Delete this review?')">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p class="no-reviews">No reviews yet — be the first to review this product!</p>
+            <% } %>
+ 
         </section>
 
     </main>
