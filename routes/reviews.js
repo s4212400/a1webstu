@@ -24,7 +24,6 @@ router.get('/', async (req, res) => {
 });
 
 // GET /reviews/create - show create form (login required)
-// If coming from a product page (?productId=5), pre-select that product
 router.get('/create', requireLogin, async (req, res) => {
     try {
         const products = await Product.find().sort({ name: 1 });
