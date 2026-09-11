@@ -23,7 +23,7 @@ This project was developed collaboratively by a team of 4 members. Below is the 
     *   Shared pages & CSS Custom: Admin, Delete account, Deactivate account.
 
 ## Live Website URL
-https://a1webstu.onrender.com/?fbclid=IwY2xjawUQm4xwZG9mBWV4dG4DYWVtAjEwAGJyaWQRMUZNY3h0aVFSelpySGRndUNzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEeA_r_gJUFCAH3BMarrlYKB-_UyjcWrRZrhemtuo3kbKoKpPP_-USDsVzdwz0_aem_w3trgfYdzBy1HsY-r3mUCA
+https://a1webstu.onrender.com/
 
 ## GitHub Repository URL
 https://github.com/s4212400/a1webstu.git
