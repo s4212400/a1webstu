@@ -1,7 +1,8 @@
-# a1webstu
-# ConsoleHaven - Premium Gaming Gear
-An e-commerce and community platform for gaming hardware, retro consoles and tech gear.
+# ConsoleHaven — Gaming E-Commerce & Community Platform
 
+COSC3060|61 Web Programming Studio — Assignment 3 (Group Project)
+
+An e-commerce and community platform for gaming hardware, retro consoles and tech gear.
 This repository contains the source code for the Web Development Group Assignment.
 
 ## Team Members & Task Distribution
@@ -19,11 +20,7 @@ This project was developed collaboratively by a team of 4 members. Below is the 
     *   Shared pages & CSS Custom: Login, Register, Logout Page.
 *   **Member 4: Luong Quoc Viet(SID: S4154250 )**
     *   Module: Product Review and Rating
-    *   Shared pages & CSS Custom: Admin, Delete account, Deactivate account, Product Page. 
-
-# ConsoleHaven — Gaming E-Commerce & Community Platform
-
-COSC3060|61 Web Programming Studio — Assignment 3 (Group Project)
+    *   Shared pages & CSS Custom: Admin, Delete account, Deactivate account.
 
 ## Live Website URL
 https://a1webstu.onrender.com/?fbclid=IwY2xjawUQm4xwZG9mBWV4dG4DYWVtAjEwAGJyaWQRMUZNY3h0aVFSelpySGRndUNzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEeA_r_gJUFCAH3BMarrlYKB-_UyjcWrRZrhemtuo3kbKoKpPP_-USDsVzdwz0_aem_w3trgfYdzBy1HsY-r3mUCA
